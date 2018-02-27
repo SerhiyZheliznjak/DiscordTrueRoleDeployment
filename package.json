@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "Bot.js",
   "scripts": {
-    "start": "./Bot.js"
+    "start": "node ./Bot.js"
   },
   "author": "Serhiy Zheliznyak",
   "license": "ISC",
