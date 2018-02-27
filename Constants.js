@@ -16,6 +16,6 @@ class Constants {
     static get FORGIVE_RETARDS_INTERVAL() { return 1000 * 60 * 60 * 24; }
     static get NOMINATION_DUE_INTERVAL() { return 1000 * 60 * 60 * 24 * 7 - 1000 * 60; } // -1000*60 huge gap for calculations
     static get MATCH_DUE_TIME_SEC() { return 60 * 60 * 24 * 7; } // -1000*60 huge gap for calculations
-    static get WATCH_INTERVAL() { return 1000 * 60 * 60 * 24; }
+    static get WATCH_INTERVAL() { return 1000 * 60 * 5; } // 60 * 24
 }
 exports.Constants = Constants;

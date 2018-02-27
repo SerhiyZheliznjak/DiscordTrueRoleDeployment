@@ -98,8 +98,8 @@ class NominationService {
     }
     isClaimedNomination(newWinner, storedWinner) {
         return !storedWinner
-            || newWinner.nomination.hasHigherScoreThen(storedWinner.nomination);
-        // || this.isOutOfDueDate(newWinner, storedWinner);
+            || newWinner.nomination.hasHigherScoreThen(storedWinner.nomination)
+            || this.isOutOfDueDate(newWinner, storedWinner);
     }
     isOutOfDueDate(newWinner, storedWinner) {
         return newWinner.nomination.timeClaimed - storedWinner.nomination.timeClaimed >= Constants_1.Constants.NOMINATION_DUE_INTERVAL
