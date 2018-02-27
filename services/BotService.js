@@ -40,6 +40,7 @@ class BotService {
             this.registerall(msg);
         }
         if (msg.content.toLowerCase().startsWith("watch ")) {
+            console.log('processing watch command');
             this.addWatch(msg);
         }
         if (msg.content.toLocaleLowerCase() === 'watchlist') {
@@ -123,6 +124,7 @@ class BotService {
         }
     }
     addWatch(msg) {
+        console.log('adding watch');
         if (msg.mentions.users.array().length === 0) {
             msg.reply('Тобі показати як вставити своє ім\'я в повідомлення?');
             this.retardPlusPlus(msg);
