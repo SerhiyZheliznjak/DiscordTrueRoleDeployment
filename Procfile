@@ -1,1 +1,1 @@
-worker node --inspect ./Bot.js
+worker node ./Bot.js
