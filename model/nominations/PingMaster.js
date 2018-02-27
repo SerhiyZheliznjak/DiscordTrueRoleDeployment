@@ -22,4 +22,3 @@ class PingMaster extends Nomination_1.Nomination {
     }
 }
 exports.PingMaster = PingMaster;
-//# sourceMappingURL=PingMaster.js.map

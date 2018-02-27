@@ -7,4 +7,3 @@ class Pair {
     }
 }
 exports.default = Pair;
-//# sourceMappingURL=Pair.js.map

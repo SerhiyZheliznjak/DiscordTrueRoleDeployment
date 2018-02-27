@@ -28,4 +28,3 @@ class MaxDamageHit extends Nomination_1.Nomination {
     }
 }
 exports.MaxDamageHit = MaxDamageHit;
-//# sourceMappingURL=MaxDamageHit.js.map

@@ -18,4 +18,3 @@ class Looser extends Nomination_1.Nomination {
     }
 }
 exports.Looser = Looser;
-//# sourceMappingURL=Looser.js.map

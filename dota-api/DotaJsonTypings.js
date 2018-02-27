@@ -15,4 +15,3 @@ exports.ProfileJson = ProfileJson;
 class RecentMatchJson {
 }
 exports.RecentMatchJson = RecentMatchJson;
-//# sourceMappingURL=DotaJsonTypings.js.map

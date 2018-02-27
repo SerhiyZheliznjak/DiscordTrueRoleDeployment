@@ -16,4 +16,3 @@ class MotherOfGod extends Nomination_1.Nomination {
     }
 }
 exports.MotherOfGod = MotherOfGod;
-//# sourceMappingURL=MotherOfGod.js.map

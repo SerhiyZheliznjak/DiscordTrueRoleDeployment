@@ -42,4 +42,3 @@ class Nomination {
     }
 }
 exports.Nomination = Nomination;
-//# sourceMappingURL=Nomination.js.map

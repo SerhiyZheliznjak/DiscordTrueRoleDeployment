@@ -15,4 +15,3 @@ class Constants {
     static get WINNING_MATCH_ID() { return '686'; }
 }
 exports.Constants = Constants;
-//# sourceMappingURL=Constants.js.map

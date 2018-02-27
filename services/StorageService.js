@@ -54,4 +54,3 @@ class StorageService {
     }
 }
 exports.default = StorageService;
-//# sourceMappingURL=StorageService.js.map

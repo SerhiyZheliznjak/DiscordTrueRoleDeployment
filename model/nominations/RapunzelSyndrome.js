@@ -25,4 +25,3 @@ class RapunzelSyndrome extends Nomination_1.Nomination {
     }
 }
 exports.RapunzelSyndrome = RapunzelSyndrome;
-//# sourceMappingURL=RapunzelSyndrome.js.map

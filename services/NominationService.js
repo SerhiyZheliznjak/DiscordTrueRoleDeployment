@@ -93,4 +93,3 @@ class NominationService {
     }
 }
 exports.default = NominationService;
-//# sourceMappingURL=NominationService.js.map

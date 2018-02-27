@@ -16,4 +16,3 @@ class OponentOwsMoney extends Nomination_1.Nomination {
     }
 }
 exports.OponentOwsMoney = OponentOwsMoney;
-//# sourceMappingURL=OponentOwsMoney.js.map

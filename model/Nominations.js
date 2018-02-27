@@ -33,4 +33,3 @@ class Nominations {
     }
 }
 exports.default = Nominations;
-//# sourceMappingURL=Nominations.js.map

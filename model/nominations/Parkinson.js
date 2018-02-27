@@ -20,4 +20,3 @@ class Parkinson extends Nomination_1.Nomination {
     }
 }
 exports.Parkinson = Parkinson;
-//# sourceMappingURL=Parkinson.js.map

@@ -15,4 +15,3 @@ class DotaParser {
     }
 }
 exports.DotaParser = DotaParser;
-//# sourceMappingURL=DotaParser.js.map

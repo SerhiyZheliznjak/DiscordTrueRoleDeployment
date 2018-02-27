@@ -20,4 +20,3 @@ class ScoreBoard {
     }
 }
 exports.default = ScoreBoard;
-//# sourceMappingURL=ScoreBoard.js.map

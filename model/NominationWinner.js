@@ -7,4 +7,3 @@ class NominationWinner {
     }
 }
 exports.default = NominationWinner;
-//# sourceMappingURL=NominationWinner.js.map

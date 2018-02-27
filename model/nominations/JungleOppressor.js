@@ -32,4 +32,3 @@ class JungleOppressor extends Nomination_1.Nomination {
     }
 }
 exports.JungleOppressor = JungleOppressor;
-//# sourceMappingURL=JungleOppressor.js.map

@@ -7,4 +7,3 @@ class PlayerRecentMatchesJson {
     }
 }
 exports.default = PlayerRecentMatchesJson;
-//# sourceMappingURL=PlayerRecentMatchesJson.js.map

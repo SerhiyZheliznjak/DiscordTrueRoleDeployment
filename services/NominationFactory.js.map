@@ -1,1 +1,0 @@
-{"version":3,"file":"NominationFactory.js","sourceRoot":"","sources":["../../DiscordTrueRoleBot/src/services/NominationFactory.ts"],"names":[],"mappings":";;AAAA,sDAA+C;AAG/C;IACW,MAAM,CAAC,YAAY,CAAC,IAAY;QACnC,MAAM,CAAC,qBAAW,CAAC,GAAG,CAAC,IAAI,CAAC,UAAU,CAAC,EAAE,CAAC,UAAU,CAAC,OAAO,EAAE,KAAK,IAAI,CAAC,CAAC;IAC7E,CAAC;CACJ;AAJD,oCAIC"}

@@ -16,4 +16,3 @@ class FirstBloodOwner extends Nomination_1.Nomination {
     }
 }
 exports.FirstBloodOwner = FirstBloodOwner;
-//# sourceMappingURL=FirstBloodOwner.js.map

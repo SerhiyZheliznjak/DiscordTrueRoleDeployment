@@ -8,4 +8,3 @@ class NominationWinnerJson {
     }
 }
 exports.default = NominationWinnerJson;
-//# sourceMappingURL=NominationWinnerJson.js.map

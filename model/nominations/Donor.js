@@ -18,4 +18,3 @@ class Donor extends Nomination_1.Nomination {
     }
 }
 exports.Donor = Donor;
-//# sourceMappingURL=Donor.js.map

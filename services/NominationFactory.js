@@ -7,4 +7,3 @@ class NominationFactory {
     }
 }
 exports.default = NominationFactory;
-//# sourceMappingURL=NominationFactory.js.map

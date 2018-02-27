@@ -43,4 +43,3 @@ class BestKDA extends Nomination_1.Nomination {
     }
 }
 exports.BestKDA = BestKDA;
-//# sourceMappingURL=BestKDA.js.map

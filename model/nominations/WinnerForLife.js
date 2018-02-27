@@ -18,4 +18,3 @@ class WinnerForLife extends Nomination_1.Nomination {
     }
 }
 exports.WinnerForLife = WinnerForLife;
-//# sourceMappingURL=WinnerForLife.js.map

@@ -104,4 +104,3 @@ class DotaApi {
 }
 DotaApi.queue = [];
 exports.default = DotaApi;
-//# sourceMappingURL=DotaApi.js.map

@@ -16,4 +16,3 @@ class StackGod extends Nomination_1.Nomination {
     }
 }
 exports.StackGod = StackGod;
-//# sourceMappingURL=StackGod.js.map
