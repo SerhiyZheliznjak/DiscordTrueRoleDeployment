@@ -14,14 +14,14 @@ class BotService {
         this.storageService = storageService;
         this.retardMap = new Map();
         this.playersMap = StorageConvertionUtil_1.default.convertToPlayerObserved(this.storageService.getPlayersObserved());
-        // if (this.playersMap.size === 0) {
-        //     this.playersMap.set(298134653, '407971834689093632'); // Dno
-        //     this.playersMap.set(333303976, '407949091163865099'); // Tee Hee
-        //     this.playersMap.set(118975931, '289388465034887178'); // I'm 12 btw GG.BET
-        //     this.playersMap.set(86848474, '408363774257528852'); // whoami
-        //     this.playersMap.set(314684987, '413792999030652938'); // blackRose
-        //     this.playersMap.set(36753317, '408172132875501581'); // =3
-        // }
+        if (this.playersMap.size === 0) {
+            this.playersMap.set(298134653, '407971834689093632'); // Dno
+            this.playersMap.set(333303976, '407949091163865099'); // Tee Hee
+            this.playersMap.set(118975931, '289388465034887178'); // I'm 12 btw GG.BET
+            this.playersMap.set(86848474, '408363774257528852'); // whoami
+            this.playersMap.set(314684987, '413792999030652938'); // blackRose
+            this.playersMap.set(36753317, '408172132875501581'); // =3
+        }
         this.chanel = this.client.channels.find('type', 'text');
     }
     processMesage(msg) {
