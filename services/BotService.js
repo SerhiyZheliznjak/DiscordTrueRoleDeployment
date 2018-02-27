@@ -25,6 +25,7 @@ class BotService {
         this.chanel = this.client.channels.find('type', 'text');
     }
     processMesage(msg) {
+        console.log('processing message');
         if (msg.author.bot) {
             return;
         }
