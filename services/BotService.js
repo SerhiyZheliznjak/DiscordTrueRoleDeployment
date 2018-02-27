@@ -27,9 +27,11 @@ class BotService {
     processMesage(msg) {
         console.log('processing message');
         if (msg.author.bot) {
+            console.log('author is bot');
             return;
         }
         if (this.isRetard(msg.author.id)) {
+            console.log('ignoring');
             this.shutUpYouRRetard(msg);
             return;
         }
