@@ -12,5 +12,6 @@ client.on('ready', () => {
     // botService.startNominating();
 });
 client.on('message', msg => {
+    console.log('sombdy sent message');
     botService.processMesage(msg);
 });
