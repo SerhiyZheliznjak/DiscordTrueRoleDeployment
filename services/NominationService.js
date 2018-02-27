@@ -19,7 +19,7 @@ class NominationService {
     startWatching(playersMap) {
         DataStore_1.default.maxMatches = playersMap.size * 20;
         this.dotaIds = this.getDotaIds(playersMap);
-        this.subscription = rxjs_1.Observable.interval(1000 * 60 * 60).subscribe(this.recentGamesObserver);
+        this.subscription = rxjs_1.Observable.interval(Constants_1.Constants.WATCH_INTERVAL).subscribe(this.recentGamesObserver);
         this.recentGamesObserver.next(0);
         return rxjs_1.Observable.create(claimedNominationsObserver => this.claimedNominationsObserver = claimedNominationsObserver);
     }
@@ -54,7 +54,9 @@ class NominationService {
     }
     recentGamesObserverNext() {
         rxjs_1.Observable.forkJoin(this.dotaIds.map(account_id => this.dotaApi.getRecentMatches(account_id)
-            .map(recentMatch => new Pair_1.default(account_id, recentMatch.map(m => m.match_id))))).subscribe(playerRecentMatches => {
+            .map(recentMatch => new Pair_1.default(account_id, recentMatch
+            .filter(rm => this.isMatchYoungerThanWeek(rm))
+            .map(m => m.match_id))))).subscribe(playerRecentMatches => {
             if (this.hasNewMatches(playerRecentMatches)) {
                 this.nominate(playerRecentMatches).subscribe(scoreBoard => {
                     this.awardWinners(scoreBoard);
@@ -63,6 +65,9 @@ class NominationService {
                 this.dataStore.saveRecentMatches();
             }
         });
+    }
+    isMatchYoungerThanWeek(recentMatch) {
+        return (recentMatch.start_time - (new Date().getTime() / 1000)) < Constants_1.Constants.MATCH_DUE_TIME_SEC;
     }
     hasNewMatches(playerRecentMatches) {
         const atLeastOneNewMatch = playerRecentMatches.find(pair => {
@@ -80,7 +85,7 @@ class NominationService {
             const newWinner = scoreBoard.nominationsWinners.get(nominationName);
             if (newWinner.account_id !== Constants_1.Constants.UNCLAIMED && newWinner.nomination.isScored()) {
                 const storedWinner = this.dataStore.wonNominationCache.get(nominationName);
-                if (!storedWinner || storedWinner.nomination.getScore() < newWinner.nomination.getScore()) {
+                if (this.isClaimedNomination(newWinner, storedWinner)) {
                     newNomintionsClaimed.push(newWinner);
                 }
             }
@@ -90,6 +95,16 @@ class NominationService {
             this.dataStore.saveWinnersScore(scoreBoard.nominationsWinners);
             this.claimedNominationsObserver.next(newNomintionsClaimed);
         }
+    }
+    isClaimedNomination(newWinner, storedWinner) {
+        return !storedWinner
+            || newWinner.nomination.hasHigherScoreThen(storedWinner.nomination)
+            || this.isOutOfDueDate(newWinner, storedWinner);
+    }
+    isOutOfDueDate(newWinner, storedWinner) {
+        return newWinner.nomination.timeClaimed - storedWinner.nomination.timeClaimed >= Constants_1.Constants.NOMINATION_DUE_INTERVAL
+            && newWinner.account_id !== storedWinner.account_id
+            && newWinner.nomination.getScore() !== storedWinner.nomination.getScore();
     }
 }
 exports.default = NominationService;

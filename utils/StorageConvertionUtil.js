@@ -23,7 +23,7 @@ class StorageConvertionUtil {
     static convertToNominationWinnersJson(nominationsWinners) {
         const nominationWinnersJson = [];
         for (const nw of nominationsWinners.values()) {
-            nominationWinnersJson.push(new NominationWinnerJson_1.default(nw.nomination.getName(), nw.account_id, nw.nomination.getScore()));
+            nominationWinnersJson.push(new NominationWinnerJson_1.default(nw.nomination.getName(), nw.account_id, nw.nomination.getScore(), new Date().getTime()));
         }
         return nominationWinnersJson;
     }
@@ -31,6 +31,7 @@ class StorageConvertionUtil {
         return nominationsWinnersJson.reduce((map, nwj) => {
             const nomination = NominationFactory_1.default.createByName(nwj.nominationName);
             nomination.addPoint(Constants_1.Constants.WINNING_MATCH_ID, nwj.score);
+            nomination.timeClaimed = nwj.timeClaimed;
             const nw = new NominationWinner_1.default(nwj.owner_account_id, nomination);
             map.set(nwj.nominationName, nw);
             return map;

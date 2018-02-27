@@ -4,6 +4,7 @@ const Pair_1 = require("./Pair");
 class Nomination {
     constructor(points = []) {
         this.points = points;
+        this.timeClaimed = new Date().getTime();
     }
     getName() {
         return this.name;

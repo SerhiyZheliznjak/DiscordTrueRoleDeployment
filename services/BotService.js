@@ -6,6 +6,7 @@ const DataStore_1 = require("./DataStore");
 const NominationService_1 = require("./NominationService");
 const StorageService_1 = require("./StorageService");
 const StorageConvertionUtil_1 = require("../utils/StorageConvertionUtil");
+const Constants_1 = require("../Constants");
 class BotService {
     constructor(client, dataStore = new DataStore_1.default(), nominationService = new NominationService_1.default(), storageService = new StorageService_1.default()) {
         this.client = client;
@@ -46,7 +47,7 @@ class BotService {
         }
     }
     forgiveRetards() {
-        rxjs_1.Observable.interval(1000 * 60 * 60 * 24).subscribe(() => this.retardMap = new Map());
+        rxjs_1.Observable.interval(Constants_1.Constants.FORGIVE_RETARDS_INTERVAL).subscribe(() => this.retardMap = new Map());
     }
     startNominating() {
         this.claimedNominationsSubscription = this.nominationService.startWatching(this.playersMap)
