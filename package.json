@@ -1,9 +1,9 @@
 {
   "name": "dota-2-true-role-bot",
   "version": "1.0.0",
-  "main": "bot.js",
+  "main": "Bot.js",
   "scripts": {
-    "start": "node ./Bot.js"
+    "start": "node ./src/Bot.js"
   },
   "author": "Serhiy Zheliznyak",
   "license": "ISC",
@@ -19,5 +19,5 @@
     "discord",
     "dota2"
   ],
-  "description": ""
+  "description": "Analyzes recent matches and awards players with titles"
 }
