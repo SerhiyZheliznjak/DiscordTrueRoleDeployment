@@ -9,7 +9,7 @@ class DataStore {
         this.storage = storage;
     }
     get playersRecentMatches() {
-        if (!DataStore.playersRecentMatchesCacheMap) {
+        if (DataStore.playersRecentMatchesCacheMap.size === 0) {
             return this.storage.getRecentMatches().map(map => {
                 DataStore.playersRecentMatchesCacheMap = map;
                 return map;
@@ -22,7 +22,7 @@ class DataStore {
         this.storage.updatePlayerRecentMatches(account_id, matchesIds);
     }
     get wonNominations() {
-        if (!DataStore.wonNominationsCacheMap) {
+        if (DataStore.wonNominationsCacheMap.size === 0) {
             return this.storage.getWinners().map(map => {
                 DataStore.wonNominationsCacheMap = map;
                 return map;
@@ -35,7 +35,7 @@ class DataStore {
         this.storage.saveWinners(recentWinners);
     }
     get matchesCache() {
-        if (!DataStore.matchesCacheMap) {
+        if (DataStore.matchesCacheMap.size === 0) {
             DataStore.matchesCacheMap = new Map();
         }
         return DataStore.matchesCacheMap;
@@ -86,7 +86,7 @@ class DataStore {
         return rxjs_1.Observable.forkJoin(accountsIds.map(account_id => this.dotaApi.getPlayerProfile(account_id).map((ppj) => ppj.profile)));
     }
     get registeredPlayers() {
-        if (!DataStore.registeredPlayersCache) {
+        if (DataStore.registeredPlayersCache.size === 0) {
             return this.storage.getPlayersObserved().map(map => {
                 DataStore.registeredPlayersCache = map;
                 console.log("returning from db");
@@ -100,4 +100,8 @@ class DataStore {
         this.storage.registerPlayer(account_id, discordId);
     }
 }
+DataStore.playersRecentMatchesCacheMap = new Map();
+DataStore.matchesCacheMap = new Map();
+DataStore.wonNominationsCacheMap = new Map();
+DataStore.registeredPlayersCache = new Map();
 exports.default = DataStore;
