@@ -47,12 +47,13 @@ class NominationService {
     nextCheck() {
         const scoreBoard = new ScoreBoard_1.default();
         rxjs_1.Observable.from(this.dotaIds)
-            .flatMap(account_id => rxjs_1.Observable.zip(this.dataStore.getRecentMatchesForPlayer(account_id), this.getRecentMatchesForPlayer(account_id)))
-            .filter(playerMatches => this.hasNewMatches(...playerMatches))
+            .flatMap((account_id) => rxjs_1.Observable.zip(this.dataStore.getRecentMatchesForPlayer(account_id), this.getRecentMatchesForPlayer(account_id)))
+            .filter((playerMatches) => this.hasNewMatches(...playerMatches))
             .flatMap(playersWithNewMatches => this.mapToPlayerWithFullMatches(playersWithNewMatches[1]))
             .scan((arr, pfm) => [...arr, pfm], [])
+            .scan((arr, pfms) => [...arr, pfms], [])
             .subscribe(playersMatches => {
-            playersMatches.forEach(pfm => scoreBoard.scorePlayer(pfm.account_id, pfm.matches));
+            playersMatches.forEach(pfms => pfms.forEach(pfm => scoreBoard.scorePlayer(pfm.account_id, pfm.matches)));
             this.awardWinners(scoreBoard);
         });
     }
