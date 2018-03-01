@@ -2,17 +2,17 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Nomination_1 = require("../Nomination");
 const DotaParser_1 = require("../../services/DotaParser");
-class OponentOwsMoney extends Nomination_1.default {
+class StunningMan extends Nomination_1.default {
     constructor(points = []) {
         super(points);
         this.points = points;
-        this.name = 'Не вбий суперника свого';
-        this.minScore = 5;
-        this.msg = 'Суперник гроші винен';
+        this.name = 'Гупало Василь';
+        this.minScore = 100;
+        this.msg = 'Він такий приголомшливий!';
     }
     scorePoint(match, player_slot) {
         const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
-        return !!player && player.kills === 0 ? 1 : 0;
+        return player && player.stuns ? player.stuns : 0;
     }
 }
-exports.OponentOwsMoney = OponentOwsMoney;
+exports.StunningMan = StunningMan;

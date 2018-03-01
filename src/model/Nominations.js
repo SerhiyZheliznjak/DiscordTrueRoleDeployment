@@ -13,6 +13,10 @@ const BestKDA_1 = require("./nominations/BestKDA");
 const WinnerForLife_1 = require("./nominations/WinnerForLife");
 const Looser_1 = require("./nominations/Looser");
 const PingMaster_1 = require("./nominations/PingMaster");
+const ChickenSoupLover_1 = require("./nominations/ChickenSoupLover");
+const DenyGod_1 = require("./nominations/DenyGod");
+const Nenza_1 = require("./nominations/Nenza");
+const StunningMan_1 = require("./nominations/StunningMan");
 class Nominations {
     static get all() {
         return [
@@ -29,6 +33,10 @@ class Nominations {
             new WinnerForLife_1.WinnerForLife(),
             new Looser_1.Looser(),
             new PingMaster_1.PingMaster(),
+            new ChickenSoupLover_1.ChickeSoupLover(),
+            new DenyGod_1.DenyGod(),
+            new Nenza_1.Nenza(),
+            new StunningMan_1.StunningMan()
         ];
     }
 }

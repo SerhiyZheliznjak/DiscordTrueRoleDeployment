@@ -8,7 +8,7 @@ class FirstBloodOwner extends Nomination_1.default {
         this.points = points;
         this.name = 'Володар крові';
         this.minScore = 1;
-        this.msg = 'Є різні методи пролити першу кров. Розказувати чи ви самі знаєте?';
+        this.msg = 'Є різні методи пролити першу кров. Вам розказувати чи самі знаєте?';
     }
     scorePoint(match, player_slot) {
         const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);

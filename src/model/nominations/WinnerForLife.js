@@ -8,7 +8,7 @@ class WinnerForLife extends Nomination_1.default {
         this.points = points;
         this.name = 'Пабідітіль па жизні';
         this.minScore = 10;
-        this.msg = 'Всі хочуть його в тіму, а хто не хоче той просто заздрЕ';
+        this.msg = 'Всі хочуть його в тіму, а хто не хоче той просто заздрит';
     }
     scorePoint(match, player_slot) {
         if (!!match) {
