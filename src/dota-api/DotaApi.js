@@ -83,7 +83,6 @@ class DotaApi {
                         });
                     }
                 }, err => {
-                    console.error(nextRequest.url, err);
                     this.retry(nextRequest);
                 }, () => { });
             }
@@ -100,7 +99,7 @@ class DotaApi {
     }
     retry(request) {
         request.retryCount -= 1;
-        console.log('retrying');
+        console.log('retrying ', request.url);
         DotaApi.queue.push(request);
     }
 }

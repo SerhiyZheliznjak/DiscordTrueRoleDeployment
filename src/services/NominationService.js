@@ -68,7 +68,11 @@ class NominationService {
         });
     }
     isFreshMatch(recentMatch) {
-        return ((new Date().getTime() / 1000) - recentMatch.start_time) < Constants_1.default.MATCH_DUE_TIME_SEC;
+        const now = (new Date().getTime() / 1000);
+        console.log('recentMatch.start_time: ', recentMatch.start_time);
+        console.log('now: ', now);
+        console.log('difference: ', now - recentMatch.start_time);
+        return now - recentMatch.start_time < Constants_1.default.MATCH_DUE_TIME_SEC;
     }
     hasNewMatches(playerRecentMatches) {
         return this.dataStore.playersRecentMatches.map(recentMatches => {
