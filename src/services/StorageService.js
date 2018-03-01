@@ -11,9 +11,9 @@ class StorageService {
         this.url = url;
         this.dbName = dbName;
     }
-    getRecentMatches() {
+    getRecentMatchesForPlayer(account_id) {
         return this.find(Constants_1.default.RECENT_MATCHES_COLLECTION)
-            .map(json => StorageConvertionUtil_1.default.convertToPlayersRecentMatchesMap(json));
+            .map(json => StorageConvertionUtil_1.default.convertToPlayersRecentMatches(json[0]), { key: account_id });
     }
     getWinners() {
         return this.find(Constants_1.default.HALL_OF_FAME_COLLECTION)
@@ -23,7 +23,7 @@ class StorageService {
         return this.find(Constants_1.default.PLAYERS_COLLECTION)
             .map(json => StorageConvertionUtil_1.default.convertToPlayerObserved(json));
     }
-    updatePlayerRecentMatches(account_id, matchesIds) {
+    updateRecentMatchesForPlayer(account_id, matchesIds) {
         this.update(Constants_1.default.RECENT_MATCHES_COLLECTION, StorageConvertionUtil_1.default.convertToRecentMatchJson(account_id, matchesIds));
     }
     updateNominationResult(result) {

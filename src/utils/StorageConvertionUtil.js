@@ -5,15 +5,16 @@ const NominationResult_1 = require("../model/NominationResult");
 const NominationResultJson_1 = require("../model/json/NominationResultJson");
 const NominationFactory_1 = require("../services/NominationFactory");
 const Constants_1 = require("../Constants");
+const PlayerRecentMatches_1 = require("../model/PlayerRecentMatches");
 class StorageConvertionUtil {
     static convertToRecentMatchJson(account_id, matches) {
         return new PlayerRecentMatchesJson_1.default(account_id, matches);
     }
-    static convertToPlayersRecentMatchesMap(recentMatches) {
-        return recentMatches.reduce((map, rmj) => {
-            map.set(rmj.account_id, rmj.recentMatchesIds);
-            return map;
-        }, new Map());
+    static convertToPlayersRecentMatches(recentMatches) {
+        if (recentMatches) {
+            return new PlayerRecentMatches_1.default(recentMatches.account_id, recentMatches.recentMatchesIds);
+        }
+        return new PlayerRecentMatches_1.default(0, []);
     }
     static convertToNominationResultJson(nominationResult) {
         return new NominationResultJson_1.default(nominationResult.nomination.getName(), nominationResult.account_id, nominationResult.nomination.getScore(), new Date().getTime());

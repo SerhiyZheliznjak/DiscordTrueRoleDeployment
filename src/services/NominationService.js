@@ -37,24 +37,23 @@ class NominationService {
         }
         return dotaIds;
     }
-    getRecentMatchesIds() {
-        return rxjs_1.Observable.from(this.dotaIds).flatMap(account_id => this.dotaApi.getRecentMatches(account_id).map(recentMatches => {
+    getRecentMatchesForPlayer(account_id) {
+        return this.dotaApi.getRecentMatches(account_id).map(recentMatches => {
             const freshMatches = recentMatches.filter(rm => this.isFreshMatch(rm)).map(m => m.match_id);
-            this.dataStore.updatePlayerRecentMatches(account_id, freshMatches);
+            this.dataStore.updatePlayerRecentMatch(account_id, freshMatches);
             return new PlayerRecentMatches_1.default(account_id, freshMatches);
-        })); // .scan((arr, next) => [...arr, next], []);
+        });
     }
     nextCheck() {
         const scoreBoard = new ScoreBoard_1.default();
-        this.dataStore.playersRecentMatchesClone.subscribe(oldRecentMatches => {
-            this.getRecentMatchesIds()
-                .filter(pair => this.hasNewMatches(pair, oldRecentMatches))
-                .flatMap(playersWithNewMatches => this.mapToPlayerWithFullMatches(playersWithNewMatches))
-                .scan((arr, pfm) => [...arr, pfm], [])
-                .subscribe(playersMatches => {
-                playersMatches.forEach(pfm => scoreBoard.scorePlayer(pfm.account_id, pfm.matches));
-                this.awardWinners(scoreBoard);
-            });
+        rxjs_1.Observable.from(this.dotaIds)
+            .flatMap(account_id => rxjs_1.Observable.zip(this.dataStore.getRecentMatchesForPlayer(account_id), this.getRecentMatchesForPlayer(account_id)))
+            .filter(playerMatches => this.hasNewMatches(...playerMatches))
+            .flatMap(playersWithNewMatches => this.mapToPlayerWithFullMatches(playersWithNewMatches[1]))
+            .scan((arr, pfm) => [...arr, pfm], [])
+            .subscribe(playersMatches => {
+            playersMatches.forEach(pfm => scoreBoard.scorePlayer(pfm.account_id, pfm.matches));
+            this.awardWinners(scoreBoard);
         });
     }
     mapToPlayerWithFullMatches(prm) {
@@ -69,12 +68,10 @@ class NominationService {
         const nowInSeconds = new Date().getTime() / 1000;
         return nowInSeconds - recentMatch.start_time < Constants_1.default.MATCH_DUE_TIME_SEC;
     }
-    hasNewMatches(playerRecentMatches, recentMatchesCache) {
-        console.dir(recentMatchesCache);
-        return recentMatchesCache
-            && recentMatchesCache.get(playerRecentMatches.account_id)
-            && recentMatchesCache.get(playerRecentMatches.account_id)
-                .reduce((exist, match_id) => exist || playerRecentMatches.recentMatchesIds.indexOf(match_id) < 0, false);
+    hasNewMatches(storedPlayerMatches, newPlayerMatches) {
+        return storedPlayerMatches
+            && storedPlayerMatches.recentMatchesIds
+                .reduce((exist, match_id) => exist || newPlayerMatches.recentMatchesIds.indexOf(match_id) < 0, false);
     }
     awardWinners(scoreBoard) {
         this.dataStore.nominationsResults.subscribe(wonNominations => {

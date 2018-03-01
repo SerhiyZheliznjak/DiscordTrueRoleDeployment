@@ -8,21 +8,20 @@ class DataStore {
         this.dotaApi = dotaApi;
         this.storage = storage;
     }
-    get playersRecentMatches() {
-        if (DataStore.playersRecentMatchesCacheMap.size === 0) {
-            return this.storage.getRecentMatches().map(map => {
-                DataStore.playersRecentMatchesCacheMap = map;
-                return map;
-            });
-        }
-        return rxjs_1.Observable.of(DataStore.playersRecentMatchesCacheMap);
+    // public get playersRecentMatches(): Observable<Map<number, number[]>> {
+    //     if (DataStore.playersRecentMatchesCacheMap.size === 0) {
+    //         return this.storage.getRecentMatches().map(map => {
+    //             DataStore.playersRecentMatchesCacheMap = map;
+    //             return map;
+    //         });
+    //     }
+    //     return Observable.of(DataStore.playersRecentMatchesCacheMap);
+    // }
+    getRecentMatchesForPlayer(account_id) {
+        return this.storage.getRecentMatchesForPlayer(account_id);
     }
-    get playersRecentMatchesClone() {
-        return this.playersRecentMatches.map(cache => new Map(cache));
-    }
-    updatePlayerRecentMatches(account_id, matchesIds) {
-        this.playersRecentMatches.subscribe(map => map.set(account_id, matchesIds));
-        this.storage.updatePlayerRecentMatches(account_id, matchesIds);
+    updatePlayerRecentMatch(account_id, matchesIds) {
+        this.storage.updateRecentMatchesForPlayer(account_id, matchesIds);
     }
     get nominationsResults() {
         if (DataStore.nominationsResultsCacheMap.size === 0) {
