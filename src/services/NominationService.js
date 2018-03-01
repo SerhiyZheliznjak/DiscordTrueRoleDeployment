@@ -16,18 +16,19 @@ class NominationService {
             complete: () => { }
         };
     }
-    startWatching(playersMap) {
+    startNominating(playersMap) {
         DataStore_1.default.maxMatches = playersMap.size * 20;
         this.dotaIds = this.getDotaIds(playersMap);
         this.subscription = rxjs_1.Observable.interval(Constants_1.default.WATCH_INTERVAL).subscribe(this.recentGamesObserver);
         this.recentGamesObserver.next(0);
+        console.log('started nominating ', playersMap.size, ' players');
         return rxjs_1.Observable.create(claimedNominationsObserver => this.claimedNominationsObserver = claimedNominationsObserver);
     }
-    stopWatching() {
+    stopNominating() {
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
-        console.log('stopped watching');
+        console.log('stopped nominating');
     }
     nominate(playerRecentMatches) {
         const scoreBoard = new ScoreBoard_1.default();

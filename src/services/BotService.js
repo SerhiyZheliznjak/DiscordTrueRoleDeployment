@@ -41,10 +41,9 @@ class BotService {
     }
     startNominating() {
         this.dataStore.registeredPlayers.subscribe(playersMap => {
-            this.claimedNominationsSubscription = this.nominationService.startWatching(playersMap)
+            this.claimedNominationsSubscription = this.nominationService.startNominating(playersMap)
                 .subscribe((newNomintionsClaimed) => {
                 this.generateMessages(newNomintionsClaimed).subscribe((richEmbed) => {
-                    console.log('sending message about ', richEmbed.title);
                     this.chanel.send('', richEmbed);
                 });
             });
@@ -163,11 +162,10 @@ class BotService {
         }
     }
     isCreator(msg) {
-        console.log(msg.author.id);
         return msg.author.id === process.env.creatorId;
     }
     stopNominating() {
-        this.nominationService.stopWatching();
+        this.nominationService.stopNominating();
         if (this.claimedNominationsSubscription) {
             this.claimedNominationsSubscription.unsubscribe();
         }
