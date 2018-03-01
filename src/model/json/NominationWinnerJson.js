@@ -6,6 +6,7 @@ class NominationWinnerJson {
         this.owner_account_id = owner_account_id;
         this.score = score;
         this.timeClaimed = timeClaimed;
+        this.key = nominationName;
     }
 }
 exports.default = NominationWinnerJson;

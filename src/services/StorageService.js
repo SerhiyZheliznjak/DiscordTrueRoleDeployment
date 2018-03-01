@@ -23,13 +23,13 @@ class StorageService {
             .map(json => StorageConvertionUtil_1.default.convertToPlayerObserved(json));
     }
     updatePlayerRecentMatches(account_id, matchesIds) {
-        this.update(Constants_1.default.RECENT_MATCHES_COLLECTION, [StorageConvertionUtil_1.default.convertToRecentMatchJson(account_id, matchesIds)], 'account_id');
+        this.update(Constants_1.default.RECENT_MATCHES_COLLECTION, [StorageConvertionUtil_1.default.convertToRecentMatchJson(account_id, matchesIds)]);
     }
     saveWinners(winners) {
-        this.update(Constants_1.default.HALL_OF_FAME_COLLECTION, StorageConvertionUtil_1.default.convertToNominationWinnersJson(winners), 'nominationName');
+        this.update(Constants_1.default.HALL_OF_FAME_COLLECTION, StorageConvertionUtil_1.default.convertToNominationWinnersJson(winners));
     }
     registerPlayer(account_id, discordId) {
-        this.update(Constants_1.default.PLAYERS_COLLECTION, [StorageConvertionUtil_1.default.convertToPair(account_id, discordId)], 'key');
+        this.update(Constants_1.default.PLAYERS_COLLECTION, [StorageConvertionUtil_1.default.convertToPair(account_id, discordId)]);
     }
     get client() {
         return rxjs_1.Observable.create(clientObserver => {
@@ -52,13 +52,11 @@ class StorageService {
             });
         });
     }
-    update(collectionName, documents, idName) {
+    update(collectionName, documents) {
         this.client.subscribe(client => {
             const db = client.db(this.dbName);
             documents.forEach(doc => {
-                const filterObj = {};
-                filterObj[idName] = doc[idName];
-                db.collection(collectionName).update(filterObj, doc, { upsert: true });
+                db.collection(collectionName).update({ key: doc.key }, doc, { upsert: true });
             });
         });
     }

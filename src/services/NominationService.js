@@ -96,8 +96,8 @@ class NominationService {
                 });
             }
         }
+        console.log('awarding winners ', newNomintionsClaimed.length);
         if (!!newNomintionsClaimed.length) {
-            console.log('awarding winners ', newNomintionsClaimed.length);
             this.dataStore.saveWinnersScore(scoreBoard.nominationsWinners);
             this.claimedNominationsObserver.next(newNomintionsClaimed);
         }
