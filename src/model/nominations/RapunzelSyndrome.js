@@ -11,7 +11,6 @@ class RapunzelSyndrome extends Nomination_1.default {
         this.minScore = 1;
         this.msg = 'Вежу ліпше знести ніж в ній сидіти';
     }
-    // this way it counts if team killed towers, if want to award for all towers kill then just check if player.towers_killed === 10
     scorePoint(match, player_slot) {
         const objectives = DotaParser_1.DotaParser.getObjectives(match);
         const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);

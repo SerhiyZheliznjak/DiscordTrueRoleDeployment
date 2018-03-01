@@ -186,7 +186,7 @@ class BotService {
             this.getPlayerProfilesSet(claimedNominations).subscribe(players => {
                 claimedNominations.forEach(claimed => {
                     const player = players.find(p => +p.account_id === +claimed.account_id);
-                    messagesObserver.next(this.getRichEmbed(player.personaname + ' ' + claimed.nomination.getName(), claimed.nomination.getMessage(), player.avatarmedium, 'Рахунок: ' + claimed.nomination.getScoreText(), player.profileurl));
+                    messagesObserver.next(this.getRichEmbed(player.personaname + ': ' + claimed.nomination.getName(), claimed.nomination.getMessage(), player.avatarmedium, 'Рахунок: ' + claimed.nomination.getScoreText(), player.profileurl));
                 });
                 messagesObserver.complete();
             });

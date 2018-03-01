@@ -6,7 +6,7 @@ class FirstBloodOwner extends Nomination_1.default {
     constructor(points = []) {
         super(points);
         this.points = points;
-        this.name = 'Целкозбий';
+        this.name = 'Володар крові';
         this.minScore = 1;
         this.msg = 'Є різні методи пролити першу кров. Розказувати чи ви самі знаєте?';
     }

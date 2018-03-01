@@ -36,7 +36,7 @@ class Nomination {
         return this.getScore() > that.getScore();
     }
     isScored() {
-        return this.getScore() > this.minScore;
+        return this.getScore() >= this.minScore;
     }
     scorePoint(match, player_slot) {
         return null;

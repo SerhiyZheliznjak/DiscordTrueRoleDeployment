@@ -7,7 +7,7 @@ class OponentOwsMoney extends Nomination_1.default {
         super(points);
         this.points = points;
         this.name = 'Суперник мені гроші винен';
-        this.minScore = 10;
+        this.minScore = 5;
         this.msg = 'Ну то тіпа капець';
     }
     scorePoint(match, player_slot) {
