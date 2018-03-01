@@ -18,7 +18,7 @@ class DataStore {
         return rxjs_1.Observable.of(DataStore.playersRecentMatchesCacheMap);
     }
     get playersRecentMatchesClone() {
-        return this.playersRecentMatches.map(cache => Object.apply({}, cache));
+        return this.playersRecentMatches.map(cache => new Map(cache));
     }
     updatePlayerRecentMatches(account_id, matchesIds) {
         this.playersRecentMatches.subscribe(map => map.set(account_id, matchesIds));
