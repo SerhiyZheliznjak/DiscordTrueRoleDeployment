@@ -20,19 +20,32 @@ class StorageConvertionUtil {
     }
     static convertToWonNominations(nominationsWinnersJson) {
         return nominationsWinnersJson.reduce((map, nwj) => {
-            const nomination = NominationFactory_1.default.createByName(nwj.nominationName);
-            nomination.addPoint(Constants_1.default.WINNING_MATCH_ID, nwj.score);
-            nomination.timeClaimed = nwj.timeClaimed;
-            const nw = new NominationResult_1.default(nwj.owner_account_id, nomination);
-            map.set(nwj.nominationName, nw);
+            if (this.isValidNominationResult(nwj)) {
+                const nomination = NominationFactory_1.default.createByName(nwj.nominationName);
+                nomination.addPoint(Constants_1.default.WINNING_MATCH_ID, nwj.score);
+                nomination.timeClaimed = nwj.timeClaimed;
+                const nw = new NominationResult_1.default(nwj.owner_account_id, nomination);
+                map.set(nwj.nominationName, nw);
+            }
+            else {
+                console.error('Corrupted nomination result ', nwj);
+            }
             return map;
         }, new Map());
     }
-    static convertToPlayerObserved(playersPairs) {
-        return playersPairs.reduce((map, pair) => {
-            map.set(pair.p1, pair.p2);
+    static convertToPlayerObserved(registeredPlayersJson) {
+        return registeredPlayersJson.reduce((map, registeredPlayer) => {
+            if (registeredPlayer.account_id && registeredPlayer.discordId) {
+                map.set(registeredPlayer.account_id, registeredPlayer.discordId);
+            }
+            else {
+                console.error('Corrupted Registered Player ', registeredPlayer);
+            }
             return map;
         }, new Map());
+    }
+    static isValidNominationResult(nrj) {
+        return !!nrj.nominationName && !!nrj.owner_account_id && !!nrj.score && !!nrj.timeClaimed;
     }
 }
 exports.default = StorageConvertionUtil;
