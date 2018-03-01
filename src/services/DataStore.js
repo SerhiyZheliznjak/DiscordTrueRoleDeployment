@@ -89,11 +89,9 @@ class DataStore {
         if (DataStore.registeredPlayersCache.size === 0) {
             return this.storage.getPlayersObserved().map(map => {
                 DataStore.registeredPlayersCache = map;
-                console.log("returning from db");
                 return map;
             });
         }
-        console.log("returning from cache", DataStore.registeredPlayersCache);
         return rxjs_1.Observable.of(DataStore.registeredPlayersCache);
     }
     registerPlayer(account_id, discordId) {

@@ -21,7 +21,6 @@ class NominationService {
         this.dotaIds = this.getDotaIds(playersMap);
         this.subscription = rxjs_1.Observable.interval(Constants_1.default.WATCH_INTERVAL).subscribe(this.recentGamesObserver);
         this.recentGamesObserver.next(0);
-        console.log('started nominating ', playersMap.size, ' players');
         return rxjs_1.Observable.create(claimedNominationsObserver => this.claimedNominationsObserver = claimedNominationsObserver);
     }
     stopNominating() {
@@ -56,7 +55,7 @@ class NominationService {
     recentGamesObserverNext() {
         rxjs_1.Observable.forkJoin(this.dotaIds.map(account_id => this.dotaApi.getRecentMatches(account_id)
             .map(recentMatch => new Pair_1.default(account_id, recentMatch
-            .filter(rm => this.isMatchYoungerThanWeek(rm))
+            .filter(rm => this.isFreshMatch(rm))
             .map(m => m.match_id))))).subscribe(playerRecentMatches => {
             this.hasNewMatches(playerRecentMatches).subscribe(newMatchesHappend => {
                 if (newMatchesHappend) {
@@ -68,8 +67,8 @@ class NominationService {
             });
         });
     }
-    isMatchYoungerThanWeek(recentMatch) {
-        return (recentMatch.start_time - (new Date().getTime() / 1000)) < Constants_1.default.MATCH_DUE_TIME_SEC;
+    isFreshMatch(recentMatch) {
+        return ((new Date().getTime() / 1000) - recentMatch.start_time) < Constants_1.default.MATCH_DUE_TIME_SEC;
     }
     hasNewMatches(playerRecentMatches) {
         return this.dataStore.playersRecentMatches.map(recentMatches => {
