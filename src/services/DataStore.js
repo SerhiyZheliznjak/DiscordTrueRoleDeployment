@@ -86,13 +86,15 @@ class DataStore {
         return rxjs_1.Observable.forkJoin(accountsIds.map(account_id => this.dotaApi.getPlayerProfile(account_id).map((ppj) => ppj.profile)));
     }
     get registeredPlayers() {
-        if (!DataStore.registeredPlayersMap) {
+        if (!DataStore.registeredPlayersCache) {
             return this.storage.getPlayersObserved().map(map => {
-                DataStore.registeredPlayersMap = map;
+                DataStore.registeredPlayersCache = map;
+                console.log("returning from db");
                 return map;
             });
         }
-        return rxjs_1.Observable.of(DataStore.registeredPlayersMap);
+        console.log("returning from cache", DataStore.registeredPlayersCache);
+        return rxjs_1.Observable.of(DataStore.registeredPlayersCache);
     }
     registerPlayer(account_id, discordId) {
         this.storage.registerPlayer(account_id, discordId);
