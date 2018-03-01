@@ -3,29 +3,32 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const StorageService_1 = require("./StorageService");
 const rxjs_1 = require("rxjs");
 const DotaApi_1 = require("../dota-api/DotaApi");
-const StorageConvertionUtil_1 = require("../utils/StorageConvertionUtil");
 class DataStore {
     constructor(dotaApi = new DotaApi_1.default(), storage = new StorageService_1.default()) {
         this.dotaApi = dotaApi;
         this.storage = storage;
     }
-    get playerRecentMatchesCache() {
-        if (!DataStore.playerRecentMatchesCacheMap) {
-            DataStore.playerRecentMatchesCacheMap = StorageConvertionUtil_1.default.convertToPlayerRecentMatches(this.storage.getRecentMatches());
+    get playersRecentMatches() {
+        if (!DataStore.playersRecentMatchesCacheMap) {
+            return this.storage.getRecentMatches().map(map => {
+                DataStore.playersRecentMatchesCacheMap = map;
+                return map;
+            });
         }
-        return DataStore.playerRecentMatchesCacheMap;
+        return rxjs_1.Observable.of(DataStore.playersRecentMatchesCacheMap);
     }
     updatePlayerRecentMatches(account_id, matchesIds) {
-        this.playerRecentMatchesCache.set(account_id, matchesIds);
+        this.playersRecentMatches.subscribe(map => map.set(account_id, matchesIds));
+        this.storage.updatePlayerRecentMatches(account_id, matchesIds);
     }
-    saveRecentMatches() {
-        this.storage.saveRecentMatches(this.playerRecentMatchesCache);
-    }
-    get wonNominationCache() {
+    get wonNominations() {
         if (!DataStore.wonNominationsCacheMap) {
-            DataStore.wonNominationsCacheMap = StorageConvertionUtil_1.default.convertToWonNominations(this.storage.getWinners());
+            return this.storage.getWinners().map(map => {
+                DataStore.wonNominationsCacheMap = map;
+                return map;
+            });
         }
-        return DataStore.wonNominationsCacheMap;
+        return rxjs_1.Observable.of(DataStore.wonNominationsCacheMap);
     }
     saveWinnersScore(recentWinners) {
         DataStore.wonNominationsCacheMap = recentWinners;
@@ -46,20 +49,16 @@ class DataStore {
         }
     }
     getMatch(match_id) {
-        return rxjs_1.Observable.create(getMatchObserver => {
-            const match = this.matchesCache.get(match_id);
-            if (!match) {
-                this.dotaApi.getMatch(match_id).subscribe(m => {
-                    this.addMatch(m);
-                    getMatchObserver.next(m);
-                    getMatchObserver.complete();
-                });
-            }
-            else {
-                getMatchObserver.next(match);
-                getMatchObserver.complete();
-            }
-        });
+        const match = this.matchesCache.get(match_id);
+        if (!match) {
+            return this.dotaApi.getMatch(match_id).map(m => {
+                this.addMatch(m);
+                return m;
+            });
+        }
+        else {
+            return rxjs_1.Observable.of(match);
+        }
     }
     getMatches(matchesIds) {
         return rxjs_1.Observable.forkJoin(matchesIds.map(match_id => this.getMatch(match_id)));
@@ -71,25 +70,32 @@ class DataStore {
         return DataStore.profilesMap;
     }
     getProfile(account_id) {
-        return rxjs_1.Observable.create(profileObserver => {
-            const profile = this.profilesCache.get(account_id);
-            if (!profile) {
-                this.dotaApi.getPlayerProfile(account_id)
-                    .map(p => p.profile)
-                    .subscribe(p => {
-                    this.profilesCache.set(account_id, profile);
-                    profileObserver.next(p);
-                    profileObserver.complete();
-                }, err => profileObserver.error(err));
-            }
-            else {
-                profileObserver.next(profile);
-                profileObserver.complete();
-            }
-        });
+        const profile = this.profilesCache.get(account_id);
+        if (profile) {
+            return rxjs_1.Observable.of(profile);
+        }
+        else {
+            return this.dotaApi.getPlayerProfile(account_id)
+                .map(p => {
+                this.profilesCache.set(account_id, profile);
+                return p.profile;
+            });
+        }
     }
     getPlayers(accountsIds) {
         return rxjs_1.Observable.forkJoin(accountsIds.map(account_id => this.dotaApi.getPlayerProfile(account_id).map((ppj) => ppj.profile)));
+    }
+    get registeredPlayers() {
+        if (!DataStore.registeredPlayersMap) {
+            return this.storage.getPlayersObserved().map(map => {
+                DataStore.registeredPlayersMap = map;
+                return map;
+            });
+        }
+        return rxjs_1.Observable.of(DataStore.registeredPlayersMap);
+    }
+    registerPlayer(account_id, discordId) {
+        this.storage.registerPlayer(account_id, discordId);
     }
 }
 exports.default = DataStore;

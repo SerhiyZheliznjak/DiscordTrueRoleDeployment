@@ -5,7 +5,6 @@ const rxjs_1 = require("rxjs");
 const DataStore_1 = require("./DataStore");
 const NominationService_1 = require("./NominationService");
 const StorageService_1 = require("./StorageService");
-const StorageConvertionUtil_1 = require("../utils/StorageConvertionUtil");
 const Constants_1 = require("../Constants");
 class BotService {
     constructor(client, dataStore = new DataStore_1.default(), nominationService = new NominationService_1.default(), storageService = new StorageService_1.default()) {
@@ -14,15 +13,6 @@ class BotService {
         this.nominationService = nominationService;
         this.storageService = storageService;
         this.retardMap = new Map();
-        this.playersMap = StorageConvertionUtil_1.default.convertToPlayerObserved(this.storageService.getPlayersObserved());
-        if (this.playersMap.size === 0) {
-            this.playersMap.set(298134653, '407971834689093632'); // Dno
-            this.playersMap.set(333303976, '407949091163865099'); // Tee Hee
-            this.playersMap.set(118975931, '289388465034887178'); // I'm 12 btw GG.BET
-            this.playersMap.set(86848474, '408363774257528852'); // whoami
-            this.playersMap.set(314684987, '413792999030652938'); // blackRose
-            this.playersMap.set(36753317, '408172132875501581'); // =3
-        }
         this.chanel = this.client.channels.find('type', 'text');
     }
     processMesage(msg) {
@@ -47,14 +37,16 @@ class BotService {
         }
     }
     forgiveRetards() {
-        rxjs_1.Observable.interval(Constants_1.Constants.FORGIVE_RETARDS_INTERVAL).subscribe(() => this.retardMap = new Map());
+        rxjs_1.Observable.interval(Constants_1.default.FORGIVE_RETARDS_INTERVAL).subscribe(() => this.retardMap = new Map());
     }
     startNominating() {
-        this.claimedNominationsSubscription = this.nominationService.startWatching(this.playersMap)
-            .subscribe((newNomintionsClaimed) => {
-            this.generateMessages(newNomintionsClaimed).subscribe((richEmbed) => {
-                console.log('sending message about ', richEmbed.title);
-                this.chanel.send('', richEmbed);
+        this.dataStore.registeredPlayers.subscribe(playersMap => {
+            this.claimedNominationsSubscription = this.nominationService.startWatching(playersMap)
+                .subscribe((newNomintionsClaimed) => {
+                this.generateMessages(newNomintionsClaimed).subscribe((richEmbed) => {
+                    console.log('sending message about ', richEmbed.title);
+                    this.chanel.send('', richEmbed);
+                });
             });
         });
     }
@@ -98,6 +90,18 @@ class BotService {
             this.retardPlusPlus(msg);
             msg.reply('хуєгістеролл');
         }
+        else {
+            this.dataStore.registeredPlayers.subscribe(playersMap => {
+                if (playersMap.size === 0) {
+                    this.dataStore.registerPlayer(298134653, '407971834689093632'); // Dno
+                    this.dataStore.registerPlayer(333303976, '407949091163865099'); // Tee Hee
+                    this.dataStore.registerPlayer(118975931, '289388465034887178'); // I'm 12 btw GG.BET
+                    this.dataStore.registerPlayer(86848474, '408363774257528852'); // whoami
+                    this.dataStore.registerPlayer(314684987, '413792999030652938'); // blackRose
+                    this.dataStore.registerPlayer(36753317, '408172132875501581'); // =3
+                }
+            });
+        }
     }
     restart(msg) {
         if (this.isCreator(msg)) {
@@ -111,11 +115,13 @@ class BotService {
     }
     showRegistered(msg) {
         if (this.isCreator(msg)) {
-            let registered = 'Стежу за: ';
-            for (const info of this.playersMap) {
-                registered += info + '\n';
-            }
-            msg.reply(registered);
+            this.dataStore.registeredPlayers.subscribe(playersMap => {
+                let registered = 'Стежу за: ';
+                for (const info of playersMap) {
+                    registered += info + '\n';
+                }
+                msg.reply(registered);
+            });
         }
         else {
             this.retardPlusPlus(msg);
@@ -138,14 +144,16 @@ class BotService {
         else {
             this.dataStore.getProfile(parseInt(msg.content.match(/ \d+/)[0].trim())).subscribe(playerInfo => {
                 if (!!playerInfo) {
-                    if (this.playersMap.get(playerInfo.account_id) && !this.isCreator(msg)) {
-                        msg.reply('Вже закріплено за @' + this.playersMap.get(playerInfo.account_id));
-                        this.retardPlusPlus(msg);
-                    }
-                    else {
-                        this.watchPlayer(playerInfo.account_id, msg.mentions.users.first().id);
-                        msg.reply('Я стежитиму за тобою, ' + playerInfo.personaname);
-                    }
+                    this.dataStore.registeredPlayers.subscribe(playersMap => {
+                        if (playersMap.get(playerInfo.account_id) && !this.isCreator(msg)) {
+                            msg.reply('Вже закріплено за @' + playersMap.get(playerInfo.account_id));
+                            this.retardPlusPlus(msg);
+                        }
+                        else {
+                            this.dataStore.registerPlayer(playerInfo.account_id, msg.mentions.users.first().id);
+                            msg.reply('Я стежитиму за тобою, ' + playerInfo.personaname);
+                        }
+                    });
                 }
                 else {
                     msg.reply('Давай ще раз, але цього разу очима дивись на айді гравця');
@@ -153,10 +161,6 @@ class BotService {
                 }
             });
         }
-    }
-    watchPlayer(account_id, discordId) {
-        this.playersMap.set(account_id, discordId);
-        this.storageService.savePlayersObserved(this.playersMap);
     }
     isCreator(msg) {
         console.log(msg.author.id);
@@ -167,7 +171,6 @@ class BotService {
         if (this.claimedNominationsSubscription) {
             this.claimedNominationsSubscription.unsubscribe();
         }
-        this.storageService.savePlayersObserved(this.playersMap);
     }
     getRichEmbed(title, description, avatarUrl, footer, url) {
         const richEmbed = new discord_js_1.RichEmbed();
@@ -200,4 +203,4 @@ class BotService {
         }, []));
     }
 }
-exports.BotService = BotService;
+exports.default = BotService;

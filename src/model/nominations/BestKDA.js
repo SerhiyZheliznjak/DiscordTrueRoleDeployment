@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Nomination_1 = require("../Nomination");
 const DotaParser_1 = require("../../services/DotaParser");
 const Constants_1 = require("../../Constants");
-class BestKDA extends Nomination_1.Nomination {
+class BestKDA extends Nomination_1.default {
     constructor(points = []) {
         super(points);
         this.points = points;
@@ -27,7 +27,7 @@ class BestKDA extends Nomination_1.Nomination {
     scorePoint(match, player_slot) {
         if (!!match) {
             const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
-            const matchResult = player.win === 1 ? Constants_1.Constants.WON : Constants_1.Constants.LOST;
+            const matchResult = player.win === 1 ? Constants_1.default.WON : Constants_1.default.LOST;
             return !!player && player.kills !== null && player.deaths !== null && player.assists !== null
                 ? player.kills + '/' + player.deaths + '/' + player.assists + '/' + matchResult
                 : null;

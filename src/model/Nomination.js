@@ -42,4 +42,4 @@ class Nomination {
         return null;
     }
 }
-exports.Nomination = Nomination;
+exports.default = Nomination;
