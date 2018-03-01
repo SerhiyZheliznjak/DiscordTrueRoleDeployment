@@ -69,9 +69,11 @@ class NominationService {
     }
     isFreshMatch(recentMatch) {
         const now = (new Date().getTime() / 1000);
-        console.log('recentMatch.start_time: ', recentMatch.start_time);
-        console.log('now: ', now);
-        console.log('difference: ', now - recentMatch.start_time);
+        if (now - recentMatch.start_time < Constants_1.default.MATCH_DUE_TIME_SEC) {
+            console.log('recentMatch.start_time: ', recentMatch.start_time);
+            console.log('now: ', now);
+            console.log('difference: ', now - recentMatch.start_time);
+        }
         return now - recentMatch.start_time < Constants_1.default.MATCH_DUE_TIME_SEC;
     }
     hasNewMatches(playerRecentMatches) {
