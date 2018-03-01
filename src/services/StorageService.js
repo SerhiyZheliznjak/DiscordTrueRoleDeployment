@@ -23,7 +23,7 @@ class StorageService {
             .map(json => StorageConvertionUtil_1.default.convertToPlayerObserved(json));
     }
     updatePlayerRecentMatches(account_id, matchesIds) {
-        this.update(Constants_1.default.RECENT_MATCHES_COLLECTION, [StorageConvertionUtil_1.default.convertToRecentMatchJson(account_id, matchesIds)], 'match_id');
+        this.update(Constants_1.default.RECENT_MATCHES_COLLECTION, [StorageConvertionUtil_1.default.convertToRecentMatchJson(account_id, matchesIds)], 'account_id');
     }
     saveWinners(winners) {
         this.update(Constants_1.default.HALL_OF_FAME_COLLECTION, StorageConvertionUtil_1.default.convertToNominationWinnersJson(winners), 'nominationName');
