@@ -11,7 +11,7 @@ class PingMaster extends Nomination_1.default {
         this.msg = 'Нема такого що не можливо виразити пінгом';
     }
     getScore() {
-        const pings = this.points.map(p => parseInt(p.val + ''));
+        const pings = this.points.map(p => parseInt(p.p2 + ''));
         return Math.max(...pings);
     }
     scorePoint(match, player_slot) {

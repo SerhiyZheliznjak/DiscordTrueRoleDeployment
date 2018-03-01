@@ -6,6 +6,7 @@ const DataStore_1 = require("./DataStore");
 const NominationService_1 = require("./NominationService");
 const StorageService_1 = require("./StorageService");
 const Constants_1 = require("../Constants");
+const Pair_1 = require("../model/Pair");
 class BotService {
     constructor(client, dataStore = new DataStore_1.default(), nominationService = new NominationService_1.default(), storageService = new StorageService_1.default()) {
         this.client = client;
@@ -182,23 +183,12 @@ class BotService {
         return richEmbed;
     }
     generateMessages(claimedNominations) {
-        return rxjs_1.Observable.create((messagesObserver) => {
-            this.getPlayerProfilesSet(claimedNominations).subscribe(players => {
-                claimedNominations.forEach(claimed => {
-                    const player = players.find(p => +p.account_id === +claimed.account_id);
-                    messagesObserver.next(this.getRichEmbed(player.personaname + ': ' + claimed.nomination.getName(), claimed.nomination.getMessage(), player.avatarmedium, 'Рахунок: ' + claimed.nomination.getScoreText(), player.profileurl));
-                });
-                messagesObserver.complete();
-            });
-        });
+        return rxjs_1.Observable.from(claimedNominations)
+            .flatMap(cn => this.getNominationWithPlayerProfile(cn))
+            .map(pair => this.getRichEmbed(pair.p2.personaname + ': ' + pair.p1.nomination.getName(), pair.p1.nomination.getMessage(), pair.p2.avatarmedium, 'Рахунок: ' + pair.p1.nomination.getScoreText(), pair.p2.profileurl));
     }
-    getPlayerProfilesSet(claimedNominations) {
-        return this.dataStore.getPlayers(claimedNominations.map(cn => cn.account_id).reduce((uniq, id) => {
-            if (uniq.indexOf(id) < 0) {
-                uniq.push(id);
-            }
-            return uniq;
-        }, []));
+    getNominationWithPlayerProfile(claimedNomination) {
+        return this.dataStore.getProfile(claimedNomination.account_id).map(profile => new Pair_1.default(claimedNomination, profile));
     }
 }
 exports.default = BotService;

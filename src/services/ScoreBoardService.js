@@ -2,13 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Nominations_1 = require("../model/Nominations");
 const DotaParser_1 = require("./DotaParser");
-const NominationWinner_1 = require("../model/NominationWinner");
+const NominationResult_1 = require("../model/NominationResult");
 const Constants_1 = require("../Constants");
 class ScoreBoardService {
     constructor() { }
-    initNominationWinners() {
+    initNominationResults() {
         return Nominations_1.default.all.reduce((map, nomination) => {
-            map.set(nomination.getName(), new NominationWinner_1.default(Constants_1.default.UNCLAIMED, nomination));
+            map.set(nomination.getName(), new NominationResult_1.default(Constants_1.default.UNCLAIMED, nomination));
             return map;
         }, new Map());
     }

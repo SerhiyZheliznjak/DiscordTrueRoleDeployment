@@ -11,7 +11,7 @@ class DenyGod extends Nomination_1.default {
         this.msg = 'Сам не гам і ворогу не дам!';
     }
     getScore() {
-        const denyArr = this.getPoints().map(p => parseInt(p.val + ''));
+        const denyArr = this.getPoints().map(p => parseInt(p.p2 + ''));
         return Math.max(...denyArr);
     }
     scorePoint(match, player_slot) {

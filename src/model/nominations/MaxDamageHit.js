@@ -13,7 +13,7 @@ class MaxDamageHit extends Nomination_1.default {
         this.msg = 'Йобне раз, але сильно. Вбив %s антимагів одиним ударом!';
     }
     getScore() {
-        const dmgArr = this.getPoints().map(p => parseInt(p.val + ''));
+        const dmgArr = this.getPoints().map(p => parseInt(p.p2 + ''));
         return Math.max(...dmgArr);
     }
     getMessage() {

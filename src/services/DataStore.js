@@ -17,22 +17,24 @@ class DataStore {
         }
         return rxjs_1.Observable.of(DataStore.playersRecentMatchesCacheMap);
     }
+    get playersRecentMatchesClone() {
+        return this.playersRecentMatches.map(cache => Object.apply({}, cache));
+    }
     updatePlayerRecentMatches(account_id, matchesIds) {
         this.playersRecentMatches.subscribe(map => map.set(account_id, matchesIds));
         this.storage.updatePlayerRecentMatches(account_id, matchesIds);
     }
-    get wonNominations() {
-        if (DataStore.wonNominationsCacheMap.size === 0) {
+    get nominationsResults() {
+        if (DataStore.nominationsResultsCacheMap.size === 0) {
             return this.storage.getWinners().map(map => {
-                DataStore.wonNominationsCacheMap = map;
+                DataStore.nominationsResultsCacheMap = map;
                 return map;
             });
         }
-        return rxjs_1.Observable.of(DataStore.wonNominationsCacheMap);
+        return rxjs_1.Observable.of(DataStore.nominationsResultsCacheMap);
     }
-    saveWinnersScore(recentWinners) {
-        DataStore.wonNominationsCacheMap = recentWinners;
-        this.storage.saveWinners(recentWinners);
+    updateNominationResult(nominationResult) {
+        this.storage.updateNominationResult(nominationResult);
     }
     get matchesCache() {
         if (DataStore.matchesCacheMap.size === 0) {
@@ -60,9 +62,6 @@ class DataStore {
             return rxjs_1.Observable.of(match);
         }
     }
-    getMatches(matchesIds) {
-        return rxjs_1.Observable.forkJoin(matchesIds.map(match_id => this.getMatch(match_id)));
-    }
     get profilesCache() {
         if (!DataStore.profilesMap) {
             DataStore.profilesMap = new Map();
@@ -82,9 +81,6 @@ class DataStore {
             });
         }
     }
-    getPlayers(accountsIds) {
-        return rxjs_1.Observable.forkJoin(accountsIds.map(account_id => this.dotaApi.getPlayerProfile(account_id).map((ppj) => ppj.profile)));
-    }
     get registeredPlayers() {
         if (DataStore.registeredPlayersCache.size === 0) {
             return this.storage.getPlayersObserved().map(map => {
@@ -100,6 +96,6 @@ class DataStore {
 }
 DataStore.playersRecentMatchesCacheMap = new Map();
 DataStore.matchesCacheMap = new Map();
-DataStore.wonNominationsCacheMap = new Map();
+DataStore.nominationsResultsCacheMap = new Map();
 DataStore.registeredPlayersCache = new Map();
 exports.default = DataStore;

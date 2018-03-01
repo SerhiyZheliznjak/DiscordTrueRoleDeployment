@@ -52,10 +52,6 @@ class DotaApi {
     getRecentMatches(account_id) {
         return this.queueRequest(DotaApi.getRecentMatchesUrl(account_id));
     }
-    getFullMatches(matcheIds) {
-        const formatedUrls = matcheIds.map(match_id => DotaApi.getMatchUrl(match_id));
-        return rxjs_1.Observable.forkJoin(formatedUrls.map(url => this.queueRequest(url)));
-    }
     getMatch(match_id) {
         return this.queueRequest(DotaApi.getMatchUrl(match_id));
     }

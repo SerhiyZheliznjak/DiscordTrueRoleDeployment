@@ -11,7 +11,7 @@ class Parkinson extends Nomination_1.default {
         this.msg = 'Як крілик, бо не факт що крілики каждий раз попадають там де цілились.\nЯкщо крілики взагалі вміють цілитись...';
     }
     getScore() {
-        const apmArr = this.getPoints().map(p => parseInt(p.val + ''));
+        const apmArr = this.getPoints().map(p => parseInt(p.p2 + ''));
         return Math.max(...apmArr);
     }
     scorePoint(match, player_slot) {

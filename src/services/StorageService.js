@@ -4,6 +4,7 @@ const Constants_1 = require("../Constants");
 const StorageConvertionUtil_1 = require("../utils/StorageConvertionUtil");
 const mongodb_1 = require("mongodb");
 const rxjs_1 = require("rxjs");
+const RegisteredPlayerJson_1 = require("../model/json/RegisteredPlayerJson");
 class StorageService {
     constructor(mongoClient = mongodb_1.MongoClient, url = Constants_1.default.MONGODB_URI, dbName = Constants_1.default.MONGODB_DB_NAME) {
         this.mongoClient = mongoClient;
@@ -23,13 +24,13 @@ class StorageService {
             .map(json => StorageConvertionUtil_1.default.convertToPlayerObserved(json));
     }
     updatePlayerRecentMatches(account_id, matchesIds) {
-        this.update(Constants_1.default.RECENT_MATCHES_COLLECTION, [StorageConvertionUtil_1.default.convertToRecentMatchJson(account_id, matchesIds)]);
+        this.update(Constants_1.default.RECENT_MATCHES_COLLECTION, StorageConvertionUtil_1.default.convertToRecentMatchJson(account_id, matchesIds));
     }
-    saveWinners(winners) {
-        this.update(Constants_1.default.HALL_OF_FAME_COLLECTION, StorageConvertionUtil_1.default.convertToNominationWinnersJson(winners));
+    updateNominationResult(result) {
+        this.update(Constants_1.default.HALL_OF_FAME_COLLECTION, StorageConvertionUtil_1.default.convertToNominationResultJson(result));
     }
     registerPlayer(account_id, discordId) {
-        this.update(Constants_1.default.PLAYERS_COLLECTION, [StorageConvertionUtil_1.default.convertToPair(account_id, discordId)]);
+        this.update(Constants_1.default.PLAYERS_COLLECTION, new RegisteredPlayerJson_1.default(account_id, discordId));
     }
     get client() {
         return rxjs_1.Observable.create(clientObserver => {
@@ -52,12 +53,10 @@ class StorageService {
             });
         });
     }
-    update(collectionName, documents) {
+    update(collectionName, document) {
         this.client.subscribe(client => {
             const db = client.db(this.dbName);
-            documents.forEach(doc => {
-                db.collection(collectionName).update({ key: doc.key }, doc, { upsert: true });
-            });
+            db.collection(collectionName).update({ key: document.key }, document, { upsert: true });
         });
     }
 }
