@@ -71,8 +71,10 @@ class NominationService {
     }
     hasNewMatches(playerRecentMatches, recentMatchesCache) {
         console.dir(recentMatchesCache);
-        return recentMatchesCache && recentMatchesCache.get(playerRecentMatches.account_id)
-            .reduce((exist, match_id) => exist || playerRecentMatches.recentMatchesIds.indexOf(match_id) < 0, false);
+        return recentMatchesCache
+            && recentMatchesCache.get(playerRecentMatches.account_id)
+            && recentMatchesCache.get(playerRecentMatches.account_id)
+                .reduce((exist, match_id) => exist || playerRecentMatches.recentMatchesIds.indexOf(match_id) < 0, false);
     }
     awardWinners(scoreBoard) {
         this.dataStore.nominationsResults.subscribe(wonNominations => {
