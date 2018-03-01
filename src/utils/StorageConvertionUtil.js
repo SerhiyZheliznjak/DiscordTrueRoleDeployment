@@ -46,7 +46,13 @@ class StorageConvertionUtil {
         }, new Map());
     }
     static isValidNominationResult(nrj) {
-        return !!nrj.nominationName && !!nrj.owner_account_id && !!nrj.score && !!nrj.timeClaimed;
+        return this.isDefined(nrj.nominationName)
+            && this.isDefined(nrj.owner_account_id)
+            && this.isDefined(nrj.score)
+            && this.isDefined(nrj.timeClaimed);
+    }
+    static isDefined(val) {
+        return val !== undefined && val !== null;
     }
 }
 exports.default = StorageConvertionUtil;

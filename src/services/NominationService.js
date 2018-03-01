@@ -47,13 +47,12 @@ class NominationService {
     nextCheck() {
         const scoreBoard = new ScoreBoard_1.default();
         rxjs_1.Observable.from(this.dotaIds)
-            .flatMap((account_id) => rxjs_1.Observable.zip(this.dataStore.getRecentMatchesForPlayer(account_id), this.getRecentMatchesForPlayer(account_id)))
+            .flatMap((account_id) => rxjs_1.Observable.zip(this.getRecentMatchesForPlayer(account_id), this.dataStore.getRecentMatchesForPlayer(account_id)))
             .filter((playerMatches) => this.hasNewMatches(...playerMatches))
-            .flatMap(playersWithNewMatches => this.mapToPlayerWithFullMatches(playersWithNewMatches[1]))
+            .flatMap(playersWithNewMatches => this.mapToPlayerWithFullMatches(playersWithNewMatches[0]))
             .scan((arr, pfm) => [...arr, pfm], [])
-            .scan((arr, pfms) => [...arr, pfms], [])
-            .subscribe(playersMatches => {
-            playersMatches.forEach(pfms => pfms.forEach(pfm => scoreBoard.scorePlayer(pfm.account_id, pfm.matches)));
+            .subscribe((playersMatches) => {
+            playersMatches.forEach(pfm => scoreBoard.scorePlayer(pfm.account_id, pfm.matches));
             this.awardWinners(scoreBoard);
         });
     }
@@ -69,7 +68,10 @@ class NominationService {
         const nowInSeconds = new Date().getTime() / 1000;
         return nowInSeconds - recentMatch.start_time < Constants_1.default.MATCH_DUE_TIME_SEC;
     }
-    hasNewMatches(storedPlayerMatches, newPlayerMatches) {
+    hasNewMatches(newPlayerMatches, storedPlayerMatches) {
+        console.log('Player ' + newPlayerMatches.account_id + ' has new matches: ' + storedPlayerMatches
+            && storedPlayerMatches.recentMatchesIds
+                .reduce((exist, match_id) => exist || newPlayerMatches.recentMatchesIds.indexOf(match_id) < 0, false));
         return storedPlayerMatches
             && storedPlayerMatches.recentMatchesIds
                 .reduce((exist, match_id) => exist || newPlayerMatches.recentMatchesIds.indexOf(match_id) < 0, false);
