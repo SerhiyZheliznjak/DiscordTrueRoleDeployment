@@ -70,6 +70,7 @@ class NominationService {
         return nowInSeconds - recentMatch.start_time < Constants_1.default.MATCH_DUE_TIME_SEC;
     }
     hasNewMatches(playerRecentMatches, recentMatchesCache) {
+        console.dir(recentMatchesCache);
         return recentMatchesCache && recentMatchesCache.get(playerRecentMatches.account_id)
             .reduce((exist, match_id) => exist || playerRecentMatches.recentMatchesIds.indexOf(match_id) < 0, false);
     }
