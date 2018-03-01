@@ -84,23 +84,22 @@ class NominationService {
         });
     }
     awardWinners(scoreBoard) {
-        const newNomintionsClaimed = [];
-        for (const nominationName of scoreBoard.nominationsWinners.keys()) {
-            const newWinner = scoreBoard.nominationsWinners.get(nominationName);
-            if (newWinner.account_id !== Constants_1.default.UNCLAIMED && newWinner.nomination.isScored()) {
-                this.dataStore.wonNominations.subscribe(wonNominations => {
+        this.dataStore.wonNominations.subscribe(wonNominations => {
+            const newNomintionsClaimed = [];
+            for (const nominationName of scoreBoard.nominationsWinners.keys()) {
+                const newWinner = scoreBoard.nominationsWinners.get(nominationName);
+                if (newWinner.account_id !== Constants_1.default.UNCLAIMED && newWinner.nomination.isScored()) {
                     const storedWinner = wonNominations.get(nominationName);
                     if (this.isClaimedNomination(newWinner, storedWinner)) {
                         newNomintionsClaimed.push(newWinner);
                     }
-                });
+                }
             }
-        }
-        console.log('awarding winners ', newNomintionsClaimed.length);
-        if (!!newNomintionsClaimed.length) {
-            this.dataStore.saveWinnersScore(scoreBoard.nominationsWinners);
-            this.claimedNominationsObserver.next(newNomintionsClaimed);
-        }
+            if (!!newNomintionsClaimed.length) {
+                this.dataStore.saveWinnersScore(scoreBoard.nominationsWinners);
+                this.claimedNominationsObserver.next(newNomintionsClaimed);
+            }
+        });
     }
     isClaimedNomination(newWinner, storedWinner) {
         return !storedWinner
