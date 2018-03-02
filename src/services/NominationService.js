@@ -37,16 +37,17 @@ class NominationService {
         }
         return dotaIds;
     }
-    getRecentMatchesForPlayer(account_id) {
+    getFreshRecentMatchesForPlayer(account_id) {
         return this.dotaApi.getRecentMatches(account_id).map(recentMatches => {
             const freshMatches = recentMatches.filter(rm => this.isFreshMatch(rm)).map(m => m.match_id);
+            console.log(account_id, ' has ', freshMatches.length + ' fresh matches ');
             return new PlayerRecentMatches_1.default(account_id, freshMatches);
         });
     }
     nextCheck() {
         const scoreBoard = new ScoreBoard_1.default();
         rxjs_1.Observable.from(this.dotaIds)
-            .flatMap((account_id) => rxjs_1.Observable.zip(this.getRecentMatchesForPlayer(account_id), this.dataStore.getRecentMatchesForPlayer(account_id)))
+            .flatMap((account_id) => rxjs_1.Observable.zip(this.getFreshRecentMatchesForPlayer(account_id), this.dataStore.getRecentMatchesForPlayer(account_id)))
             .map((playerMatches) => this.getOnlyFreshNewMatches(playerMatches))
             .flatMap(playersWithNewMatches => this.mapToPlayerWithFullMatches(playersWithNewMatches))
             .scan((arr, pfm) => [...arr, pfm], [])
@@ -73,6 +74,9 @@ class NominationService {
     hasNewMatches(freshMatches, storedMatches) {
         const hasNewMatch = this.noMatches(storedMatches)
             || this.storedMatchesDoNotContainRecent(freshMatches, storedMatches);
+        console.log('Player ', freshMatches.account_id, ' has noStoredMatches: ', this.noMatches(storedMatches));
+        console.log('Player ', freshMatches.account_id, ' has noFreshMatches: ', this.noMatches(freshMatches));
+        console.log('Player ', freshMatches.account_id, ' storedMatchesDoNotContainRecent: ', this.storedMatchesDoNotContainRecent(freshMatches, storedMatches));
         console.log('Player ', freshMatches.account_id, ' has new matches: ', hasNewMatch);
         return hasNewMatch;
     }
