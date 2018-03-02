@@ -73,17 +73,17 @@ class NominationService {
     }
     hasNewMatches(freshMatches, storedMatches) {
         let hasNewMatch = false;
+        console.log('Player ', freshMatches.account_id);
         if (this.noMatches(storedMatches)) {
             hasNewMatch = !this.noMatches(freshMatches);
+            console.log('has no stored matches and noFreshMatches: ', !this.noMatches(freshMatches));
         }
         else {
             if (!this.noMatches(freshMatches)) {
                 hasNewMatch = this.storedMatchesDoNotContainRecent(freshMatches, storedMatches);
+                console.log('does have stored matches at leas on new match: ', this.storedMatchesDoNotContainRecent(freshMatches, storedMatches));
             }
         }
-        console.log('Player ', freshMatches.account_id, ' has noStoredMatches: ', this.noMatches(storedMatches));
-        console.log('has noFreshMatches: ', this.noMatches(freshMatches));
-        console.log('storedMatchesDoNotContainRecent: ', this.storedMatchesDoNotContainRecent(freshMatches, storedMatches));
         console.log('has new matches: ', hasNewMatch);
         return hasNewMatch;
     }
