@@ -68,12 +68,11 @@ class NominationService {
         return nowInSeconds - recentMatch.start_time < Constants_1.default.MATCH_DUE_TIME_SEC;
     }
     hasNewMatches(newPlayerMatches, storedPlayerMatches) {
-        console.log('Player ', newPlayerMatches.account_id, ' has new matches: ', !storedPlayerMatches
-            || storedPlayerMatches.recentMatchesIds
-                .reduce((exist, match_id) => exist || newPlayerMatches.recentMatchesIds.indexOf(match_id) < 0, false));
-        return !storedPlayerMatches
+        const hasNewMatch = !storedPlayerMatches
             || storedPlayerMatches.recentMatchesIds
                 .reduce((exist, match_id) => exist || newPlayerMatches.recentMatchesIds.indexOf(match_id) < 0, false);
+        console.log('Player ', newPlayerMatches.account_id, ' has new matches: ', hasNewMatch);
+        return hasNewMatch;
     }
     filterOldMatches(playerMatches) {
         if (this.hasNewMatches(...playerMatches)) {
