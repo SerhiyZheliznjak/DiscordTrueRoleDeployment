@@ -85,7 +85,7 @@ class DotaApi {
             else {
                 this.stopQueue();
             }
-        }, err => console.error(err));
+        });
     }
     stopQueue() {
         if (DotaApi.queueSubscription) {
