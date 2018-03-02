@@ -47,7 +47,7 @@ class NominationService {
         const scoreBoard = new ScoreBoard_1.default();
         rxjs_1.Observable.from(this.dotaIds)
             .flatMap((account_id) => rxjs_1.Observable.zip(this.getRecentMatchesForPlayer(account_id), this.dataStore.getRecentMatchesForPlayer(account_id)))
-            .map((playerMatches) => this.filterOldMatches(playerMatches))
+            .map((playerMatches) => this.getOnlyFreshNewMatches(playerMatches))
             .flatMap(playersWithNewMatches => this.mapToPlayerWithFullMatches(playersWithNewMatches))
             .scan((arr, pfm) => [...arr, pfm], [])
             .subscribe((playersMatches) => {
@@ -56,6 +56,9 @@ class NominationService {
         });
     }
     mapToPlayerWithFullMatches(prm) {
+        if (!prm.recentMatchesIds.length) {
+            return rxjs_1.Observable.of(new PlayerFullMatches_1.default(prm.account_id, []));
+        }
         return rxjs_1.Observable.from(prm.recentMatchesIds)
             .flatMap(match_id => this.dataStore.getMatch(match_id))
             .scan((pfm, match) => {
@@ -67,14 +70,20 @@ class NominationService {
         const nowInSeconds = new Date().getTime() / 1000;
         return nowInSeconds - recentMatch.start_time < Constants_1.default.MATCH_DUE_TIME_SEC;
     }
-    hasNewMatches(newPlayerMatches, storedPlayerMatches) {
-        const hasNewMatch = !storedPlayerMatches || !storedPlayerMatches.recentMatchesIds || !storedPlayerMatches.recentMatchesIds.length
-            || storedPlayerMatches.recentMatchesIds
-                .reduce((exist, match_id) => exist || newPlayerMatches.recentMatchesIds.indexOf(match_id) < 0, false);
-        console.log('Player ', newPlayerMatches.account_id, ' has new matches: ', hasNewMatch);
+    hasNewMatches(freshMatches, storedMatches) {
+        const hasNewMatch = this.noMatches(storedMatches)
+            || this.storedMatchesDoNotContainRecent(freshMatches, storedMatches);
+        console.log('Player ', freshMatches.account_id, ' has new matches: ', hasNewMatch);
         return hasNewMatch;
     }
-    filterOldMatches(playerMatches) {
+    noMatches(playerMatches) {
+        return !playerMatches || !playerMatches.recentMatchesIds || !playerMatches.recentMatchesIds.length;
+    }
+    storedMatchesDoNotContainRecent(freshMatches, storedMatches) {
+        return !this.noMatches(freshMatches) && storedMatches.recentMatchesIds
+            .reduce((exist, match_id) => exist || freshMatches.recentMatchesIds.indexOf(match_id) < 0, false);
+    }
+    getOnlyFreshNewMatches(playerMatches) {
         if (this.hasNewMatches(...playerMatches)) {
             this.dataStore.updatePlayerRecentMatch(playerMatches[0].account_id, playerMatches[0].recentMatchesIds);
             return playerMatches[0];
