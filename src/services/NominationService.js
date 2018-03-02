@@ -72,8 +72,15 @@ class NominationService {
         return nowInSeconds - recentMatch.start_time < Constants_1.default.MATCH_DUE_TIME_SEC;
     }
     hasNewMatches(freshMatches, storedMatches) {
-        const hasNewMatch = this.noMatches(storedMatches)
-            || this.storedMatchesDoNotContainRecent(freshMatches, storedMatches);
+        let hasNewMatch = false;
+        if (this.noMatches(storedMatches)) {
+            hasNewMatch = !this.noMatches(freshMatches);
+        }
+        else {
+            if (!this.noMatches(freshMatches)) {
+                hasNewMatch = this.storedMatchesDoNotContainRecent(freshMatches, storedMatches);
+            }
+        }
         console.log('Player ', freshMatches.account_id, ' has noStoredMatches: ', this.noMatches(storedMatches));
         console.log('has noFreshMatches: ', this.noMatches(freshMatches));
         console.log('storedMatchesDoNotContainRecent: ', this.storedMatchesDoNotContainRecent(freshMatches, storedMatches));
@@ -84,7 +91,7 @@ class NominationService {
         return !playerMatches || !playerMatches.recentMatchesIds || !playerMatches.recentMatchesIds.length;
     }
     storedMatchesDoNotContainRecent(freshMatches, storedMatches) {
-        return !this.noMatches(freshMatches) && storedMatches.recentMatchesIds
+        return storedMatches.recentMatchesIds
             .reduce((exist, match_id) => exist || freshMatches.recentMatchesIds.indexOf(match_id) < 0, false);
     }
     getOnlyFreshNewMatches(playerMatches) {
