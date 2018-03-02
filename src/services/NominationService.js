@@ -40,7 +40,6 @@ class NominationService {
     getFreshRecentMatchesForPlayer(account_id) {
         return this.dotaApi.getRecentMatches(account_id).map(recentMatches => {
             const freshMatches = recentMatches.filter(rm => this.isFreshMatch(rm)).map(m => m.match_id);
-            console.log(account_id, ' has ', freshMatches.length + ' fresh matches ');
             return new PlayerRecentMatches_1.default(account_id, freshMatches);
         });
     }
@@ -50,7 +49,10 @@ class NominationService {
             .flatMap((account_id) => rxjs_1.Observable.zip(this.getFreshRecentMatchesForPlayer(account_id), this.dataStore.getRecentMatchesForPlayer(account_id)))
             .map((playerMatches) => this.getOnlyFreshNewMatches(playerMatches))
             .flatMap(playersWithNewMatches => this.mapToPlayerWithFullMatches(playersWithNewMatches))
-            .scan((arr, pfm) => [...arr, pfm], [])
+            .scan((arr, pfm) => {
+            // console.log('Scan for ');
+            return [...arr, pfm];
+        }, [])
             .subscribe((playersMatches) => {
             playersMatches.forEach(pfm => scoreBoard.scorePlayer(pfm.account_id, pfm.matches));
             this.awardWinners(scoreBoard);
@@ -63,6 +65,7 @@ class NominationService {
         return rxjs_1.Observable.from(prm.recentMatchesIds)
             .flatMap(match_id => this.dataStore.getMatch(match_id))
             .scan((pfm, match) => {
+            console.log('Scanend ', match.match_id, 'match for ', prm.account_id, ' curernt length ', pfm.matches.length);
             pfm.matches.push(match);
             return pfm;
         }, new PlayerFullMatches_1.default(prm.account_id, []));
@@ -76,12 +79,10 @@ class NominationService {
         console.log('Player ', freshMatches.account_id);
         if (this.noMatches(storedMatches)) {
             hasNewMatch = !this.noMatches(freshMatches);
-            console.log('has no stored matches and noFreshMatches: ', !this.noMatches(freshMatches));
         }
         else {
             if (!this.noMatches(freshMatches)) {
                 hasNewMatch = this.storedMatchesDoNotContainRecent(freshMatches, storedMatches);
-                console.log('does have stored matches at leas on new match: ', this.storedMatchesDoNotContainRecent(freshMatches, storedMatches));
             }
         }
         console.log('has new matches: ', hasNewMatch);

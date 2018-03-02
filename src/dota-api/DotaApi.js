@@ -62,7 +62,6 @@ class DotaApi {
                 if (nextRequest.retryCount === 0) {
                     nextRequest.observers.forEach(obs => obs.error('Failed to fetch from ' + nextRequest.url));
                 }
-                console.log('requesting ', nextRequest.url);
                 this.rxHttpRequest.get(nextRequest.url).subscribe((data) => {
                     let obj;
                     try {
