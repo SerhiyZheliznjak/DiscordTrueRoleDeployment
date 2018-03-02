@@ -68,7 +68,7 @@ class NominationService {
         return nowInSeconds - recentMatch.start_time < Constants_1.default.MATCH_DUE_TIME_SEC;
     }
     hasNewMatches(newPlayerMatches, storedPlayerMatches) {
-        const hasNewMatch = !storedPlayerMatches
+        const hasNewMatch = !storedPlayerMatches || !storedPlayerMatches.recentMatchesIds || !storedPlayerMatches.recentMatchesIds.length
             || storedPlayerMatches.recentMatchesIds
                 .reduce((exist, match_id) => exist || newPlayerMatches.recentMatchesIds.indexOf(match_id) < 0, false);
         console.log('Player ', newPlayerMatches.account_id, ' has new matches: ', hasNewMatch);
