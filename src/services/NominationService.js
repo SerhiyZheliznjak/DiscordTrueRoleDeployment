@@ -75,9 +75,9 @@ class NominationService {
         const hasNewMatch = this.noMatches(storedMatches)
             || this.storedMatchesDoNotContainRecent(freshMatches, storedMatches);
         console.log('Player ', freshMatches.account_id, ' has noStoredMatches: ', this.noMatches(storedMatches));
-        console.log('Player ', freshMatches.account_id, ' has noFreshMatches: ', this.noMatches(freshMatches));
-        console.log('Player ', freshMatches.account_id, ' storedMatchesDoNotContainRecent: ', this.storedMatchesDoNotContainRecent(freshMatches, storedMatches));
-        console.log('Player ', freshMatches.account_id, ' has new matches: ', hasNewMatch);
+        console.log('has noFreshMatches: ', this.noMatches(freshMatches));
+        console.log('storedMatchesDoNotContainRecent: ', this.storedMatchesDoNotContainRecent(freshMatches, storedMatches));
+        console.log('has new matches: ', hasNewMatch);
         return hasNewMatch;
     }
     noMatches(playerMatches) {
