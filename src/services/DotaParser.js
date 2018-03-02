@@ -8,7 +8,7 @@ class DotaParser {
         return !!match ? match.objectives : undefined;
     }
     static getPlayerSlot(match, account_id) {
-        const player = match.players.find(p => p.account_id === account_id);
+        const player = !!match ? match.players.find(p => p.account_id === account_id) : null;
         if (player) {
             return player.player_slot;
         }

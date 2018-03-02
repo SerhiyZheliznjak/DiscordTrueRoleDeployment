@@ -11,6 +11,7 @@ class NominationService {
     constructor(dataStore = new DataStore_1.default(), dotaApi = new DotaApi_1.default()) {
         this.dataStore = dataStore;
         this.dotaApi = dotaApi;
+        console.log('Initialized NominationService');
         this.recentGamesObserver = {
             next: () => this.nextCheck(),
             error: () => { },
@@ -50,7 +51,7 @@ class NominationService {
             .map((playerMatches) => this.getOnlyFreshNewMatches(playerMatches))
             .flatMap(playersWithNewMatches => this.mapToPlayerWithFullMatches(playersWithNewMatches))
             .scan((arr, pfm) => {
-            // console.log('Scan for ');
+            // console.log('Scan for ');   sdfsd
             return [...arr, pfm];
         }, [])
             .subscribe((playersMatches) => {
@@ -65,8 +66,10 @@ class NominationService {
         return rxjs_1.Observable.from(prm.recentMatchesIds)
             .flatMap(match_id => this.dataStore.getMatch(match_id))
             .scan((pfm, match) => {
-            console.log('Scanend ', match.match_id, 'match for ', prm.account_id, ' curernt length ', pfm.matches.length);
-            pfm.matches.push(match);
+            if (match) {
+                console.log('Scanend ', match.match_id, 'match for ', prm.account_id, ' curernt length ', pfm.matches.length);
+                pfm.matches.push(match);
+            }
             return pfm;
         }, new PlayerFullMatches_1.default(prm.account_id, []));
     }

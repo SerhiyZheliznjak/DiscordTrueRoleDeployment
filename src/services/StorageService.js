@@ -33,11 +33,17 @@ class StorageService {
         this.update(Constants_1.default.PLAYERS_COLLECTION, new RegisteredPlayerJson_1.default(account_id, discordId));
     }
     get client() {
-        return rxjs_1.Observable.create(clientObserver => {
-            this.mongoClient.connect(this.url, (err, client) => {
+        return rxjs_1.Observable.create(clientObserver => this.connectLoop(clientObserver, 5));
+    }
+    connectLoop(clientObserver, retryCount) {
+        this.mongoClient.connect(this.url, (err, client) => {
+            if (err !== null) {
+                this.connectLoop(clientObserver, retryCount);
+            }
+            else {
                 clientObserver.next(client);
                 clientObserver.complete();
-            });
+            }
         });
     }
     find(collectionName, query) {

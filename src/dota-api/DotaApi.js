@@ -14,6 +14,7 @@ class QueuedRequest {
 class DotaApi {
     constructor(rxHttpRequest = rx_http_request_1.RxHttpRequest) {
         this.rxHttpRequest = rxHttpRequest;
+        console.log('Initialized DotaApi');
     }
     static getMatchUrl(match_id) {
         return util_1.format('https://api.opendota.com/api/matches/%s', match_id);
@@ -56,30 +57,38 @@ class DotaApi {
         return this.queueRequest(DotaApi.getMatchUrl(match_id));
     }
     moveQueue() {
-        DotaApi.queueSubscription = rxjs_1.Observable.interval(400).subscribe(() => {
+        DotaApi.queueSubscription = rxjs_1.Observable.interval(500).subscribe(() => {
             if (DotaApi.queue.length > 0) {
                 const nextRequest = DotaApi.queue.shift();
                 if (nextRequest.retryCount === 0) {
-                    nextRequest.observers.forEach(obs => obs.error('Failed to fetch from ' + nextRequest.url));
+                    console.error('DotaApi: FAILED get ', nextRequest.url);
+                    nextRequest.observers.forEach(obs => {
+                        obs.next(null);
+                        obs.complete();
+                    });
                 }
-                this.rxHttpRequest.get(nextRequest.url).subscribe((data) => {
-                    let obj;
-                    try {
-                        obj = JSON.parse(data.body);
-                    }
-                    catch (err) {
-                        console.error(err, nextRequest.url, '. response data: ', data.body);
+                else {
+                    console.log('DotaApi: requesting ', nextRequest.url);
+                    this.rxHttpRequest.get(nextRequest.url).subscribe((data) => {
+                        let obj;
+                        try {
+                            obj = JSON.parse(data.body);
+                        }
+                        catch (err) {
+                            console.error('DotaApi: ', err, nextRequest.url, '. response data: ', data.body);
+                            this.retry(nextRequest);
+                        }
+                        if (obj) {
+                            nextRequest.observers.forEach(obs => {
+                                console.log('DotaApi: ', nextRequest.url, ' OK');
+                                obs.next(obj);
+                                obs.complete();
+                            });
+                        }
+                    }, err => {
                         this.retry(nextRequest);
-                    }
-                    if (obj) {
-                        nextRequest.observers.forEach(obs => {
-                            obs.next(obj);
-                            obs.complete();
-                        });
-                    }
-                }, err => {
-                    this.retry(nextRequest);
-                }, () => { });
+                    }, () => { });
+                }
             }
             else {
                 this.stopQueue();
@@ -94,7 +103,7 @@ class DotaApi {
     }
     retry(request) {
         request.retryCount -= 1;
-        console.log('retrying ', request.url);
+        console.log('DotaApi: retrying ', request.url);
         DotaApi.queue.push(request);
     }
 }
