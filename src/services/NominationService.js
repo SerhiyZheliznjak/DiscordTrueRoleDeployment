@@ -97,8 +97,8 @@ class NominationService {
         return !playerMatches || !playerMatches.recentMatchesIds || !playerMatches.recentMatchesIds.length;
     }
     freshMatchesNotStored(freshMatches, storedMatches) {
-        const atLeastOneNotStored = freshMatches.recentMatchesIds.find(match_id => storedMatches.recentMatchesIds.indexOf(match_id) < 0);
-        return !!atLeastOneNotStored;
+        const notStored = freshMatches.recentMatchesIds.filter(match_id => storedMatches.recentMatchesIds.indexOf(match_id) < 0);
+        return notStored.length > 0;
     }
     getOnlyFreshNewMatches(playerMatches) {
         if (this.hasNewMatches(...playerMatches)) {
