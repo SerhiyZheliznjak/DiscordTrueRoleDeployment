@@ -47,9 +47,7 @@ class NominationService {
     nextCheck() {
         const scoreBoard = new ScoreBoard_1.default();
         rxjs_1.Observable.from(this.dotaIds)
-            .flatMap((account_id) => {
-            return rxjs_1.Observable.forkJoin(this.getFreshRecentMatchesForPlayer(account_id), this.dataStore.getRecentMatchesForPlayer(account_id));
-        })
+            .flatMap((account_id) => rxjs_1.Observable.zip(this.getFreshRecentMatchesForPlayer(account_id), this.dataStore.getRecentMatchesForPlayer(account_id)))
             .map((playerMatches) => this.getOnlyFreshNewMatches(playerMatches))
             .flatMap(playersWithNewMatches => this.mapToPlayerWithFullMatches(playersWithNewMatches))
             .reduce((arr, pfm) => [...arr, pfm], [])
