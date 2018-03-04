@@ -97,8 +97,8 @@ class NominationService {
         return !playerMatches || !playerMatches.recentMatchesIds || !playerMatches.recentMatchesIds.length;
     }
     freshMatchesNotStored(freshMatches, storedMatches) {
-        console.dir('stored: ', storedMatches.recentMatchesIds);
-        console.dir('freshMatches: ', freshMatches.recentMatchesIds);
+        console.log('stored: ', storedMatches.recentMatchesIds);
+        console.log('freshMatches: ', freshMatches.recentMatchesIds);
         const notStored = freshMatches.recentMatchesIds.filter(match_id => storedMatches.recentMatchesIds.indexOf(match_id) < 0);
         return notStored.length > 0;
     }
