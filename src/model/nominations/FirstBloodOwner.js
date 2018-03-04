@@ -11,8 +11,11 @@ class FirstBloodOwner extends Nomination_1.default {
         this.msg = 'Є різні методи то пролити... Вам розказувати чи самі знаєте?';
     }
     scorePoint(match, player_slot) {
+        if (!match) {
+            return 0;
+        }
         const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
-        return !!player ? player.firstblood_claimed : null;
+        return !!player && player.firstblood_claimed ? player.firstblood_claimed : 0;
     }
 }
 exports.FirstBloodOwner = FirstBloodOwner;

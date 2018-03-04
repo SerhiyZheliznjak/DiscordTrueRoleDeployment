@@ -11,8 +11,11 @@ class StackGod extends Nomination_1.default {
         this.msg = 'То певно той що джунглі персувати помагав';
     }
     scorePoint(match, player_slot) {
-        const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
-        return !!player && player.camps_stacked;
+        if (!!match) {
+            const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+            return !!player && player.camps_stacked ? player.camps_stacked : 0;
+        }
+        return 0;
     }
 }
 exports.StackGod = StackGod;

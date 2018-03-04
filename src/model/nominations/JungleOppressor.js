@@ -12,9 +12,12 @@ class JungleOppressor extends Nomination_1.default {
         this.msg = 'Пацани не шарю що ви там робите, але я цілі джунглі пресую!';
     }
     scorePoint(match, player_slot) {
+        if (!match) {
+            return 0;
+        }
         const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
         if (!player || !player.damage) {
-            return null;
+            return 0;
         }
         let jungleDamaged = 0;
         let objectiveDamage = 0;

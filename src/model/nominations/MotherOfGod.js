@@ -11,8 +11,11 @@ class MotherOfGod extends Nomination_1.default {
         this.msg = 'Мабуть то ліпше ніж Ісус?\nНу бо нащо вміти воскресати за 3 дні, якщо тебе хрін замочиш?';
     }
     scorePoint(match, player_slot) {
-        const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
-        return !!player && player.deaths === 0 ? 1 : 0;
+        if (!!match) {
+            const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+            return !!player && player.deaths === 0 ? 1 : 0;
+        }
+        return 0;
     }
 }
 exports.MotherOfGod = MotherOfGod;

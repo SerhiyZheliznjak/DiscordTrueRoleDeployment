@@ -16,7 +16,8 @@ class PingMaster extends Nomination_1.default {
     }
     scorePoint(match, player_slot) {
         if (!!match) {
-            return DotaParser_1.DotaParser.getPlayerInfo(match, player_slot).pings;
+            const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+            return player && player.pings ? player.pings : 0;
         }
         return 0;
     }

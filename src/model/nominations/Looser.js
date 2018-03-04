@@ -12,7 +12,8 @@ class Looser extends Nomination_1.default {
     }
     scorePoint(match, player_slot) {
         if (!!match) {
-            return DotaParser_1.DotaParser.getPlayerInfo(match, player_slot).lose;
+            const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+            return player && player.lose ? player.lose : 0;
         }
         return 0;
     }

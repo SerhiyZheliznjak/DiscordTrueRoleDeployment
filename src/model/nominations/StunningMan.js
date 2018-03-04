@@ -11,8 +11,11 @@ class StunningMan extends Nomination_1.default {
         this.msg = 'Він такий приголомшливий!';
     }
     scorePoint(match, player_slot) {
-        const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
-        return player && player.stuns ? player.stuns : 0;
+        if (!!match) {
+            const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+            return player && player.stuns ? player.stuns : 0;
+        }
+        return 0;
     }
 }
 exports.StunningMan = StunningMan;

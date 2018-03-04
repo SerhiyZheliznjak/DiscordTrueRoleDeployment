@@ -10,7 +10,7 @@ class Nenza extends Nomination_1.default {
         this.msg = 'Бачу тапок в закупі - report, ff, afk';
     }
     scorePoint(match, player_slot) {
-        if (match.chat) {
+        if (match && match.chat) {
             const nenzaMsg = match.chat.filter(msg => msg.player_slot === player_slot)
                 .filter(msg => {
                 const text = msg.key ? msg.key.toLowerCase() : '';
@@ -19,7 +19,7 @@ class Nenza extends Nomination_1.default {
             });
             return nenzaMsg.length;
         }
-        return null;
+        return 0;
     }
 }
 exports.Nenza = Nenza;

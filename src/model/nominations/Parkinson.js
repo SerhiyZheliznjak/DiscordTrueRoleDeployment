@@ -15,8 +15,11 @@ class Parkinson extends Nomination_1.default {
         return Math.max(...apmArr);
     }
     scorePoint(match, player_slot) {
-        const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
-        return !!player ? player.actions_per_min : null;
+        if (!!match) {
+            const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+            return !!player ? player.actions_per_min : 0;
+        }
+        return 0;
     }
 }
 exports.Parkinson = Parkinson;

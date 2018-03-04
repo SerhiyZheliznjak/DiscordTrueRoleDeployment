@@ -12,9 +12,12 @@ class Donor extends Nomination_1.default {
         this.msg = 'Благородне діло, но не в доті';
     }
     scorePoint(match, player_slot) {
+        if (!match) {
+            return 0;
+        }
         const objectives = DotaParser_1.DotaParser.getObjectives(match);
         const fbObjective = !!objectives ? objectives.find(obj => obj.type === Constants_1.default.OBJECTIVE_FB) : undefined;
-        return !!fbObjective ? fbObjective.key === player_slot ? 1 : 0 : null;
+        return !!fbObjective ? fbObjective.key === player_slot ? 1 : 0 : 0;
     }
 }
 exports.Donor = Donor;

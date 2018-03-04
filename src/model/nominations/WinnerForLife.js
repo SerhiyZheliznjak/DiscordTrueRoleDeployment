@@ -12,7 +12,8 @@ class WinnerForLife extends Nomination_1.default {
     }
     scorePoint(match, player_slot) {
         if (!!match) {
-            return DotaParser_1.DotaParser.getPlayerInfo(match, player_slot).win;
+            const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+            return player && player.win ? player.win : 0;
         }
         return 0;
     }

@@ -11,8 +11,11 @@ class RapunzelSyndrome extends Nomination_1.default {
         this.msg = 'Нахєр вежі!';
     }
     scorePoint(match, player_slot) {
-        const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
-        return player && player.tower_kills > 5 ? player.tower_kills : 0;
+        if (!!match) {
+            const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+            return player && player.tower_kills > 5 ? player.tower_kills : 0;
+        }
+        return 0;
     }
 }
 exports.RapunzelSyndrome = RapunzelSyndrome;

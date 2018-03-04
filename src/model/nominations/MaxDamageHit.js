@@ -20,8 +20,11 @@ class MaxDamageHit extends Nomination_1.default {
         return util_1.format(this.msg, this.roundToTwoDec(this.getScore() / Constants_1.default.AM_HP));
     }
     scorePoint(match, player_slot) {
-        const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
-        return !!player && !!player.max_hero_hit && !!player.max_hero_hit.value ? player.max_hero_hit.value : null;
+        if (!!match) {
+            const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+            return !!player && !!player.max_hero_hit && !!player.max_hero_hit.value ? player.max_hero_hit.value : 0;
+        }
+        return 0;
     }
     roundToTwoDec(num) {
         return Math.round(num * 100) / 100;

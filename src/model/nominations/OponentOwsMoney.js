@@ -11,8 +11,11 @@ class OponentOwsMoney extends Nomination_1.default {
         this.msg = 'Суперник гроші винен';
     }
     scorePoint(match, player_slot) {
-        const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
-        return !!player && player.kills === 0 ? 1 : 0;
+        if (!!match) {
+            const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+            return !!player && player.kills === 0 ? 1 : 0;
+        }
+        return 0;
     }
 }
 exports.OponentOwsMoney = OponentOwsMoney;

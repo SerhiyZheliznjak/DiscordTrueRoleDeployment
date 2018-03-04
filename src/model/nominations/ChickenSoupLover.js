@@ -11,6 +11,9 @@ class ChickeSoupLover extends Nomination_1.default {
         this.msg = 'А як ще пояснити нащо йому всі ті кури?';
     }
     scorePoint(match, player_slot) {
+        if (!match) {
+            return 0;
+        }
         const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
         return player && player.courier_kills ? player.courier_kills : 0;
     }
