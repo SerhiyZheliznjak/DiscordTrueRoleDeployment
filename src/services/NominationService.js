@@ -50,15 +50,14 @@ class NominationService {
             .flatMap((account_id) => rxjs_1.Observable.zip(this.getFreshRecentMatchesForPlayer(account_id), this.dataStore.getRecentMatchesForPlayer(account_id)))
             .map((playerMatches) => this.getOnlyFreshNewMatches(playerMatches))
             .flatMap(playersWithNewMatches => this.mapToPlayerWithFullMatches(playersWithNewMatches))
-            .scan((arr, pfm) => {
+            .reduce((arr, pfm) => {
             // console.log('Scan for ');   sdfsd
             return [...arr, pfm];
         }, [])
-            .subscribe(fpms => fpms.forEach(pfm => console.log(pfm.account_id, ' played ', pfm.matches.length)));
-        // .subscribe((playersMatches: PlayerFullMatches[]) => {
-        //   playersMatches.forEach(pfm => scoreBoard.scorePlayer(pfm.account_id, pfm.matches));
-        //   this.awardWinners(scoreBoard);
-        // });
+            .subscribe((playersMatches) => {
+            playersMatches.forEach(pfm => scoreBoard.scorePlayer(pfm.account_id, pfm.matches));
+            this.awardWinners(scoreBoard);
+        });
     }
     mapToPlayerWithFullMatches(prm) {
         if (!prm.recentMatchesIds.length) {
