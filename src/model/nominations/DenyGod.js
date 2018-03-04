@@ -6,7 +6,7 @@ class DenyGod extends Nomination_1.default {
     constructor(points = []) {
         super(points);
         this.points = points;
-        this.name = 'Заперечувало';
+        this.name = 'Заперечувач';
         this.minScore = 10;
         this.msg = 'Сам не гам і ворогу не дам!';
     }

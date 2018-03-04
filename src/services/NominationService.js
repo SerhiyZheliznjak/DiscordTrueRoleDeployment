@@ -50,10 +50,7 @@ class NominationService {
             .flatMap((account_id) => rxjs_1.Observable.zip(this.getFreshRecentMatchesForPlayer(account_id), this.dataStore.getRecentMatchesForPlayer(account_id)))
             .map((playerMatches) => this.getOnlyFreshNewMatches(playerMatches))
             .flatMap(playersWithNewMatches => this.mapToPlayerWithFullMatches(playersWithNewMatches))
-            .reduce((arr, pfm) => {
-            // console.log('Scan for ');   sdfsd
-            return [...arr, pfm];
-        }, [])
+            .reduce((arr, pfm) => [...arr, pfm], [])
             .subscribe((playersMatches) => {
             playersMatches.forEach(pfm => scoreBoard.scorePlayer(pfm.account_id, pfm.matches));
             this.awardWinners(scoreBoard);

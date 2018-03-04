@@ -9,7 +9,7 @@ class Donor extends Nomination_1.default {
         this.points = points;
         this.name = 'Донор';
         this.minScore = 1;
-        this.msg = 'Нє ну як не дати як просять?';
+        this.msg = 'Благородне діло, но не в доті';
     }
     scorePoint(match, player_slot) {
         const objectives = DotaParser_1.DotaParser.getObjectives(match);
