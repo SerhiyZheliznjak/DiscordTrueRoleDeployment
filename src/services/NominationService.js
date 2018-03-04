@@ -64,7 +64,6 @@ class NominationService {
             .flatMap(match_id => this.dataStore.getMatch(match_id))
             .reduce((pfm, match) => {
             if (match) {
-                console.log('Scanend ', match.match_id, 'match for ', prm.account_id, ' curernt length ', pfm.matches.length);
                 pfm.matches.push(match);
             }
             return pfm;
@@ -77,15 +76,21 @@ class NominationService {
     hasNewMatches(freshMatches, storedMatches) {
         let hasNewMatch = false;
         console.log('Player ', freshMatches.account_id);
+        console.log('stored matches = ', storedMatches.recentMatchesIds.length);
+        console.log('fresh matches ', freshMatches.recentMatchesIds.length);
         if (this.noMatches(storedMatches)) {
             hasNewMatch = !this.noMatches(freshMatches);
+            console.log('has no stored matches played new matches = ', hasNewMatch);
         }
         else {
             if (!this.noMatches(freshMatches)) {
                 hasNewMatch = this.storedMatchesDoNotContainRecent(freshMatches, storedMatches);
+                console.log('has stored matches ', storedMatches.recentMatchesIds.length, ' and fresh matches = ', hasNewMatch);
+            }
+            else {
+                console.log('has neither stored nor fresh matches');
             }
         }
-        console.log('has new matches: ', hasNewMatch);
         return hasNewMatch;
     }
     noMatches(playerMatches) {
