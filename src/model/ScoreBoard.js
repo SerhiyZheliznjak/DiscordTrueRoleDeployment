@@ -16,7 +16,6 @@ class ScoreBoard {
                 bestResultSoFar.account_id = account_id;
                 bestResultSoFar.nomination = challengerNominationResult;
             }
-            console.log(account_id, ' ', challengerNominationResult.getName(), ' ', challengerNominationResult.getScore());
         });
     }
 }
