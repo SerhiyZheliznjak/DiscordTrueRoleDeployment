@@ -62,7 +62,7 @@ class NominationService {
         }
         return rxjs_1.Observable.from(prm.recentMatchesIds)
             .flatMap(match_id => this.dataStore.getMatch(match_id))
-            .scan((pfm, match) => {
+            .reduce((pfm, match) => {
             if (match) {
                 console.log('Scanend ', match.match_id, 'match for ', prm.account_id, ' curernt length ', pfm.matches.length);
                 pfm.matches.push(match);
