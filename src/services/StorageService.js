@@ -12,8 +12,8 @@ class StorageService {
         this.dbName = dbName;
     }
     getRecentMatchesForPlayer(account_id) {
-        return this.find(Constants_1.default.RECENT_MATCHES_COLLECTION)
-            .map(json => StorageConvertionUtil_1.default.convertToPlayersRecentMatches(json[0]), { key: account_id });
+        return this.find(Constants_1.default.RECENT_MATCHES_COLLECTION, { key: account_id })
+            .map(json => StorageConvertionUtil_1.default.convertToPlayersRecentMatches(json[0]));
     }
     getWinners() {
         return this.find(Constants_1.default.HALL_OF_FAME_COLLECTION)

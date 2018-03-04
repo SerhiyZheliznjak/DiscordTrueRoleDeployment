@@ -8,15 +8,6 @@ class DataStore {
         this.dotaApi = dotaApi;
         this.storage = storage;
     }
-    // public get playersRecentMatches(): Observable<Map<number, number[]>> {
-    //     if (DataStore.playersRecentMatchesCacheMap.size === 0) {
-    //         return this.storage.getRecentMatches().map(map => {
-    //             DataStore.playersRecentMatchesCacheMap = map;
-    //             return map;
-    //         });
-    //     }
-    //     return Observable.of(DataStore.playersRecentMatchesCacheMap);
-    // }
     getRecentMatchesForPlayer(account_id) {
         return this.storage.getRecentMatchesForPlayer(account_id);
     }

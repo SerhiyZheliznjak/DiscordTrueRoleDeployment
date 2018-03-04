@@ -47,7 +47,9 @@ class NominationService {
     nextCheck() {
         const scoreBoard = new ScoreBoard_1.default();
         rxjs_1.Observable.from(this.dotaIds)
-            .flatMap((account_id) => rxjs_1.Observable.zip(this.getFreshRecentMatchesForPlayer(account_id), this.dataStore.getRecentMatchesForPlayer(account_id)))
+            .flatMap((account_id) => {
+            return rxjs_1.Observable.forkJoin(this.getFreshRecentMatchesForPlayer(account_id), this.dataStore.getRecentMatchesForPlayer(account_id));
+        })
             .map((playerMatches) => this.getOnlyFreshNewMatches(playerMatches))
             .flatMap(playersWithNewMatches => this.mapToPlayerWithFullMatches(playersWithNewMatches))
             .reduce((arr, pfm) => [...arr, pfm], [])
@@ -75,20 +77,12 @@ class NominationService {
     }
     hasNewMatches(freshMatches, storedMatches) {
         let hasNewMatch = false;
-        console.log('Player ', freshMatches.account_id);
-        console.log('stored matches = ', storedMatches.recentMatchesIds.length);
-        console.log('fresh matches ', freshMatches.recentMatchesIds.length);
         if (this.noMatches(storedMatches)) {
             hasNewMatch = !this.noMatches(freshMatches);
-            console.log('has no stored matches played new matches = ', hasNewMatch);
         }
         else {
             if (!this.noMatches(freshMatches)) {
                 hasNewMatch = this.freshMatchesNotStored(freshMatches, storedMatches);
-                console.log('has stored matches ', storedMatches.recentMatchesIds.length, ' and fresh matches = ', hasNewMatch);
-            }
-            else {
-                console.log('has neither stored nor fresh matches');
             }
         }
         return hasNewMatch;
@@ -97,8 +91,6 @@ class NominationService {
         return !playerMatches || !playerMatches.recentMatchesIds || !playerMatches.recentMatchesIds.length;
     }
     freshMatchesNotStored(freshMatches, storedMatches) {
-        console.log('stored: ', storedMatches.recentMatchesIds);
-        console.log('freshMatches: ', freshMatches.recentMatchesIds);
         const notStored = freshMatches.recentMatchesIds.filter(match_id => storedMatches.recentMatchesIds.indexOf(match_id) < 0);
         return notStored.length > 0;
     }
