@@ -18,6 +18,6 @@ class Constants {
     static get FORGIVE_RETARDS_INTERVAL() { return 1000 * 60 * 60 * 24; }
     static get NOMINATION_DUE_INTERVAL() { return 1000 * 60 * 60 * 24 * 7 - 1000 * 60; } // - huge gap for calculations time
     static get MATCH_DUE_TIME_SEC() { return 60 * 60 * 24 * 7 * 2; } // two weeks
-    static get WATCH_INTERVAL() { return 1000 * 60 * 60 * 24; }
+    static get WATCH_INTERVAL() { return 1000 * 60 * 30; }
 }
 exports.default = Constants;
