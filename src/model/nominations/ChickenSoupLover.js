@@ -7,7 +7,7 @@ class ChickeSoupLover extends Nomination_1.default {
         super(points);
         this.points = points;
         this.name = 'Збирає на росіл';
-        this.minScore = 1;
+        this.minScore = 3;
         this.msg = 'А як ще пояснити нащо йому всі ті кури?';
     }
     scorePoint(match, player_slot) {
