@@ -14,7 +14,6 @@ class QueuedRequest {
 class DotaApi {
     constructor(rxHttpRequest = rx_http_request_1.RxHttpRequest) {
         this.rxHttpRequest = rxHttpRequest;
-        console.log('Initialized DotaApi');
     }
     static getMatchUrl(match_id) {
         return util_1.format('https://api.opendota.com/api/matches/%s', match_id);

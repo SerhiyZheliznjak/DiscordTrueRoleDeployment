@@ -125,9 +125,7 @@ class NominationService {
             || this.isOutOfDueDate(newWinner, storedWinner);
     }
     isOutOfDueDate(newWinner, storedWinner) {
-        return newWinner.nomination.timeClaimed - storedWinner.nomination.timeClaimed >= Constants_1.default.NOMINATION_DUE_INTERVAL
-            && newWinner.account_id !== storedWinner.account_id
-            && newWinner.nomination.getScore() !== storedWinner.nomination.getScore();
+        return newWinner.nomination.timeClaimed - storedWinner.nomination.timeClaimed >= Constants_1.default.NOMINATION_DUE_INTERVAL;
     }
 }
 exports.default = NominationService;
