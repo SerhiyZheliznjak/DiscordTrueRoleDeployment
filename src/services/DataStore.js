@@ -24,6 +24,7 @@ class DataStore {
         return rxjs_1.Observable.of(DataStore.nominationsResultsCacheMap);
     }
     updateNominationResult(nominationResult) {
+        console.log('updating hall of fame with ', nominationResult.account_id, nominationResult.nomination.getName());
         this.storage.updateNominationResult(nominationResult);
     }
     get matchesCache() {
