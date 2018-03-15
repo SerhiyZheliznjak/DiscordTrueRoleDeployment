@@ -120,12 +120,11 @@ class NominationService {
         });
     }
     isClaimedNomination(newWinner, storedWinner) {
-        return !storedWinner
-            || newWinner.nomination.hasHigherScoreThen(storedWinner.nomination)
-            || this.isOutOfDueDate(newWinner, storedWinner);
+        return !storedWinner || this.isOutOfDueDate(storedWinner)
+            || newWinner.nomination.hasHigherScoreThen(storedWinner.nomination);
     }
-    isOutOfDueDate(newWinner, storedWinner) {
-        return newWinner.nomination.timeClaimed - storedWinner.nomination.timeClaimed >= Constants_1.default.NOMINATION_DUE_INTERVAL;
+    isOutOfDueDate(storedWinner) {
+        return new Date().getTime() - storedWinner.nomination.timeClaimed >= Constants_1.default.NOMINATION_DUE_INTERVAL;
     }
 }
 exports.default = NominationService;
