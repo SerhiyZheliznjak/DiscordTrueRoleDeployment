@@ -18,6 +18,7 @@ const DenyGod_1 = require("./nominations/DenyGod");
 const Nenza_1 = require("./nominations/Nenza");
 const StunningMan_1 = require("./nominations/StunningMan");
 const TacticalFeeder_1 = require("./nominations/TacticalFeeder");
+const ThisTimeItWillWork_1 = require("./nominations/ThisTimeItWillWork");
 class Nominations {
     static get all() {
         return [
@@ -38,7 +39,8 @@ class Nominations {
             new DenyGod_1.DenyGod(),
             new Nenza_1.Nenza(),
             new StunningMan_1.StunningMan(),
-            new TacticalFeeder_1.TacticalFeeder()
+            new TacticalFeeder_1.TacticalFeeder(),
+            new ThisTimeItWillWork_1.ThisTimeItWillWork()
         ];
     }
 }
