@@ -14,7 +14,7 @@ class DataStore {
     updatePlayerRecentMatch(account_id, matchesIds) {
         this.storage.updateRecentMatchesForPlayer(account_id, matchesIds);
     }
-    get nominationsResults() {
+    get hallOfFame() {
         if (DataStore.nominationsResultsCacheMap.size === 0) {
             return this.storage.getWinners().map(map => {
                 DataStore.nominationsResultsCacheMap = map;

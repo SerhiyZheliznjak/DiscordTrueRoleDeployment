@@ -47,17 +47,10 @@ class NominationService {
     nextCheck() {
         rxjs_1.Observable.from(this.dotaIds)
             .flatMap((account_id) => rxjs_1.Observable.zip(this.getFreshRecentMatchesForPlayer(account_id), this.dataStore.getRecentMatchesForPlayer(account_id)))
-            .map((playerMatches) => {
-            console.log(playerMatches);
-            return this.getOnlyFreshNewMatches(playerMatches);
-        })
-            .flatMap(playersWithNewMatches => this.mapToPlayerWithFullMatches(playersWithNewMatches))
+            .map((playerMatches) => this.getNewMatches(playerMatches[0], playerMatches[1]))
+            .flatMap(playerWithNewMatches => this.mapToPlayerWithFullMatches(playerWithNewMatches))
             .reduce((arr, pfm) => [...arr, pfm], [])
-            .subscribe((playersMatches) => {
-            const scoreBoard = new ScoreBoard_1.default();
-            playersMatches.forEach(pfm => scoreBoard.scorePlayer(pfm.account_id, pfm.matches));
-            this.awardWinners(scoreBoard);
-        });
+            .subscribe((playersMatches) => this.countResults(playersMatches));
     }
     mapToPlayerWithFullMatches(prm) {
         if (!prm.recentMatchesIds.length) {
@@ -95,32 +88,37 @@ class NominationService {
         const notStored = freshMatches.recentMatchesIds.filter(match_id => storedMatches.recentMatchesIds.indexOf(match_id) < 0);
         return notStored.length > 0;
     }
-    getOnlyFreshNewMatches(playerMatches) {
-        if (this.hasNewMatches(...playerMatches)) {
-            this.dataStore.updatePlayerRecentMatch(playerMatches[0].account_id, playerMatches[0].recentMatchesIds);
-            return playerMatches[0];
+    getNewMatches(freshMatches, storedMatches) {
+        if (this.hasNewMatches(freshMatches, storedMatches)) {
+            this.dataStore.updatePlayerRecentMatch(freshMatches.account_id, freshMatches.recentMatchesIds);
+            return freshMatches;
         }
-        return new PlayerRecentMatches_1.default(playerMatches[0].account_id, []);
+        return new PlayerRecentMatches_1.default(freshMatches.account_id, []);
     }
-    awardWinners(scoreBoard) {
-        this.dataStore.nominationsResults.subscribe(wonNominations => {
-            const newNomintionsClaimed = [];
+    countResults(playersMatches) {
+        const scoreBoard = new ScoreBoard_1.default();
+        playersMatches.forEach(pfm => scoreBoard.scorePlayer(pfm.account_id, pfm.matches));
+        this.dataStore.hallOfFame.subscribe(hallOfFame => {
+            const newNominationsClaimed = [];
             for (const nominationName of scoreBoard.nominationsResults.keys()) {
                 const newWinner = scoreBoard.nominationsResults.get(nominationName);
                 if (newWinner.account_id !== Constants_1.default.UNCLAIMED && newWinner.nomination.isScored()) {
-                    const storedWinner = wonNominations.get(nominationName);
+                    const storedWinner = hallOfFame.get(nominationName);
                     if (this.isClaimedNomination(newWinner, storedWinner)) {
-                        newNomintionsClaimed.push(newWinner);
+                        newNominationsClaimed.push(newWinner);
                     }
                 }
             }
-            if (!!newNomintionsClaimed.length) {
-                for (const nominationResult of scoreBoard.nominationsResults.values()) {
-                    this.dataStore.updateNominationResult(nominationResult);
-                }
-                this.claimedNominationsObserver.next(newNomintionsClaimed);
-            }
+            this.awardWinners(newNominationsClaimed);
         });
+    }
+    awardWinners(newNominationsClaimed) {
+        if (!!newNominationsClaimed.length) {
+            for (const nominationResult of newNominationsClaimed) {
+                this.dataStore.updateNominationResult(nominationResult);
+            }
+            this.claimedNominationsObserver.next(newNominationsClaimed);
+        }
     }
     isClaimedNomination(newWinner, storedWinner) {
         return !storedWinner || this.isOutOfDueDate(storedWinner)
