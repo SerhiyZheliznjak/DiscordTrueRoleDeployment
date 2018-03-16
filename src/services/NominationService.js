@@ -47,7 +47,10 @@ class NominationService {
     nextCheck() {
         rxjs_1.Observable.from(this.dotaIds)
             .flatMap((account_id) => rxjs_1.Observable.zip(this.getFreshRecentMatchesForPlayer(account_id), this.dataStore.getRecentMatchesForPlayer(account_id)))
-            .map((playerMatches) => this.getOnlyFreshNewMatches(playerMatches))
+            .map((playerMatches) => {
+            console.log(playerMatches);
+            return this.getOnlyFreshNewMatches(playerMatches);
+        })
             .flatMap(playersWithNewMatches => this.mapToPlayerWithFullMatches(playersWithNewMatches))
             .reduce((arr, pfm) => [...arr, pfm], [])
             .subscribe((playersMatches) => {
