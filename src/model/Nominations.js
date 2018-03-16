@@ -17,6 +17,7 @@ const ChickenSoupLover_1 = require("./nominations/ChickenSoupLover");
 const DenyGod_1 = require("./nominations/DenyGod");
 const Nenza_1 = require("./nominations/Nenza");
 const StunningMan_1 = require("./nominations/StunningMan");
+const TacticalFeeder_1 = require("./nominations/TacticalFeeder");
 class Nominations {
     static get all() {
         return [
@@ -36,7 +37,8 @@ class Nominations {
             new ChickenSoupLover_1.ChickeSoupLover(),
             new DenyGod_1.DenyGod(),
             new Nenza_1.Nenza(),
-            new StunningMan_1.StunningMan()
+            new StunningMan_1.StunningMan(),
+            new TacticalFeeder_1.TacticalFeeder()
         ];
     }
 }
