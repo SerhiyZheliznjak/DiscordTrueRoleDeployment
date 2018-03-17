@@ -11,7 +11,7 @@ class ScoreBoard {
     }
     applyPlayerScores(account_id, nominations) {
         nominations.forEach(challengerNominationResult => {
-            const bestResultSoFar = this.nominationsResults.get(challengerNominationResult.getName());
+            const bestResultSoFar = this.nominationsResults.get(challengerNominationResult.getKey());
             if (challengerNominationResult.hasHigherScoreThen(bestResultSoFar.nomination)) {
                 bestResultSoFar.account_id = account_id;
                 bestResultSoFar.nomination = challengerNominationResult;

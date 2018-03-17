@@ -6,6 +6,12 @@ class Nomination {
         this.points = points;
         this.timeClaimed = new Date().getTime();
     }
+    getKey() {
+        return this.name.split("").reduce((a, b) => {
+            a = ((a << 5) - a) + b.charCodeAt(0);
+            return a & a;
+        }, 0);
+    }
     getName() {
         return this.name;
     }

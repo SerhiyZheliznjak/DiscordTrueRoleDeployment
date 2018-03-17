@@ -8,7 +8,7 @@ class ScoreBoardService {
     constructor() { }
     initNominationResults() {
         return Nominations_1.default.all.reduce((map, nomination) => {
-            map.set(nomination.getName(), new NominationResult_1.default(Constants_1.default.UNCLAIMED, nomination));
+            map.set(nomination.getKey(), new NominationResult_1.default(Constants_1.default.UNCLAIMED, nomination));
             return map;
         }, new Map());
     }

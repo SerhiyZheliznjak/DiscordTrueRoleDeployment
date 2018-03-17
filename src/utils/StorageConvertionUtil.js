@@ -17,7 +17,7 @@ class StorageConvertionUtil {
         return new PlayerRecentMatches_1.default(0, []);
     }
     static convertToNominationResultJson(nominationResult) {
-        return new NominationResultJson_1.default(nominationResult.nomination.getName(), nominationResult.account_id, nominationResult.nomination.getScore(), new Date().getTime());
+        return new NominationResultJson_1.default(nominationResult.nomination.getKey(), nominationResult.nomination.getName(), nominationResult.account_id, nominationResult.nomination.getScore(), new Date().getTime());
     }
     static convertToWonNominations(nominationsWinnersJson) {
         return nominationsWinnersJson.reduce((map, nwj) => {
@@ -26,7 +26,7 @@ class StorageConvertionUtil {
                 nomination.addPoint(Constants_1.default.WINNING_MATCH_ID, nwj.score);
                 nomination.timeClaimed = nwj.timeClaimed;
                 const nw = new NominationResult_1.default(nwj.owner_account_id, nomination);
-                map.set(nwj.nominationName, nw);
+                map.set(nwj.key, nw);
             }
             else {
                 console.error('Corrupted nomination result ', nwj);
