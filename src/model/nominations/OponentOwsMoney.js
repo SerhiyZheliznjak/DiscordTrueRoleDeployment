@@ -11,7 +11,7 @@ class OponentOwsMoney extends Nomination_1.default {
         this.msg = 'Суперник гроші винен\n0 вбивств у 3х чи більше матчах';
     }
     getScoreText() {
-        return 'Жодного вбивства у: ' + this.getScore() + ' матчах';
+        return 'Матчів без вбивств: ' + this.getScore();
     }
     scorePoint(match, player_slot) {
         if (!!match) {

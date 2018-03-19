@@ -10,7 +10,7 @@ class Nenza extends Nomination_1.default {
         this.msg = 'Бачу тапок в закупі - report, ff, afk';
     }
     getScoreText() {
-        return 'Писав херню в чат: ' + this.getScore() + ' разів';
+        return 'Кількість написаної херні в чаті: ' + this.getScore();
     }
     scorePoint(match, player_slot) {
         if (match && match.chat) {

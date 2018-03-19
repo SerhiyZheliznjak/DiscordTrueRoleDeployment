@@ -11,7 +11,7 @@ class StackGod extends Nomination_1.default {
         this.msg = 'То певно той що джунглі персувати помагав\nНайбільша кількість скирт';
     }
     getScoreText() {
-        return 'Наскиртовано: ' + this.getScore() + ' таборів';
+        return 'Наскиртовано таборів: ' + this.getScore();
     }
     scorePoint(match, player_slot) {
         if (!!match) {

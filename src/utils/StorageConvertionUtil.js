@@ -17,7 +17,7 @@ class StorageConvertionUtil {
         return new PlayerRecentMatches_1.default(0, []);
     }
     static convertToNominationResultJson(nominationResult) {
-        return new NominationResultJson_1.default(nominationResult.nomination.getKey(), nominationResult.nomination.getName(), nominationResult.account_id, nominationResult.nomination.getScore(), new Date().getTime());
+        return new NominationResultJson_1.default(nominationResult.nomination.getKey(), nominationResult.nomination.getName(), nominationResult.account_id, nominationResult.nomination.getScore(), nominationResult.nomination.timeClaimed);
     }
     static convertToWonNominations(nominationsWinnersJson) {
         return nominationsWinnersJson.reduce((map, nwj) => {

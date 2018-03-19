@@ -11,7 +11,7 @@ class StunningMan extends Nomination_1.default {
         this.msg = 'Він такий приголомшливий!\nНайдовше часу протримав суперників приголомшеними';
     }
     getScoreText() {
-        return 'Протримав ворогів у приголомшені: ' + this.getScore() + ' секунд';
+        return 'Протримав ворогів у приголомшені: ' + this.getScore() + 'сек';
     }
     scorePoint(match, player_slot) {
         if (!!match) {

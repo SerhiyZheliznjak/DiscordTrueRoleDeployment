@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Pair_1 = require("./Pair");
 class Nomination {
-    constructor(points = []) {
+    constructor(points = [], timeClaimed = new Date().getTime()) {
         this.points = points;
-        this.timeClaimed = new Date().getTime();
+        this.timeClaimed = timeClaimed;
     }
     getKey() {
         return this.name.split("").reduce((a, b) => {

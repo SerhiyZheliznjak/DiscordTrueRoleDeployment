@@ -12,7 +12,7 @@ class PingMaster extends Nomination_1.default {
             + 'Напінгав 50 і більше разів у матчі';
     }
     getScoreText() {
-        return 'Пінганув: ' + this.getScore() + ' разів';
+        return 'Кількість пінгів: ' + this.getScore();
     }
     getScore() {
         const pings = this.points.map(p => parseInt(p.p2 + ''));

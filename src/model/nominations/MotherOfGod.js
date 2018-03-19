@@ -12,7 +12,7 @@ class MotherOfGod extends Nomination_1.default {
             'Має 0 смертей у 3х або більше матчах';
     }
     getScoreText() {
-        return 'Не вмер жодного разу у: ' + this.getScore() + ' матчах';
+        return 'Матчі без смертей: ' + this.getScore();
     }
     scorePoint(match, player_slot) {
         if (!!match) {
