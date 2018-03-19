@@ -22,7 +22,7 @@ class BestKDA extends Nomination_1.default {
             }
             return max;
         }, '0/0/0');
-        return bestKDA;
+        return 'ВСП: ' + bestKDA;
     }
     scorePoint(match, player_slot) {
         if (!!match) {

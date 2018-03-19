@@ -11,6 +11,9 @@ class Donor extends Nomination_1.default {
         this.minScore = 3;
         this.msg = 'Благородне діло, но не в доті';
     }
+    getScoreText() {
+        return 'Віддано першої крові: ' + this.getScore();
+    }
     scorePoint(match, player_slot) {
         if (!match) {
             return 0;

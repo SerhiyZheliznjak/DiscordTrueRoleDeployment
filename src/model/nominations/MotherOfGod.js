@@ -8,7 +8,11 @@ class MotherOfGod extends Nomination_1.default {
         this.points = points;
         this.name = 'Хуй Замочиш';
         this.minScore = 3;
-        this.msg = 'Мабуть то ліпше ніж Ісус?\nНу бо нащо вміти воскресати за 3 дні, якщо тебе хрін замочиш?';
+        this.msg = 'Мабуть то ліпше ніж Ісус?\nНу бо нащо вміти воскресати за 3 дні, якщо тебе хрін замочиш?\n' +
+            'Має 0 смертей у 3х або більше матчах';
+    }
+    getScoreText() {
+        return 'Не вмер жодного разу у: ' + this.getScore() + ' матчах';
     }
     scorePoint(match, player_slot) {
         if (!!match) {

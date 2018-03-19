@@ -8,7 +8,10 @@ class TacticalFeeder extends Nomination_1.default {
         this.points = points;
         this.name = 'Тактичний Фідер';
         this.minScore = 1;
-        this.msg = 'Мета реально працює';
+        this.msg = 'Мета реально працює\nВмер не менше 10 разів, але виграв матч';
+    }
+    getScoreText() {
+        return 'Виграно матчів фідженням: ' + this.getScore();
     }
     scorePoint(match, player_slot) {
         if (!!match) {

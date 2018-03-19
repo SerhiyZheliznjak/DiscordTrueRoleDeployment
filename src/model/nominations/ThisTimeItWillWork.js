@@ -8,7 +8,10 @@ class ThisTimeItWillWork extends Nomination_1.default {
         this.points = points;
         this.name = 'Шяс піде';
         this.minScore = 5;
-        this.msg = 'То не просто так в народі кажуть - складай на байбек з молоду';
+        this.msg = 'То не просто так в народі кажуть - складай на байбек з молоду\nБайбекнувся і виграв';
+    }
+    getScoreText() {
+        return 'Сума викупів у виграних матчах: ' + this.getScore();
     }
     scorePoint(match, player_slot) {
         if (!!match) {

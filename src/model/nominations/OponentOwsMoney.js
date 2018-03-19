@@ -7,8 +7,11 @@ class OponentOwsMoney extends Nomination_1.default {
         super(points);
         this.points = points;
         this.name = 'Не вбий суперника свого';
-        this.minScore = 5;
-        this.msg = 'Суперник гроші винен';
+        this.minScore = 3;
+        this.msg = 'Суперник гроші винен\n0 вбивств у 3х чи більше матчах';
+    }
+    getScoreText() {
+        return 'Жодного вбивства у: ' + this.getScore() + ' матчах';
     }
     scorePoint(match, player_slot) {
         if (!!match) {

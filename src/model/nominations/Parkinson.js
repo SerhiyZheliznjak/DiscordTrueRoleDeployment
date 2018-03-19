@@ -8,7 +8,11 @@ class Parkinson extends Nomination_1.default {
         this.points = points;
         this.name = 'Паркінсон';
         this.minScore = 100;
-        this.msg = 'Як крілик, бо не факт що крілики каждий раз попадають там де цілились';
+        this.msg = 'Як крілик, бо не факт що крілики каждий раз попадають там де цілились\n'
+            + 'Найбільше дій за хвилину у одному з матчів';
+    }
+    getScoreText() {
+        return 'Дій за хвилину: ' + this.getScore();
     }
     getScore() {
         const apmArr = this.getPoints().map(p => parseInt(p.p2 + ''));

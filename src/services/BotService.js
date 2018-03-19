@@ -185,7 +185,7 @@ class BotService {
     generateMessages(claimedNominations) {
         return rxjs_1.Observable.from(claimedNominations)
             .flatMap(cn => this.getNominationWithPlayerProfile(cn))
-            .map(pair => this.getRichEmbed(pair.p2.personaname + ': ' + pair.p1.nomination.getName(), pair.p1.nomination.getMessage(), pair.p2.avatarmedium, 'Рахунок: ' + pair.p1.nomination.getScoreText(), pair.p2.profileurl));
+            .map(pair => this.getRichEmbed(pair.p2.personaname + ': ' + pair.p1.nomination.getName(), pair.p1.nomination.getMessage(), pair.p2.avatarmedium, pair.p1.nomination.getScoreText(), pair.p2.profileurl));
     }
     getNominationWithPlayerProfile(claimedNomination) {
         return this.dataStore.getProfile(claimedNomination.account_id).map(profile => new Pair_1.default(claimedNomination, profile));

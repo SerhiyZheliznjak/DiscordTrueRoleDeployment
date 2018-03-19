@@ -9,6 +9,9 @@ class Nenza extends Nomination_1.default {
         this.minScore = 1;
         this.msg = 'Бачу тапок в закупі - report, ff, afk';
     }
+    getScoreText() {
+        return 'Писав херню в чат: ' + this.getScore() + ' разів';
+    }
     scorePoint(match, player_slot) {
         if (match && match.chat) {
             const nenzaMsg = match.chat.filter(msg => msg.player_slot === player_slot)

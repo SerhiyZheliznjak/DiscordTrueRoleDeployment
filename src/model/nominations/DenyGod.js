@@ -10,6 +10,9 @@ class DenyGod extends Nomination_1.default {
         this.minScore = 10;
         this.msg = 'Сам не гам і ворогу не дам!';
     }
+    getScoreText() {
+        return 'Заперечено кріпів за одну гру: ' + this.getScore();
+    }
     getScore() {
         const denyArr = this.getPoints().map(p => parseInt(p.p2 + ''));
         return Math.max(...denyArr);

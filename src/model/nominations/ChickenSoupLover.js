@@ -10,6 +10,9 @@ class ChickeSoupLover extends Nomination_1.default {
         this.minScore = 3;
         this.msg = 'А як ще пояснити нащо йому всі ті кури?';
     }
+    getScoreText() {
+        return 'Вбито кур\'єрів: ' + this.getScore();
+    }
     scorePoint(match, player_slot) {
         if (!match) {
             return 0;

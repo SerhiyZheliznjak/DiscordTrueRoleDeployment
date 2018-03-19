@@ -10,6 +10,9 @@ class FirstBloodOwner extends Nomination_1.default {
         this.minScore = 3;
         this.msg = 'Є різні методи то пролити... Вам розказувати чи самі знаєте?';
     }
+    getScoreText() {
+        return 'Пролито першої крові: ' + this.getScore();
+    }
     scorePoint(match, player_slot) {
         if (!match) {
             return 0;

@@ -12,6 +12,9 @@ class MaxDamageHit extends Nomination_1.default {
         this.minScore = Constants_1.default.AM_HP;
         this.msg = 'Йобне раз, але сильно. Вбив %s антимагів одиним ударом!';
     }
+    getScoreText() {
+        return 'Шкоди за удар: ' + this.getScore();
+    }
     getScore() {
         const dmgArr = this.getPoints().map(p => parseInt(p.p2 + ''));
         return Math.max(...dmgArr);

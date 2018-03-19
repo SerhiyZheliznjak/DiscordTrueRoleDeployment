@@ -8,7 +8,11 @@ class Looser extends Nomination_1.default {
         this.points = points;
         this.name = 'Шота не йде';
         this.minScore = 10;
-        this.msg = 'Всьо то саме що пабідітіль, от тільки не то щоб його в тіму хтіли, та й не дуже то заздрят';
+        this.msg = 'Всьо то саме що пабідітіль, от тільки не то щоб його в тіму хтіли, та й не дуже то заздрят\n' +
+            'Переживає смугу програшів';
+    }
+    getScoreText() {
+        return 'Програно матчів: ' + this.getScore();
     }
     scorePoint(match, player_slot) {
         if (!!match) {

@@ -8,7 +8,10 @@ class RapunzelSyndrome extends Nomination_1.default {
         this.points = points;
         this.name = 'Синдром Рапунзель';
         this.minScore = 1;
-        this.msg = 'Нахєр вежі!';
+        this.msg = 'Нахєр вежі!\nДобив 5 або більше веж за матч';
+    }
+    getScoreText() {
+        return 'Добито веж: ' + this.getScore();
     }
     scorePoint(match, player_slot) {
         if (!!match) {

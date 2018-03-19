@@ -8,7 +8,10 @@ class StackGod extends Nomination_1.default {
         this.points = points;
         this.name = 'Скиртувальник 1го розряду';
         this.minScore = 20;
-        this.msg = 'То певно той що джунглі персувати помагав';
+        this.msg = 'То певно той що джунглі персувати помагав\nНайбільша кількість скирт';
+    }
+    getScoreText() {
+        return 'Наскиртовано: ' + this.getScore() + ' таборів';
     }
     scorePoint(match, player_slot) {
         if (!!match) {
