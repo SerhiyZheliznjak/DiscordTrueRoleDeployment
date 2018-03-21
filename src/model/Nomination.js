@@ -45,7 +45,7 @@ class Nomination {
         return this.getScore() >= this.minScore;
     }
     scorePoint(match, player_slot) {
-        return null;
+        throw new Error('Should be implemented by child classes');
     }
 }
 exports.default = Nomination;

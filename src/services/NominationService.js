@@ -14,7 +14,7 @@ class NominationService {
         this.dotaApi = dotaApi;
         this.nominationUtils = nominationUtils;
         this.recentGamesObserver = {
-            next: () => this.nextCheck(),
+            next: () => this.nextCheck(this.dotaIds),
             error: () => { },
             complete: () => { }
         };
@@ -32,30 +32,10 @@ class NominationService {
         }
         console.log('stopped nominating');
     }
-    getDotaIds(playersMap) {
-        const dotaIds = [];
-        for (const id of playersMap.keys()) {
-            dotaIds.push(id);
-        }
-        return dotaIds;
-    }
-    getFreshRecentMatchesForPlayer(account_id) {
-        return this.dotaApi.getRecentMatches(account_id).map(recentMatches => {
-            const freshMatches = recentMatches.filter(rm => this.nominationUtils.isFreshMatch(rm)).map(m => m.match_id);
-            return new PlayerRecentMatches_1.default(account_id, freshMatches);
-        });
-    }
-    nextCheck() {
-        rxjs_1.Observable.from(this.dotaIds)
-            .flatMap((account_id) => rxjs_1.Observable.zip(this.getFreshRecentMatchesForPlayer(account_id), this.dataStore.getRecentMatchesForPlayer(account_id)))
-            .map((playerMatches) => {
-            const newMatches = this.nominationUtils.getNewMatches(playerMatches[0], playerMatches[1]);
-            this.dataStore.updatePlayerRecentMatch(newMatches.account_id, newMatches.recentMatchesIds);
-            return newMatches;
-        })
-            .flatMap(playerWithNewMatches => this.mapToPlayerWithFullMatches(playerWithNewMatches))
-            .reduce((arr, pfm) => [...arr, pfm], [])
-            .subscribe((playersMatches) => this.countResults(playersMatches));
+    mapRecentMatchesToNew(recentMatches, storedMatches) {
+        const newMatches = this.nominationUtils.getNewMatches(recentMatches, storedMatches);
+        this.dataStore.updatePlayerRecentMatch(newMatches.account_id, newMatches.recentMatchesIds);
+        return newMatches;
     }
     mapToPlayerWithFullMatches(prm) {
         if (!prm.recentMatchesIds.length) {
@@ -64,6 +44,12 @@ class NominationService {
         return rxjs_1.Observable.from(prm.recentMatchesIds)
             .flatMap(match_id => this.dataStore.getMatch(match_id))
             .reduce((pfm, match) => this.nominationUtils.getPlayerFullMatches(pfm, match), new PlayerFullMatches_1.default(prm.account_id, []));
+    }
+    getFreshRecentMatchesForPlayer(account_id) {
+        return this.dotaApi.getRecentMatches(account_id).map(recentMatches => {
+            const freshMatches = recentMatches.filter(rm => this.nominationUtils.isFreshMatch(rm)).map(m => m.match_id);
+            return new PlayerRecentMatches_1.default(account_id, freshMatches);
+        });
     }
     countResults(playersMatches) {
         this.dataStore.hallOfFame.subscribe(hallOfFame => {
@@ -80,6 +66,21 @@ class NominationService {
             this.dataStore.updateNominationResult(nominationResult);
         }
         this.claimedNominationsObserver.next(newNominationsClaimed);
+    }
+    nextCheck(dotaIds) {
+        rxjs_1.Observable.from(dotaIds)
+            .flatMap((account_id) => rxjs_1.Observable.zip(this.getFreshRecentMatchesForPlayer(account_id), this.dataStore.getRecentMatchesForPlayer(account_id)))
+            .map((playerMatches) => this.mapRecentMatchesToNew(playerMatches[0], playerMatches[1]))
+            .flatMap((playerWithNewMatches) => this.mapToPlayerWithFullMatches(playerWithNewMatches))
+            .reduce((arr, pfm) => [...arr, pfm], [])
+            .subscribe((playersMatches) => this.countResults(playersMatches));
+    }
+    getDotaIds(playersMap) {
+        const dotaIds = [];
+        for (const id of playersMap.keys()) {
+            dotaIds.push(id);
+        }
+        return dotaIds;
     }
 }
 exports.default = NominationService;
