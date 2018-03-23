@@ -61,6 +61,9 @@ class StorageService {
         });
     }
     update(collectionName, document) {
+        if (collectionName === Constants_1.default.RECENT_MATCHES_COLLECTION) {
+            console.log('StorageService: updating', document.recentMatchesIds.length);
+        }
         this.client.subscribe(client => {
             const db = client.db(this.dbName);
             db.collection(collectionName).update({ key: document.key }, document, { upsert: true });
