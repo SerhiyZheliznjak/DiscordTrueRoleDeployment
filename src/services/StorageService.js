@@ -24,7 +24,6 @@ class StorageService {
             .map(json => StorageConvertionUtil_1.default.convertToPlayerObserved(json));
     }
     updateRecentMatchesForPlayer(account_id, matchesIds) {
-        console.log("StorageService: saving rm ", matchesIds.length);
         this.update(Constants_1.default.RECENT_MATCHES_COLLECTION, StorageConvertionUtil_1.default.convertToRecentMatchJson(account_id, matchesIds));
     }
     updateNominationResult(result) {
@@ -61,9 +60,6 @@ class StorageService {
         });
     }
     update(collectionName, document) {
-        if (collectionName === Constants_1.default.RECENT_MATCHES_COLLECTION) {
-            console.log('StorageService: updating', document.recentMatchesIds.length);
-        }
         this.client.subscribe(client => {
             const db = client.db(this.dbName);
             db.collection(collectionName).update({ key: document.key }, document, { upsert: true });

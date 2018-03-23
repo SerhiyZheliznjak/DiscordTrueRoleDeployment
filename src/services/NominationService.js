@@ -34,8 +34,9 @@ class NominationService {
     }
     mapRecentMatchesToNew(recentMatches, storedMatches) {
         const newMatches = this.nominationUtils.getNewMatches(recentMatches, storedMatches);
-        console.log('NominationService: ', newMatches.recentMatchesIds.length);
-        this.dataStore.updatePlayerRecentMatch(newMatches.account_id, newMatches.recentMatchesIds);
+        if (newMatches.recentMatchesIds.length) {
+            this.dataStore.updatePlayerRecentMatch(newMatches.account_id, newMatches.recentMatchesIds);
+        }
         return newMatches;
     }
     mapToPlayerWithFullMatches(prm) {
