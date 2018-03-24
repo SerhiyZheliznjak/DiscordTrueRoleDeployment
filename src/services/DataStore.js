@@ -15,13 +15,7 @@ class DataStore {
         this.storage.updateRecentMatchesForPlayer(account_id, matchesIds);
     }
     get hallOfFame() {
-        if (DataStore.nominationsResultsCacheMap.size === 0) {
-            return this.storage.getWinners().map(map => {
-                DataStore.nominationsResultsCacheMap = map;
-                return map;
-            });
-        }
-        return rxjs_1.Observable.of(DataStore.nominationsResultsCacheMap);
+        return this.storage.getWinners();
     }
     updateNominationResult(nominationResult) {
         this.storage.updateNominationResult(nominationResult);
@@ -86,8 +80,6 @@ class DataStore {
         this.storage.registerPlayer(account_id, discordId);
     }
 }
-DataStore.playersRecentMatchesCacheMap = new Map();
 DataStore.matchesCacheMap = new Map();
-DataStore.nominationsResultsCacheMap = new Map();
 DataStore.registeredPlayersCache = new Map();
 exports.default = DataStore;

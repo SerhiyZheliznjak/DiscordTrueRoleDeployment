@@ -39,7 +39,6 @@ class Nomination {
         return this.msg;
     }
     hasHigherScoreThen(that) {
-        console.log(this.name, `: new winner score: `, this.getScore(), ' stored winner score: ', that.getScore());
         return this.getScore() > that.getScore();
     }
     isScored() {
