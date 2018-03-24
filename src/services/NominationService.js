@@ -53,15 +53,10 @@ class NominationService {
             return new PlayerRecentMatches_1.default(account_id, freshMatches);
         });
     }
-    countResults(playersMatches) {
-        this.dataStore.hallOfFame.subscribe(hallOfFame => {
-            const scoreBoard = new ScoreBoard_1.default();
-            playersMatches.forEach(pfm => scoreBoard.scorePlayer(pfm.account_id, pfm.matches));
-            const newNominationsClaimed = this.nominationUtils.getNewRecords(hallOfFame, scoreBoard.nominationsResults);
-            if (!!newNominationsClaimed.length) {
-                this.awardWinners(newNominationsClaimed);
-            }
-        });
+    getNewResults(playersMatches, hallOfFame) {
+        const scoreBoard = new ScoreBoard_1.default();
+        playersMatches.forEach(pfm => scoreBoard.scorePlayer(pfm.account_id, pfm.matches));
+        return this.nominationUtils.getNewRecords(hallOfFame, scoreBoard.nominationsResults);
     }
     awardWinners(newNominationsClaimed) {
         for (const nominationResult of newNominationsClaimed) {
@@ -75,7 +70,14 @@ class NominationService {
             .map((playerMatches) => this.mapRecentMatchesToNew(playerMatches[0], playerMatches[1]))
             .flatMap((playerWithNewMatches) => this.mapToPlayerWithFullMatches(playerWithNewMatches))
             .reduce((arr, pfm) => [...arr, pfm], [])
-            .subscribe((playersMatches) => this.countResults(playersMatches));
+            .subscribe((playersMatches) => {
+            this.dataStore.hallOfFame.subscribe(hallOfFame => {
+                const newNominationsClaimed = this.getNewResults(playersMatches, hallOfFame);
+                if (!!newNominationsClaimed.length) {
+                    this.awardWinners(newNominationsClaimed);
+                }
+            });
+        });
     }
     getDotaIds(playersMap) {
         const dotaIds = [];
