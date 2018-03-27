@@ -207,7 +207,7 @@ class BotService {
             const keyClassNameMap = Nominations_1.default.getKeyClassNameMap();
             for (const key of hallOfFame.keys()) {
                 const className = keyClassNameMap.get(key);
-                keys += key + ':\t' + hallOfFame.get(key).nominationName + '\n';
+                keys += className + ':\t' + hallOfFame.get(key).nominationName + '\n';
             }
             msg.reply(keys);
         });
