@@ -13,7 +13,7 @@ class ScoreBoard {
     getFirstPlaces() {
         const winners = new Map();
         for (const nominationKey of this.nominationsResults.keys()) {
-            const sortedResults = this.nominationsResults.get(nominationKey).sort((a, b) => a.nomination.compare(b));
+            const sortedResults = this.nominationsResults.get(nominationKey).sort((a, b) => a.nomination.compare(b.nomination));
             winners.set(nominationKey, sortedResults[0]);
         }
         return winners;
