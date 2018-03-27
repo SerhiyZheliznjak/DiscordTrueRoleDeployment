@@ -41,6 +41,9 @@ class Nomination {
     hasHigherScoreThen(that) {
         return this.getScore() > that.getScore();
     }
+    compare(that) {
+        return this.getScore() - that.getScore();
+    }
     isScored() {
         return this.getScore() >= this.minScore;
     }

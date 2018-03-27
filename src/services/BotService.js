@@ -7,6 +7,7 @@ const NominationService_1 = require("./NominationService");
 const StorageService_1 = require("./StorageService");
 const Constants_1 = require("../Constants");
 const Pair_1 = require("../model/Pair");
+const Nominations_1 = require("../model/Nominations");
 class BotService {
     constructor(client, dataStore = new DataStore_1.default(), nominationService = new NominationService_1.default(), storageService = new StorageService_1.default()) {
         this.client = client;
@@ -15,6 +16,10 @@ class BotService {
         this.storageService = storageService;
         this.retardMap = new Map();
         this.chanel = this.client.channels.find('type', 'text');
+        this.nominationKeysMap = Nominations_1.default.all.reduce((map, nomination) => {
+            map.set(nomination.constructor.name, nomination.getName());
+            return map;
+        }, new Map());
     }
     processMesage(msg) {
         if (msg.author.bot) {
@@ -30,11 +35,17 @@ class BotService {
         if (msg.content.toLocaleLowerCase() === 'registerall') {
             this.registerall(msg);
         }
-        if (msg.content.toLowerCase().startsWith("watch ")) {
+        if (msg.content.toLowerCase().startsWith('watch')) {
             this.addWatch(msg);
         }
         if (msg.content.toLocaleLowerCase() === 'watchlist') {
             this.showRegistered(msg);
+        }
+        if (msg.content.toLowerCase().startsWith('нагадай ключі')) {
+            this.showNominationKeys(msg);
+        }
+        if (msg.content.toLowerCase().startsWith('хто там ')) {
+            // this.getTopThree(msg);
         }
     }
     forgiveRetards() {
@@ -189,6 +200,15 @@ class BotService {
     }
     getNominationWithPlayerProfile(claimedNomination) {
         return this.dataStore.getProfile(claimedNomination.account_id).map(profile => new Pair_1.default(claimedNomination, profile));
+    }
+    showNominationKeys(msg) {
+        this.dataStore.hallOfFame.subscribe((hallOfFame) => {
+            let keys = '';
+            for (const key of hallOfFame.keys()) {
+                keys += key + ': ' + hallOfFame.get(key).nominationName + '\n';
+            }
+            msg.reply(keys);
+        });
     }
 }
 exports.default = BotService;

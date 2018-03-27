@@ -26,6 +26,18 @@ class NominationService {
         this.recentGamesObserver.next(0);
         return rxjs_1.Observable.create(claimedNominationsObserver => this.claimedNominationsObserver = claimedNominationsObserver);
     }
+    // public getTopThree(nominationClassName: string): Observable<NominationResult[]> {
+    //   Observable.from(this.dotaIds)
+    //   .flatMap((account_id: number) => this.getFreshRecentMatchesForPlayer(account_id))
+    //   .flatMap((playerRecentMatches: PlayerRecentMatches) => this.mapToPlayerWithFullMatches(playerRecentMatches))
+    //   .reduce((arr: PlayerFullMatches[], pfm: PlayerFullMatches) => [...arr, pfm], [])
+    //   .subscribe((playersMatches: PlayerFullMatches[]) => {
+    //       const newNominationsClaimed = this.getNewResults(playersMatches, hallOfFame);
+    //       if (!!newNominationsClaimed.length) {
+    //         this.awardWinners(newNominationsClaimed);
+    //       }
+    //   });
+    // }
     stopNominating() {
         if (this.subscription) {
             this.subscription.unsubscribe();
@@ -56,7 +68,7 @@ class NominationService {
     getNewResults(playersMatches, hallOfFame) {
         const scoreBoard = new ScoreBoard_1.default();
         playersMatches.forEach(pfm => scoreBoard.scorePlayer(pfm.account_id, pfm.matches));
-        return this.nominationUtils.getNewRecords(hallOfFame, scoreBoard.nominationsResults);
+        return this.nominationUtils.getNewRecords(hallOfFame, scoreBoard.getFirstPlaces());
     }
     awardWinners(newNominationsClaimed) {
         for (const nominationResult of newNominationsClaimed) {
