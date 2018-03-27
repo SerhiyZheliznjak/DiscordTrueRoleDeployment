@@ -13,6 +13,9 @@ class StackGod extends Nomination_1.default {
     getScoreText() {
         return 'Наскиртовано таборів: ' + this.getScore();
     }
+    getScoreDescription() {
+        return ' наскиртувати таборів ';
+    }
     scorePoint(match, player_slot) {
         if (!!match) {
             const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);

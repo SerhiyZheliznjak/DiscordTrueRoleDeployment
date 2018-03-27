@@ -17,6 +17,9 @@ class TeamFighter extends Nomination_1.default {
     getScoreText() {
         return 'Відсоток участі: ' + this.getScore();
     }
+    getScoreDescription() {
+        return ' приймати участь у командних бійках ';
+    }
     scorePoint(match, player_slot) {
         if (!match) {
             return 0;

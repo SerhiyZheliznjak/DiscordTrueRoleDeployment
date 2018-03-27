@@ -13,6 +13,9 @@ class RapunzelSyndrome extends Nomination_1.default {
     getScoreText() {
         return 'Добито веж: ' + this.getScore();
     }
+    getScoreDescription() {
+        return ' добити веж ';
+    }
     scorePoint(match, player_slot) {
         if (!!match) {
             const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);

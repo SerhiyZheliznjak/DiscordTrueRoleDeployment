@@ -13,6 +13,9 @@ class ChickeSoupLover extends Nomination_1.default {
     getScoreText() {
         return 'Вбито кур\'єрів: ' + this.getScore();
     }
+    getScoreDescription() {
+        return ' вбити кур\'єрів ';
+    }
     scorePoint(match, player_slot) {
         if (!match) {
             return 0;

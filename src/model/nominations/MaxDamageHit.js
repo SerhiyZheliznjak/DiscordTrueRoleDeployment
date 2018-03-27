@@ -15,6 +15,9 @@ class MaxDamageHit extends Nomination_1.default {
     getScoreText() {
         return 'Шкоди за удар: ' + this.getScore();
     }
+    getScoreDescription() {
+        return ' гепнути за раз ';
+    }
     getScore() {
         const dmgArr = this.getPoints().map(p => parseInt(p.p2 + ''));
         return Math.max(...dmgArr);

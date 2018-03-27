@@ -13,6 +13,9 @@ class ThisTimeItWillWork extends Nomination_1.default {
     getScoreText() {
         return 'Сума викупів у виграних матчах: ' + this.getScore();
     }
+    getScoreDescription() {
+        return ' викупитись і виграти ';
+    }
     scorePoint(match, player_slot) {
         if (!!match) {
             const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);

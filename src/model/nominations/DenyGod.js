@@ -17,6 +17,9 @@ class DenyGod extends Nomination_1.default {
         const denyArr = this.getPoints().map(p => parseInt(p.p2 + ''));
         return Math.max(...denyArr);
     }
+    getScoreDescription() {
+        return ' заперечити кріпів за одну гру ';
+    }
     scorePoint(match, player_slot) {
         if (!match) {
             return 0;

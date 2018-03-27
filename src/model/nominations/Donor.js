@@ -14,6 +14,9 @@ class Donor extends Nomination_1.default {
     getScoreText() {
         return 'Віддано першої крові: ' + this.getScore();
     }
+    getScoreDescription() {
+        return ' віддатись на першу кров ';
+    }
     scorePoint(match, player_slot) {
         if (!match) {
             return 0;

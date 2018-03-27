@@ -14,6 +14,9 @@ class PingMaster extends Nomination_1.default {
     getScoreText() {
         return 'Кількість пінгів: ' + this.getScore();
     }
+    getScoreDescription() {
+        return ' напінгати ';
+    }
     getScore() {
         const pings = this.points.map(p => parseInt(p.p2 + ''));
         return Math.max(...pings);

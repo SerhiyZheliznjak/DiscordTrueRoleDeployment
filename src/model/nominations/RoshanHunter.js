@@ -13,6 +13,9 @@ class RoshanHunter extends Nomination_1.default {
     getScoreText() {
         return 'Вбито Рошанів: ' + this.getScore();
     }
+    getScoreDescription() {
+        return ' вбити рошанів ';
+    }
     scorePoint(match, player_slot) {
         if (!match) {
             return 0;

@@ -12,6 +12,9 @@ class Nenza extends Nomination_1.default {
     getScoreText() {
         return 'Кількість написаної херні в чаті: ' + this.getScore();
     }
+    getScoreDescription() {
+        return ' понаписувати херні ';
+    }
     scorePoint(match, player_slot) {
         if (match && match.chat) {
             const nenzaMsg = match.chat.filter(msg => msg.player_slot === player_slot)

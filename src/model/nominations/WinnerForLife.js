@@ -13,6 +13,9 @@ class WinnerForLife extends Nomination_1.default {
     getScoreText() {
         return 'Виграно матчів: ' + this.getScore();
     }
+    getScoreDescription() {
+        return ' виграти матчів ';
+    }
     scorePoint(match, player_slot) {
         if (!!match) {
             const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);

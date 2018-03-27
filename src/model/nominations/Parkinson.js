@@ -18,6 +18,9 @@ class Parkinson extends Nomination_1.default {
         const apmArr = this.getPoints().map(p => parseInt(p.p2 + ''));
         return Math.max(...apmArr);
     }
+    getScoreDescription() {
+        return ' понацикувати за хвилину ';
+    }
     scorePoint(match, player_slot) {
         if (!!match) {
             const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);

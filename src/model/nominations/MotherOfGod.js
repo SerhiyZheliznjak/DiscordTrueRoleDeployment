@@ -14,6 +14,9 @@ class MotherOfGod extends Nomination_1.default {
     getScoreText() {
         return 'Матчі без смертей: ' + this.getScore();
     }
+    getScoreDescription() {
+        return ' літати як метелик, жалити як бджола ';
+    }
     scorePoint(match, player_slot) {
         if (!!match) {
             const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);

@@ -215,11 +215,29 @@ class BotService {
     getTopN(msg) {
         const arr = this.parseTopNMessage(msg);
         if (arr.length !== 0) {
-            const n = arr.length === 3 ? 3 : arr[2]; // return top 3 by default
+            const n = arr.length === 3 ? 3 : parseInt(arr[2]); // return top 3 by default
             const className = arr.length === 3 ? arr[2] : arr[3];
             const nominationName = this.nominationKeysMap.get(arr[2]);
             if (nominationName) {
-                this.nominationService.getTopN(nominationName);
+                this.nominationService.getTopN(nominationName, n).subscribe(topRes => {
+                    const accountIdsSet = topRes.map(r => r.account_id)
+                        .filter((account_id, pos, self) => self.indexOf(account_id) === pos);
+                    rxjs_1.Observable.from(accountIdsSet)
+                        .flatMap(account_id => this.dataStore.getProfile(account_id))
+                        .reduce((profileMap, profile) => {
+                        profileMap.set(profile.account_id, profile.name);
+                        return profileMap;
+                    }, new Map())
+                        .subscribe((profileMap) => {
+                        const firstNomination = topRes[0].nomination;
+                        let msgText = 'Ці герої зуміли' + firstNomination.getScoreDescription() + '\n';
+                        topRes.forEach((tr, index) => {
+                            const place = index + 1;
+                            msgText += place + ') ' + profileMap.get(tr.account_id) + ': ' + tr.nomination.getScore() + '\n';
+                        });
+                        this.chanel.send('', this.getRichEmbed(firstNomination.getName(), msgText, undefined, '#Тайтаке.'));
+                    });
+                });
             }
             else {
                 this.retardPlusPlus(msg);

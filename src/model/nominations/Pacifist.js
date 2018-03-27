@@ -17,6 +17,9 @@ class Pacifist extends Nomination_1.default {
     getScoreText() {
         return 'Відсоток участі: ' + (100 - this.getScore());
     }
+    getScoreDescription() {
+        return ' приймати участь у відсотку командних бійок ';
+    }
     scorePoint(match, player_slot) {
         if (!match) {
             return 0;

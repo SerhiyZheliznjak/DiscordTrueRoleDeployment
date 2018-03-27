@@ -14,6 +14,9 @@ class Looser extends Nomination_1.default {
     getScoreText() {
         return 'Програно матчів: ' + this.getScore();
     }
+    getScoreDescription() {
+        return ' перемогти, тільки навпаки ';
+    }
     scorePoint(match, player_slot) {
         if (!!match) {
             const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);

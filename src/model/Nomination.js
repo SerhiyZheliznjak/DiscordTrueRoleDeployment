@@ -44,6 +44,9 @@ class Nomination {
     isScored() {
         return this.getScore() >= this.minScore;
     }
+    getScoreDescription() {
+        throw new Error('Should be implemented by child classes');
+    }
     scorePoint(match, player_slot) {
         throw new Error('Should be implemented by child classes');
     }
