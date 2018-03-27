@@ -16,11 +16,12 @@ class ScoreBoard {
             const sortedResults = this.nominationsResults.get(nominationKey).sort((a, b) => a.nomination.compare(b.nomination));
             winners.set(nominationKey, sortedResults[0]);
         }
+        console.log('returning winners', winners);
         return winners;
     }
     getSortedNominationResults() {
         for (const nr of this.nominationsResults.values()) {
-            nr.sort((a, b) => a.nomination.compare(b));
+            nr.sort((a, b) => a.nomination.compare(b.nomination));
         }
         return this.nominationsResults;
     }

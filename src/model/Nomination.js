@@ -38,9 +38,6 @@ class Nomination {
     getMessage() {
         return this.msg;
     }
-    hasHigherScoreThen(that) {
-        return this.getScore() > that.getScore();
-    }
     compare(that) {
         return this.getScore() - that.getScore();
     }
