@@ -29,10 +29,15 @@ class NominationService {
     }
     getTopN(nominationClassName, n = 3) {
         if (this.scoreBoard) {
+            console.log('using sctored scoreboard');
             return rxjs_1.Observable.of(this.scoreBoard.getTopN(n).get(Nominations_1.default.getByClassName(nominationClassName).getKey()));
         }
         else {
-            this.getPlayerFullMatches(this.dotaIds).map(playersMatches => {
+            console.log('getting new scoreboard');
+            rxjs_1.Observable.from(this.dotaIds)
+                .flatMap((account_id) => this.getFreshRecentMatchesForPlayer(account_id))
+                .flatMap((playerWithNewMatches) => this.mapToPlayerWithFullMatches(playerWithNewMatches))
+                .reduce((arr, pfm) => [...arr, pfm], []).map(playersMatches => {
                 this.scoreBoard = new ScoreBoard_1.default();
                 playersMatches.forEach(pfm => this.scoreBoard.scorePlayer(pfm.account_id, pfm.matches));
                 return this.scoreBoard.getTopN(n).get(Nominations_1.default.getByClassName(nominationClassName).getKey());
