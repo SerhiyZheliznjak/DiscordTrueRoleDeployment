@@ -15,7 +15,6 @@ class ScoreBoard {
             const sortedResults = this.nominationsResults.get(nominationKey).sort((a, b) => a.nomination.compare(b.nomination));
             winners.set(nominationKey, sortedResults[0]);
         }
-        console.log('and the winners are: ', winners);
         return winners;
     }
     getTopN(n) {

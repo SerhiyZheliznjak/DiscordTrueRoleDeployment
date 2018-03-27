@@ -44,7 +44,7 @@ class BotService {
         if (msg.content.toLowerCase().startsWith('нагадай ключі')) {
             this.showNominationKeys(msg);
         }
-        if (msg.content.toLowerCase().startsWith('хто там ')) {
+        if (msg.content.toLowerCase().startsWith('хто топ ')) {
             this.getTopN(msg);
         }
     }
@@ -203,24 +203,38 @@ class BotService {
     }
     showNominationKeys(msg) {
         this.dataStore.hallOfFame.subscribe((hallOfFame) => {
-            let keys = '';
+            let keys = '\n';
+            const keyClassNameMap = Nominations_1.default.getKeyClassNameMap();
             for (const key of hallOfFame.keys()) {
-                keys += key + ': ' + hallOfFame.get(key).nominationName + '\n';
+                const className = keyClassNameMap.get(key);
+                keys += key + ':\t' + hallOfFame.get(key).nominationName + '\n';
             }
             msg.reply(keys);
         });
     }
     getTopN(msg) {
-        const arr = msg.content.toLowerCase().split(' ');
-        if (arr.length === 3) {
+        const arr = this.parseTopNMessage(msg);
+        if (arr.length !== 0) {
+            const n = arr.length === 3 ? 3 : arr[2]; // return top 3 by default
+            const className = arr.length === 3 ? arr[2] : arr[3];
             const nominationName = this.nominationKeysMap.get(arr[2]);
             if (nominationName) {
                 this.nominationService.getTopN(nominationName);
             }
+            else {
+                this.retardPlusPlus(msg);
+            }
+        }
+    }
+    parseTopNMessage(msg) {
+        const arr = msg.content.toLowerCase().split(' ');
+        if (arr.length === 3 || arr.length === 4) {
+            return arr;
         }
         else {
             this.retardPlusPlus(msg);
         }
+        return [];
     }
 }
 exports.default = BotService;

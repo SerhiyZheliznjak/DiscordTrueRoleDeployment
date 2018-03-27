@@ -50,7 +50,13 @@ class Nominations {
         ];
     }
     static getByClassName(className) {
-        return Nominations.all.find(nomination => nomination.constructor.name === className);
+        return Nominations.all.find(nomination => nomination.constructor.name.toLowerCase() === className.toLowerCase());
+    }
+    static getKeyClassNameMap() {
+        return Nominations.all.reduce((map, nomination) => {
+            map.set(nomination.getKey(), nomination.constructor.name);
+            return map;
+        }, new Map());
     }
 }
 exports.default = Nominations;
