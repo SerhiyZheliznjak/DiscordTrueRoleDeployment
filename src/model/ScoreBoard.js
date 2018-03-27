@@ -21,7 +21,7 @@ class ScoreBoard {
         return this.scoreBoardService.getTopN(n, this.nominationsResults);
     }
     hasScores(nominationKey) {
-        return this.nominationsResults.get(nominationKey).length > 0;
+        return this.nominationsResults.get(nominationKey).reduce((scored, nom) => scored || nom.nomination.isScored(), false);
     }
 }
 exports.default = ScoreBoard;
