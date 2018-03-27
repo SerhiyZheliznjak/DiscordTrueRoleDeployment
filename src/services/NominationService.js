@@ -39,7 +39,7 @@ class NominationService {
         }
         else {
             console.log('getting new scoreboard');
-            rxjs_1.Observable.from(this.dotaIds)
+            return rxjs_1.Observable.from(this.dotaIds)
                 .flatMap((account_id) => this.getFreshRecentMatchesForPlayer(account_id))
                 .flatMap((playerWithNewMatches) => this.mapToPlayerWithFullMatches(playerWithNewMatches))
                 .reduce((arr, pfm) => [...arr, pfm], []).map(playersMatches => {
