@@ -218,7 +218,7 @@ class BotService {
         if (arr.length !== 0) {
             const n = arr.length === 3 ? 3 : parseInt(arr[2]); // return top 3 by default
             const className = arr.length === 3 ? arr[2] : arr[3];
-            const nominationName = this.nominationKeysMap.get(className.toLowerCase());
+            const nominationName = className.toLowerCase();
             if (nominationName) {
                 this.nominationService.getTopN(nominationName, n).subscribe(topRes => {
                     const accountIdsSet = topRes.map(r => r.account_id)

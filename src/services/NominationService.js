@@ -28,6 +28,10 @@ class NominationService {
         return rxjs_1.Observable.create(claimedNominationsObserver => this.claimedNominationsObserver = claimedNominationsObserver);
     }
     getTopN(nominationClassName, n = 3) {
+        if (!Nominations_1.default.getByClassName(nominationClassName)) {
+            console.log('no such nomination className: ', nominationClassName);
+            return;
+        }
         if (this.scoreBoard) {
             console.log('using sctored scoreboard');
             return rxjs_1.Observable.of(this.scoreBoard.getTopN(n).get(Nominations_1.default.getByClassName(nominationClassName).getKey()));
