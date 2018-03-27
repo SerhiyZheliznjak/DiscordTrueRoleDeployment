@@ -45,7 +45,7 @@ class BotService {
             this.showNominationKeys(msg);
         }
         if (msg.content.toLowerCase().startsWith('хто там ')) {
-            // this.getTopThree(msg);
+            this.getTopN(msg);
         }
     }
     forgiveRetards() {
@@ -209,6 +209,18 @@ class BotService {
             }
             msg.reply(keys);
         });
+    }
+    getTopN(msg) {
+        const arr = msg.content.toLowerCase().split(' ');
+        if (arr.length === 3) {
+            const nominationName = this.nominationKeysMap.get(arr[2]);
+            if (nominationName) {
+                this.nominationService.getTopN(nominationName);
+            }
+        }
+        else {
+            this.retardPlusPlus(msg);
+        }
     }
 }
 exports.default = BotService;

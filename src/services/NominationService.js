@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const rxjs_1 = require("rxjs");
 const DataStore_1 = require("./DataStore");
+const Nominations_1 = require("../model/Nominations");
 const ScoreBoard_1 = require("../model/ScoreBoard");
 const DotaApi_1 = require("../dota-api/DotaApi");
 const Constants_1 = require("../Constants");
@@ -26,18 +27,18 @@ class NominationService {
         this.recentGamesObserver.next(0);
         return rxjs_1.Observable.create(claimedNominationsObserver => this.claimedNominationsObserver = claimedNominationsObserver);
     }
-    // public getTopThree(nominationClassName: string): Observable<NominationResult[]> {
-    //   Observable.from(this.dotaIds)
-    //   .flatMap((account_id: number) => this.getFreshRecentMatchesForPlayer(account_id))
-    //   .flatMap((playerRecentMatches: PlayerRecentMatches) => this.mapToPlayerWithFullMatches(playerRecentMatches))
-    //   .reduce((arr: PlayerFullMatches[], pfm: PlayerFullMatches) => [...arr, pfm], [])
-    //   .subscribe((playersMatches: PlayerFullMatches[]) => {
-    //       const newNominationsClaimed = this.getNewResults(playersMatches, hallOfFame);
-    //       if (!!newNominationsClaimed.length) {
-    //         this.awardWinners(newNominationsClaimed);
-    //       }
-    //   });
-    // }
+    getTopN(nominationClassName, n = 3) {
+        if (this.scoreBoard) {
+            return rxjs_1.Observable.of(this.scoreBoard.getTopN(n).get(Nominations_1.default.getByClassName(nominationClassName).getKey()));
+        }
+        else {
+            this.getPlayerFullMatches(this.dotaIds).map(playersMatches => {
+                this.scoreBoard = new ScoreBoard_1.default();
+                playersMatches.forEach(pfm => this.scoreBoard.scorePlayer(pfm.account_id, pfm.matches));
+                return this.scoreBoard.getTopN(n).get(Nominations_1.default.getByClassName(nominationClassName).getKey());
+            });
+        }
+    }
     stopNominating() {
         if (this.subscription) {
             this.subscription.unsubscribe();
@@ -66,9 +67,9 @@ class NominationService {
         });
     }
     getNewResults(playersMatches, hallOfFame) {
-        const scoreBoard = new ScoreBoard_1.default();
-        playersMatches.forEach(pfm => scoreBoard.scorePlayer(pfm.account_id, pfm.matches));
-        return this.nominationUtils.getNewRecords(hallOfFame, scoreBoard.getFirstPlaces());
+        this.scoreBoard = new ScoreBoard_1.default();
+        playersMatches.forEach(pfm => this.scoreBoard.scorePlayer(pfm.account_id, pfm.matches));
+        return this.nominationUtils.getNewRecords(hallOfFame, this.scoreBoard.getFirstPlaces());
     }
     awardWinners(newNominationsClaimed) {
         for (const nominationResult of newNominationsClaimed) {
@@ -77,11 +78,7 @@ class NominationService {
         this.claimedNominationsObserver.next(newNominationsClaimed);
     }
     nextCheck(dotaIds) {
-        rxjs_1.Observable.from(dotaIds)
-            .flatMap((account_id) => rxjs_1.Observable.zip(this.getFreshRecentMatchesForPlayer(account_id), this.dataStore.getRecentMatchesForPlayer(account_id)))
-            .map((playerMatches) => this.mapRecentMatchesToNew(playerMatches[0], playerMatches[1]))
-            .flatMap((playerWithNewMatches) => this.mapToPlayerWithFullMatches(playerWithNewMatches))
-            .reduce((arr, pfm) => [...arr, pfm], [])
+        this.getPlayerFullMatches(dotaIds)
             .subscribe((playersMatches) => {
             this.dataStore.hallOfFame.subscribe(hallOfFame => {
                 const newNominationsClaimed = this.getNewResults(playersMatches, hallOfFame);
@@ -90,6 +87,13 @@ class NominationService {
                 }
             });
         });
+    }
+    getPlayerFullMatches(dotaIds) {
+        return rxjs_1.Observable.from(dotaIds)
+            .flatMap((account_id) => rxjs_1.Observable.zip(this.getFreshRecentMatchesForPlayer(account_id), this.dataStore.getRecentMatchesForPlayer(account_id)))
+            .map((playerMatches) => this.mapRecentMatchesToNew(playerMatches[0], playerMatches[1]))
+            .flatMap((playerWithNewMatches) => this.mapToPlayerWithFullMatches(playerWithNewMatches))
+            .reduce((arr, pfm) => [...arr, pfm], []);
     }
     getDotaIds(playersMap) {
         const dotaIds = [];
