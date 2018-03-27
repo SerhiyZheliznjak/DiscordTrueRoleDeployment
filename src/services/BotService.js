@@ -187,10 +187,10 @@ class BotService {
         const richEmbed = new discord_js_1.RichEmbed();
         richEmbed.setTitle(title);
         richEmbed.setDescription(description);
-        richEmbed.setImage(avatarUrl);
+        richEmbed.setThumbnail(avatarUrl);
         richEmbed.setFooter(footer);
         if (url) {
-            richEmbed.setThumbnail(url);
+            richEmbed.setURL(url);
         }
         return richEmbed;
     }
