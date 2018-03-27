@@ -190,7 +190,7 @@ class BotService {
         richEmbed.setImage(avatarUrl);
         richEmbed.setFooter(footer);
         if (url) {
-            richEmbed.setURL(url);
+            richEmbed.setThumbnail(url);
         }
         return richEmbed;
     }
