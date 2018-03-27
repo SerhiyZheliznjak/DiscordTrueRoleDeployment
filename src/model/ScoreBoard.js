@@ -20,5 +20,8 @@ class ScoreBoard {
     getTopN(n) {
         return this.scoreBoardService.getTopN(n, this.nominationsResults);
     }
+    hasScores(nominationKey) {
+        return this.nominationsResults.get(nominationKey).length > 0;
+    }
 }
 exports.default = ScoreBoard;

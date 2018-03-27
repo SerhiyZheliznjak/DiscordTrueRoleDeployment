@@ -32,9 +32,10 @@ class NominationService {
             console.log('no such nomination className: ', nominationClassName);
             return;
         }
-        if (this.scoreBoard) {
-            console.log('using sctored scoreboard');
-            return rxjs_1.Observable.of(this.scoreBoard.getTopN(n).get(Nominations_1.default.getByClassName(nominationClassName).getKey()));
+        const nominationKey = Nominations_1.default.getByClassName(nominationClassName).getKey();
+        if (this.scoreBoard && this.scoreBoard.hasScores(nominationKey)) {
+            console.log('using scored scoreboard');
+            return rxjs_1.Observable.of(this.scoreBoard.getTopN(n).get(nominationKey));
         }
         else {
             console.log('getting new scoreboard');
@@ -44,7 +45,7 @@ class NominationService {
                 .reduce((arr, pfm) => [...arr, pfm], []).map(playersMatches => {
                 this.scoreBoard = new ScoreBoard_1.default();
                 playersMatches.forEach(pfm => this.scoreBoard.scorePlayer(pfm.account_id, pfm.matches));
-                return this.scoreBoard.getTopN(n).get(Nominations_1.default.getByClassName(nominationClassName).getKey());
+                return this.scoreBoard.getTopN(n).get(nominationKey);
             });
         }
     }
