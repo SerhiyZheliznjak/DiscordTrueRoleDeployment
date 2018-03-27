@@ -39,7 +39,7 @@ class Nomination {
         return this.msg;
     }
     compare(that) {
-        return this.getScore() - that.getScore();
+        return that.getScore() - this.getScore();
     }
     isScored() {
         return this.getScore() >= this.minScore;
