@@ -17,7 +17,7 @@ class BotService {
         this.retardMap = new Map();
         this.chanel = this.client.channels.find('type', 'text');
         this.nominationKeysMap = Nominations_1.default.all.reduce((map, nomination) => {
-            map.set(nomination.constructor.name, nomination.getName());
+            map.set(nomination.constructor.name.toLowerCase(), nomination.getName());
             return map;
         }, new Map());
     }
@@ -89,6 +89,7 @@ class BotService {
                 retardCount.shift();
             }
         }
+        console.log('retard++');
     }
     shutUpYouRRetard(msg) {
         const shutRetard = ['Стягнув', 'Ти такий розумний', 'Помовчи трохи', 'Т-с-с-с-с-с-с',
@@ -217,7 +218,7 @@ class BotService {
         if (arr.length !== 0) {
             const n = arr.length === 3 ? 3 : parseInt(arr[2]); // return top 3 by default
             const className = arr.length === 3 ? arr[2] : arr[3];
-            const nominationName = this.nominationKeysMap.get(arr[2]);
+            const nominationName = this.nominationKeysMap.get(className.toLowerCase());
             if (nominationName) {
                 this.nominationService.getTopN(nominationName, n).subscribe(topRes => {
                     const accountIdsSet = topRes.map(r => r.account_id)
