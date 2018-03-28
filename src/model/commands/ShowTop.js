@@ -12,29 +12,43 @@ class ShowTop extends Command_1.CommandBase {
     process(msg) {
         const arr = this.parseTopNMessage(msg);
         if (arr.length !== 0) {
-            const n = arr.length === 3 ? 3 : parseInt(arr[2]); // return top 3 by default
-            const className = arr.length === 3 ? arr[2] : arr[3];
+            const n = arr.length === 2 ? 3 : parseInt(arr[1]); // return top 3 by default
+            const className = arr.length === 3 ? arr[1] : arr[2];
             const nominationName = className.toLowerCase();
             if (nominationName) {
-                this.nominationService.getTopN(nominationName, n).subscribe(topRes => {
-                    const accountIdsSet = topRes.map(r => r.account_id)
-                        .filter((account_id, pos, self) => self.indexOf(account_id) === pos);
-                    rxjs_1.Observable.from(accountIdsSet)
-                        .flatMap(account_id => this.dataStore.getProfile(account_id))
-                        .reduce((profileMap, profile) => {
-                        profileMap.set(profile.account_id, profile.personaname);
-                        return profileMap;
-                    }, new Map())
-                        .subscribe((profileMap) => {
-                        const firstNomination = topRes[0].nomination;
-                        let msgText = 'Вони зуміли\n';
-                        topRes.forEach((tr, index) => {
-                            const place = index + 1;
-                            msgText += place + ') ' + profileMap.get(tr.account_id) + ':\t' + tr.nomination.getScoreText() + '\n';
+                const pendingChannels = this.queue.get(nominationName);
+                if (pendingChannels) {
+                    const exists = pendingChannels.find((ch) => ch.equals(msg.channel));
+                    if (!exists) {
+                        console.log('adding new channel to queue');
+                        pendingChannels.push(msg.channel);
+                    }
+                }
+                else {
+                    console.log('sending request to get top best');
+                    this.queue.set(nominationName, [msg.channel]);
+                    this.nominationService.getTopN(nominationName, n).subscribe(topRes => {
+                        const accountIdsSet = topRes.map(r => r.account_id)
+                            .filter((account_id, pos, self) => self.indexOf(account_id) === pos);
+                        rxjs_1.Observable.from(accountIdsSet)
+                            .flatMap(account_id => this.dataStore.getProfile(account_id))
+                            .reduce((profileMap, profile) => {
+                            profileMap.set(profile.account_id, profile.personaname);
+                            return profileMap;
+                        }, new Map())
+                            .subscribe((profileMap) => {
+                            const firstNomination = topRes[0].nomination;
+                            let msgText = 'Вони зуміли\n';
+                            topRes.forEach((tr, index) => {
+                                const place = index + 1;
+                                msgText += place + ') ' + profileMap.get(tr.account_id) + ':\t' + tr.nomination.getScoreText() + '\n';
+                            });
+                            this.queue.get(nominationName).forEach(channel => {
+                                channel.send('', DiscordUtils_1.DiscordUtils.getRichEmbed(firstNomination.getName(), msgText, undefined, '#Тайтаке.'));
+                            });
                         });
-                        msg.channel.send('', DiscordUtils_1.DiscordUtils.getRichEmbed(firstNomination.getName(), msgText, undefined, '#Тайтаке.'));
                     });
-                });
+                }
             }
             else {
                 this.retardPlusPlus(msg);
@@ -43,7 +57,7 @@ class ShowTop extends Command_1.CommandBase {
     }
     parseTopNMessage(msg) {
         const arr = msg.content.toLowerCase().split(' ');
-        if (arr.length === 3 || arr.length === 4) {
+        if (arr.length === 2 || arr.length === 3) {
             return arr;
         }
         else {
