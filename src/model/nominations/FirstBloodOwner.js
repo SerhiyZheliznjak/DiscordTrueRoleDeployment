@@ -17,7 +17,7 @@ class FirstBloodOwner extends Nomination_1.default {
         return ' пролити першу кров';
     }
     getThumbURL() {
-        return 'https://www.dropbox.com/s/e4yuqx7yafnfutg/FirstBlood.jpg?dl=0';
+        return 'https://www.dropbox.com/s/e4yuqx7yafnfutg/FirstBlood.jpg';
     }
     scorePoint(match, player_slot) {
         if (!match) {

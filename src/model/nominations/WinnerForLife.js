@@ -17,7 +17,7 @@ class WinnerForLife extends Nomination_1.default {
         return ' виграти матчів';
     }
     getThumbURL() {
-        return 'https://www.dropbox.com/s/qo5mfwo84h2k6p8/winnerForLife.jpg?dl=0';
+        return 'https://www.dropbox.com/s/qo5mfwo84h2k6p8/winnerForLife.jpg';
     }
     scorePoint(match, player_slot) {
         if (!!match) {

@@ -30,7 +30,7 @@ class BestKDA extends Nomination_1.default {
         return ' накадеашити';
     }
     getThumbURL() {
-        return `https://www.dropbox.com/s/xyi9ctnh2a0pcfa/kda.jpg?dl=0`;
+        return `https://www.dropbox.com/s/xyi9ctnh2a0pcfa/kda.jpg`;
     }
     scorePoint(match, player_slot) {
         if (!!match) {

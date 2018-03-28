@@ -17,7 +17,7 @@ class RapunzelSyndrome extends Nomination_1.default {
         return ' добити веж';
     }
     getThumbURL() {
-        return 'https://www.dropbox.com/s/7tijp2qd37enwrf/rapunzel.jpg?dl=0';
+        return 'https://www.dropbox.com/s/7tijp2qd37enwrf/rapunzel.jpg';
     }
     scorePoint(match, player_slot) {
         if (!!match) {

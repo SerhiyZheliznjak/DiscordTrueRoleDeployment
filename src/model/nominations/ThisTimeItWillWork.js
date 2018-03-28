@@ -17,7 +17,7 @@ class ThisTimeItWillWork extends Nomination_1.default {
         return ' викупитись і виграти';
     }
     getThumbURL() {
-        return 'https://www.dropbox.com/s/ngprb5mcde8f0kf/buyback.png?dl=0';
+        return 'https://www.dropbox.com/s/ngprb5mcde8f0kf/buyback.png';
     }
     scorePoint(match, player_slot) {
         if (!!match) {

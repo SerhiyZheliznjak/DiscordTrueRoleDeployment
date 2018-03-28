@@ -16,7 +16,7 @@ class Nenza extends Nomination_1.default {
         return ' понаписувати херні';
     }
     getThumbURL() {
-        return 'https://www.dropbox.com/s/c8afvrkkmt5k8fo/Nenza.jpg?dl=0';
+        return 'https://www.dropbox.com/s/c8afvrkkmt5k8fo/Nenza.jpg';
     }
     scorePoint(match, player_slot) {
         if (match && match.chat) {

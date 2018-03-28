@@ -17,7 +17,7 @@ class ChickeSoupLover extends Nomination_1.default {
         return ' вбити кур\'єрів';
     }
     getThumbURL() {
-        return 'https://www.dropbox.com/s/09om8yh99oqzfo6/currierKiller.jpg?dl=0';
+        return 'https://www.dropbox.com/s/09om8yh99oqzfo6/currierKiller.jpg';
     }
     scorePoint(match, player_slot) {
         if (!match) {

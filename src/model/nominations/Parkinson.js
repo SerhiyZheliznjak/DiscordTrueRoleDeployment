@@ -22,7 +22,7 @@ class Parkinson extends Nomination_1.default {
         return ' понацикувати за хвилину';
     }
     getThumbURL() {
-        return 'https://www.dropbox.com/s/it8lg5dq0hrowq2/parkinson.jpg?dl=0';
+        return 'https://www.dropbox.com/s/it8lg5dq0hrowq2/parkinson.jpg';
     }
     scorePoint(match, player_slot) {
         if (!!match) {

@@ -17,7 +17,7 @@ class TacticalFeeder extends Nomination_1.default {
         return ' виграти матчів безбожно фідячи ворога';
     }
     getThumbURL() {
-        return 'https://www.dropbox.com/s/x5hm81dy3y2gq0r/TacticalFeeder.png?dl=0';
+        return 'https://www.dropbox.com/s/x5hm81dy3y2gq0r/TacticalFeeder.png';
     }
     scorePoint(match, player_slot) {
         if (!!match) {
