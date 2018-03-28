@@ -13,7 +13,7 @@ class Nenza extends Nomination_1.default {
         return 'Кількість написаної херні в чаті: ' + this.getScore();
     }
     getScoreDescription() {
-        return ' понаписувати херні ';
+        return ' понаписувати херні';
     }
     getThumbURL() {
         return 'https://www.dropbox.com/s/c8afvrkkmt5k8fo/Nenza.jpg?dl=0';

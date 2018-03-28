@@ -18,7 +18,7 @@ class Pacifist extends Nomination_1.default {
         return 'Відсоток участі: ' + (100 - this.getScore());
     }
     getScoreDescription() {
-        return ' приймати участь у відсотку командних бійок ';
+        return ' приймати участь у командних бійках';
     }
     getThumbURL() {
         return 'https://www.dropbox.com/s/6z5kqi3y2smx2fa/hippie.jpg?dl=0';

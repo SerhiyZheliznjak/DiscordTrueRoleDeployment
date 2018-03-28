@@ -14,7 +14,7 @@ class RoshanHunter extends Nomination_1.default {
         return 'Вбито Рошанів: ' + this.getScore();
     }
     getScoreDescription() {
-        return ' вбити рошанів ';
+        return ' вбити рошанів';
     }
     getThumbURL() {
         return 'https://www.dropbox.com/s/nng80711fbthpy2/Roshan.jpg?dl=0';

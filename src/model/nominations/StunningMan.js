@@ -14,7 +14,7 @@ class StunningMan extends Nomination_1.default {
         return 'Протримав ворогів у приголомшені: ' + this.getScore() + 'сек';
     }
     getScoreDescription() {
-        return ' протримати ворогів у приголомшенні ';
+        return ' протримати ворогів у приголомшенні';
     }
     getThumbURL() {
         return 'https://www.dropbox.com/s/7hp4kz65g51r1nt/stunner.png?dl=0';

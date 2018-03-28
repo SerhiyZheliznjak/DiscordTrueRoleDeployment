@@ -14,7 +14,7 @@ class OponentOwsMoney extends Nomination_1.default {
         return 'Матчів без вбивств: ' + this.getScore();
     }
     getScoreDescription() {
-        return ' не вбити жодного суперника ';
+        return ' не вбити жодного суперника';
     }
     getThumbURL() {
         return 'https://www.dropbox.com/s/5ck534x4gfv6x9a/OpponentOwnsMoney.jpeg?dl=0';

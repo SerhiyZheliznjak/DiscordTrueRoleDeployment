@@ -14,7 +14,7 @@ class WinnerForLife extends Nomination_1.default {
         return 'Виграно матчів: ' + this.getScore();
     }
     getScoreDescription() {
-        return ' виграти матчів ';
+        return ' виграти матчів';
     }
     getThumbURL() {
         return 'https://www.dropbox.com/s/qo5mfwo84h2k6p8/winnerForLife.jpg?dl=0';

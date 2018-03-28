@@ -15,7 +15,7 @@ class Looser extends Nomination_1.default {
         return 'Програно матчів: ' + this.getScore();
     }
     getScoreDescription() {
-        return ' перемогти, тільки навпаки ';
+        return ' перемогти, тільки навпаки';
     }
     getThumbURL() {
         return 'https://www.dropbox.com/s/v16doe6rq6q0l5j/looser.png?dl=0';

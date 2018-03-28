@@ -14,7 +14,7 @@ class RapunzelSyndrome extends Nomination_1.default {
         return 'Добито веж: ' + this.getScore();
     }
     getScoreDescription() {
-        return ' добити веж ';
+        return ' добити веж';
     }
     getThumbURL() {
         return 'https://www.dropbox.com/s/7tijp2qd37enwrf/rapunzel.jpg?dl=0';

@@ -19,7 +19,7 @@ class Parkinson extends Nomination_1.default {
         return Math.max(...apmArr);
     }
     getScoreDescription() {
-        return ' понацикувати за хвилину ';
+        return ' понацикувати за хвилину';
     }
     getThumbURL() {
         return 'https://www.dropbox.com/s/it8lg5dq0hrowq2/parkinson.jpg?dl=0';

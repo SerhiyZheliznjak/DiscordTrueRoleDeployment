@@ -16,7 +16,7 @@ class JungleOppressor extends Nomination_1.default {
         return 'Кількість матчів з цим "досягненням": ' + this.getScore();
     }
     getScoreDescription() {
-        return ' гнобити джунглі протягом числа матчів ';
+        return ' гнобити джунглі протягом числа матчів';
     }
     getThumbURL() {
         return 'https://www.dropbox.com/s/o19rh5sjftbi794/Jungler.jpg?dl=0';

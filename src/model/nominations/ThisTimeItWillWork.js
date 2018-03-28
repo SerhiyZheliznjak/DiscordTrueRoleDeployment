@@ -14,7 +14,7 @@ class ThisTimeItWillWork extends Nomination_1.default {
         return 'Сума викупів у виграних матчах: ' + this.getScore();
     }
     getScoreDescription() {
-        return ' викупитись і виграти ';
+        return ' викупитись і виграти';
     }
     getThumbURL() {
         return 'https://www.dropbox.com/s/ngprb5mcde8f0kf/buyback.png?dl=0';

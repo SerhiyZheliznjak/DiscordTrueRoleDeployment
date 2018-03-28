@@ -14,7 +14,7 @@ class FirstBloodOwner extends Nomination_1.default {
         return 'Пролито першої крові: ' + this.getScore();
     }
     getScoreDescription() {
-        return ' пролити першої крові ';
+        return ' пролити першу кров';
     }
     getThumbURL() {
         return 'https://www.dropbox.com/s/e4yuqx7yafnfutg/FirstBlood.jpg?dl=0';

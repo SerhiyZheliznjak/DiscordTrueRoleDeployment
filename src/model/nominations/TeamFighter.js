@@ -18,7 +18,7 @@ class TeamFighter extends Nomination_1.default {
         return 'Відсоток участі: ' + this.getScore();
     }
     getScoreDescription() {
-        return ' приймати участь у командних бійках ';
+        return ' приймати участь у командних бійках';
     }
     getThumbURL() {
         return 'https://www.dropbox.com/s/z9nqjmd63uem5sg/Team_Fighterlogo_square.png?dl=0';

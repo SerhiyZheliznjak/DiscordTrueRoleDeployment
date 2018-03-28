@@ -14,7 +14,7 @@ class StackGod extends Nomination_1.default {
         return 'Наскиртовано таборів: ' + this.getScore();
     }
     getScoreDescription() {
-        return ' наскиртувати таборів ';
+        return ' наскиртувати таборів';
     }
     getThumbURL() {
         return 'https://www.dropbox.com/s/97k2fxf5gz404av/Stack.jpg?dl=0';

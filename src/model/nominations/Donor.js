@@ -15,7 +15,7 @@ class Donor extends Nomination_1.default {
         return 'Віддано першої крові: ' + this.getScore();
     }
     getScoreDescription() {
-        return ' віддатись на першу кров ';
+        return ' віддатись на першу кров';
     }
     getThumbURL() {
         return 'https://www.dropbox.com/s/7jbzwdhy6ncvlt8/DONOR.jpg?dl=0';
