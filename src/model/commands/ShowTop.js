@@ -44,9 +44,9 @@ class ShowTop extends Command_1.CommandBase {
                             columns.p1 += place + ') ' + profileMap.get(tr.account_id) + '\n';
                             columns.p2 += tr.nomination.getScoreText() + '\n';
                         });
-                        const embed = DiscordUtils_1.DiscordUtils.getRichEmbed(firstNomination.getName(), 'Вони зуміли', undefined, '#Тайтаке.');
+                        const embed = DiscordUtils_1.DiscordUtils.getRichEmbed(firstNomination.getName(), 'Вони зуміли', 'http://is4.mzstatic.com/image/thumb/Video4/v4/ed/11/4d/ed114d74-8312-6fbc-072c-d1f8ac576743/source/227x227bb.jpg', '#Тайтаке.');
                         embed.addField('СтімАйді', columns.p1, true);
-                        embed.addField('Результат', columns.p1, true);
+                        embed.addField('Результат', columns.p2, true);
                         this.queue.get(args.className).forEach(channel => {
                             channel.send('', embed);
                         });
