@@ -33,7 +33,7 @@ class Nomination {
         }, 0);
     }
     scoreToString() {
-        return this.getScore().toString();
+        return this.getScore() + '';
     }
     getMessage() {
         return this.msg;
