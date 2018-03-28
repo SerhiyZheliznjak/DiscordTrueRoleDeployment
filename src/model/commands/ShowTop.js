@@ -62,11 +62,12 @@ class ShowTop extends Command_1.CommandBase {
             return new TopArgs(3, arr[0]);
         }
         else if (arr.length === 2) {
-            try {
-                return new TopArgs(parseInt(arr[0]), arr[1]);
-            }
-            catch (e) {
+            const n = parseInt(arr[0]);
+            if (isNaN(n)) {
                 console.error('second arg is not a number');
+            }
+            else {
+                return new TopArgs(n, arr[1]);
             }
         }
         return undefined;
