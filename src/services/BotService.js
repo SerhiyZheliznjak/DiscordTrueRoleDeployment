@@ -18,7 +18,7 @@ class BotService {
             map.set(nomination.constructor.name.toLowerCase(), nomination.getName());
             return map;
         }, new Map());
-        this.commandsProcessor = new CommandsProcessor_1.CommandsProcessor(this.client, this.dataStore);
+        this.commandsProcessor = new CommandsProcessor_1.CommandsProcessor(this.client, this.dataStore, this.nominationService);
         this.commandsProcessor.addCommand('restart', new CreatorCommand_1.CreatorCommand(this.client, this.dataStore, msg => this.restart(msg)));
     }
     processMesage(msg) {

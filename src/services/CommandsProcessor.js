@@ -9,8 +9,9 @@ const RegisterAll_1 = require("../model/commands/RegisterAll");
 const WatchList_1 = require("../model/commands/WatchList");
 const NominationKeysReminder_1 = require("../model/commands/NominationKeysReminder");
 class CommandsProcessor extends Command_1.CommandBase {
-    constructor(client, dataStore) {
+    constructor(client, dataStore, nominationService) {
         super(client, dataStore);
+        this.nominationService = nominationService;
         this.commandMap = new Map();
         this.init();
     }
@@ -49,7 +50,7 @@ class CommandsProcessor extends Command_1.CommandBase {
     }
     init() {
         this.commandMap.set('register', new Register_1.Register(this.client, this.dataStore));
-        this.commandMap.set('top', new ShowTop_1.ShowTop(this.client, this.dataStore));
+        this.commandMap.set('top', new ShowTop_1.ShowTop(this.client, this.dataStore, this.nominationService));
         this.commandMap.set('commands', this);
         this.commandMap.set('registerall', new RegisterAll_1.RegisterAll(this.client, this.dataStore));
         this.commandMap.set('watchlist', new WatchList_1.WatchList(this.client, this.dataStore));

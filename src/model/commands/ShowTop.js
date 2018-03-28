@@ -2,10 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Command_1 = require("../Command");
 const rxjs_1 = require("rxjs");
-const NominationService_1 = require("../../services/NominationService");
 const DiscordUtils_1 = require("../../utils/DiscordUtils");
 class ShowTop extends Command_1.CommandBase {
-    constructor(client, dataStore, nominationService = new NominationService_1.default()) {
+    constructor(client, dataStore, nominationService) {
         super(client, dataStore);
         this.nominationService = nominationService;
         this.queue = new Map();
