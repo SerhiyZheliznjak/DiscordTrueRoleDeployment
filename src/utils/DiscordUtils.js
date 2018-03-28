@@ -34,10 +34,10 @@ class DiscordUtils {
         return desiredLength - text.length > 0 ? text + ' '.repeat(desiredLength - text.length) : text;
     }
     static getLongestLength(arr) {
-        return arr.sort((a, b) => a.length - b.length)[0].length;
+        return Math.max(...arr.map(s => s.length));
     }
     static formatAsBlock(text) {
-        return '```\n' + text + '```';
+        return '```bash\n' + text + '\n```';
     }
 }
 exports.DiscordUtils = DiscordUtils;
