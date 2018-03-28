@@ -36,13 +36,13 @@ class ShowTop extends Command_1.CommandBase {
                         return profileMap;
                     }, new Map())
                         .subscribe((profileMap) => {
-                        const longestProfileName = [...profileMap].sort((a, b) => b[1].length - a[1].length)[0].length;
+                        const longestProfileName = [...profileMap].sort((a, b) => a[1].length - b[1].length)[0].length;
                         const firstNomination = topRes[0].nomination;
-                        let msgText = '```bash\n';
+                        let msgText = '```\n';
                         topRes.forEach((tr, index) => {
                             const place = index + 1;
                             const name = this.fillWithSpaces(profileMap.get(tr.account_id), longestProfileName);
-                            msgText += place + ') ' + name + ': ' + tr.nomination.getScoreText() + '\n';
+                            msgText += place + ') ' + name + ': ' + tr.nomination.getScore() + '\n';
                         });
                         const embed = DiscordUtils_1.DiscordUtils.getRichEmbed('Вони зуміли' + firstNomination.getScoreDescription(), msgText + '```', firstNomination.getThumbURL(), '#Тайтаке.');
                         this.queue.get(args.className).forEach(channel => {
