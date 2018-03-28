@@ -9,18 +9,16 @@ const RegisterAll_1 = require("../model/commands/RegisterAll");
 const WatchList_1 = require("../model/commands/WatchList");
 const NominationKeysReminder_1 = require("../model/commands/NominationKeysReminder");
 class CommandsProcessor extends Command_1.CommandBase {
-    constructor() {
-        super(...arguments);
+    constructor(client, dataStore) {
+        super(client, dataStore);
         this.commandMap = new Map();
+        this.init();
     }
     addCommand(command, processor) {
         this.commandMap.set(command, processor);
     }
     getCommandParser(msg) {
         const commandName = this.parseCommandName(msg.content);
-        if (!this.commandMap.get(commandName)) {
-            this.init();
-        }
         return this.commandMap.get(commandName);
     }
     onMessage(msg) {
@@ -33,6 +31,7 @@ class CommandsProcessor extends Command_1.CommandBase {
         }
         const processor = this.getCommandParser(msg);
         if (processor) {
+            console.log('processing', processor.constructor.name);
             processor.process(msg);
         }
     }
