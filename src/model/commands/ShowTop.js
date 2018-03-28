@@ -8,6 +8,7 @@ class ShowTop extends Command_1.CommandBase {
     constructor(client, dataStore, nominationService = new NominationService_1.default()) {
         super(client, dataStore);
         this.nominationService = nominationService;
+        this.queue = new Map();
     }
     process(msg) {
         const args = this.parseArgs(msg);
