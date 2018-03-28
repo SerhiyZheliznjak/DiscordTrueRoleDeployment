@@ -10,24 +10,24 @@ class ShowTop extends Command_1.CommandBase {
         this.nominationService = nominationService;
     }
     process(msg) {
-        const arr = this.parseTopNMessage(msg);
-        if (arr.length !== 0) {
-            const n = arr.length === 2 ? 3 : parseInt(arr[1]); // return top 3 by default
-            const className = arr.length === 3 ? arr[1] : arr[2];
-            const nominationName = className.toLowerCase();
-            if (nominationName) {
-                const pendingChannels = this.queue.get(nominationName);
+        const args = this.parseArgs(msg);
+        if (args) {
+            if (args.className) {
+                const pendingChannels = this.queue.get(args.className);
                 if (pendingChannels) {
                     const exists = pendingChannels.find((ch) => ch.equals(msg.channel));
                     if (!exists) {
                         console.log('adding new channel to queue');
                         pendingChannels.push(msg.channel);
                     }
+                    else {
+                        this.retardPlusPlus(msg);
+                    }
                 }
                 else {
                     console.log('sending request to get top best');
-                    this.queue.set(nominationName, [msg.channel]);
-                    this.nominationService.getTopN(nominationName, n).subscribe(topRes => {
+                    this.queue.set(args.className, [msg.channel]);
+                    this.nominationService.getTopN(args.className, args.n).subscribe(topRes => {
                         const accountIdsSet = topRes.map(r => r.account_id)
                             .filter((account_id, pos, self) => self.indexOf(account_id) === pos);
                         rxjs_1.Observable.from(accountIdsSet)
@@ -43,7 +43,7 @@ class ShowTop extends Command_1.CommandBase {
                                 const place = index + 1;
                                 msgText += place + ') ' + profileMap.get(tr.account_id) + ':\t' + tr.nomination.getScoreText() + '\n';
                             });
-                            this.queue.get(nominationName).forEach(channel => {
+                            this.queue.get(args.className).forEach(channel => {
                                 channel.send('', DiscordUtils_1.DiscordUtils.getRichEmbed(firstNomination.getName(), msgText, undefined, '#Тайтаке.'));
                             });
                         });
@@ -55,15 +55,27 @@ class ShowTop extends Command_1.CommandBase {
             }
         }
     }
-    parseTopNMessage(msg) {
-        const arr = msg.content.toLowerCase().split(' ');
-        if (arr.length === 2 || arr.length === 3) {
-            return arr;
+    parseArgs(msg) {
+        const arr = this.getArgs(msg.content.toLowerCase());
+        if (arr.length === 1) {
+            return new TopArgs(3, arr[0]);
         }
-        else {
-            this.retardPlusPlus(msg);
+        else if (arr.length === 2) {
+            try {
+                return new TopArgs(parseInt(arr[0]), arr[1]);
+            }
+            catch (e) {
+                console.error('second arg is not a number');
+            }
         }
-        return [];
+        return undefined;
     }
 }
 exports.ShowTop = ShowTop;
+class TopArgs {
+    constructor(n, className) {
+        this.n = n;
+        this.className = className;
+        this.className = className.toLowerCase();
+    }
+}
