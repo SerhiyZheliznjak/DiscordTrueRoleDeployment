@@ -15,17 +15,22 @@ class BestKDA extends Nomination_1.default {
         const kdaArr = this.getPoints().map(p => this.countKDA(p.p2 + ''));
         return Math.max(...kdaArr);
     }
-    getScoreText() {
-        const bestKDA = this.getPoints().map(p => p.p2 + '').reduce((max, next) => {
+    scoreToString() {
+        return this.getPoints().map(p => p.p2 + '').reduce((max, next) => {
             if (this.countKDA(max) < this.countKDA(next)) {
                 return next;
             }
             return max;
         }, '0/0/0');
-        return 'Накадеашив: ' + bestKDA;
+    }
+    getScoreText() {
+        return 'Накадеашив: ' + this.scoreToString();
     }
     getScoreDescription() {
-        return ' накадеашити ';
+        return ' накадеашити';
+    }
+    getThumbURL() {
+        return `https://www.dropbox.com/s/xyi9ctnh2a0pcfa/kda.jpg?dl=0`;
     }
     scorePoint(match, player_slot) {
         if (!!match) {

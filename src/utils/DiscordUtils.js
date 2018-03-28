@@ -4,7 +4,7 @@ const discord_js_1 = require("discord.js");
 const rxjs_1 = require("rxjs");
 const Pair_1 = require("../model/Pair");
 class DiscordUtils {
-    static getRichEmbed(title, description, avatarUrl, footer, url, fields) {
+    static getRichEmbed(title, description, avatarUrl, footer, url, imageUrl, fields) {
         const richEmbed = new discord_js_1.RichEmbed();
         richEmbed.setTitle(title);
         richEmbed.setDescription(description);
@@ -17,6 +17,9 @@ class DiscordUtils {
         if (url) {
             richEmbed.setURL(url);
         }
+        if (imageUrl) {
+            richEmbed.setImage(imageUrl);
+        }
         if (fields) {
             fields.forEach(field => richEmbed.addField(field.name, field.value, field.inline));
         }
@@ -25,7 +28,7 @@ class DiscordUtils {
     static generateMessages(claimedNominations, dataStore) {
         return rxjs_1.Observable.from(claimedNominations)
             .flatMap(cn => DiscordUtils.getNomiPlayerPair(cn, dataStore))
-            .map(pair => DiscordUtils.getRichEmbed(pair.p2.personaname + ': ' + pair.p1.nomination.getName(), pair.p1.nomination.getMessage(), pair.p2.avatarmedium, pair.p1.nomination.getScoreText(), pair.p2.profileurl));
+            .map(pair => DiscordUtils.getRichEmbed(pair.p2.personaname + ': ' + pair.p1.nomination.getName(), pair.p1.nomination.getMessage(), pair.p1.nomination.getThumbURL(), pair.p1.nomination.getScoreText(), pair.p2.profileurl, pair.p2.avatarmedium));
     }
     static getNomiPlayerPair(nomiRes, dataStore) {
         return dataStore.getProfile(nomiRes.account_id).map(profile => new Pair_1.default(nomiRes, profile));

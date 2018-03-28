@@ -21,7 +21,7 @@ class Pacifist extends Nomination_1.default {
         return ' приймати участь у відсотку командних бійок ';
     }
     getThumbURL() {
-        return 'https://ic.pics.livejournal.com/ibigdan/8161099/5590101/5590101_original.jpg';
+        return 'https://www.dropbox.com/s/6z5kqi3y2smx2fa/hippie.jpg?dl=0';
     }
     scorePoint(match, player_slot) {
         if (!match) {

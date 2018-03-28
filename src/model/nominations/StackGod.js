@@ -16,6 +16,9 @@ class StackGod extends Nomination_1.default {
     getScoreDescription() {
         return ' наскиртувати таборів ';
     }
+    getThumbURL() {
+        return 'https://www.dropbox.com/s/97k2fxf5gz404av/Stack.jpg?dl=0';
+    }
     scorePoint(match, player_slot) {
         if (!!match) {
             const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);

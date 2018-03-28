@@ -16,6 +16,9 @@ class ThisTimeItWillWork extends Nomination_1.default {
     getScoreDescription() {
         return ' викупитись і виграти ';
     }
+    getThumbURL() {
+        return 'https://www.dropbox.com/s/ngprb5mcde8f0kf/buyback.png?dl=0';
+    }
     scorePoint(match, player_slot) {
         if (!!match) {
             const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);

@@ -18,7 +18,10 @@ class DenyGod extends Nomination_1.default {
         return Math.max(...denyArr);
     }
     getScoreDescription() {
-        return ' заперечити кріпів за одну гру ';
+        return ' заперечити кріпів за одну гру';
+    }
+    getThumbURL() {
+        return 'https://www.dropbox.com/s/4u2nnqk5h85wyzl/Denier.jpg?dl=0';
     }
     scorePoint(match, player_slot) {
         if (!match) {

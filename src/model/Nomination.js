@@ -32,8 +32,8 @@ class Nomination {
             return p != null && p.p2 != null ? r + parseInt(p.p2 + '') : r;
         }, 0);
     }
-    getScoreText() {
-        return '' + this.getScore();
+    scoreToString() {
+        return this.getScore().toString();
     }
     getMessage() {
         return this.msg;
@@ -43,6 +43,9 @@ class Nomination {
     }
     isScored() {
         return this.getScore() >= this.minScore;
+    }
+    getScoreText() {
+        throw new Error('Should be implemented by child classes');
     }
     getScoreDescription() {
         throw new Error('Should be implemented by child classes');

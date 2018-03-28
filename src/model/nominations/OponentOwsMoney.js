@@ -16,6 +16,9 @@ class OponentOwsMoney extends Nomination_1.default {
     getScoreDescription() {
         return ' не вбити жодного суперника ';
     }
+    getThumbURL() {
+        return 'https://www.dropbox.com/s/5ck534x4gfv6x9a/OpponentOwnsMoney.jpeg?dl=0';
+    }
     scorePoint(match, player_slot) {
         if (!!match) {
             const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);

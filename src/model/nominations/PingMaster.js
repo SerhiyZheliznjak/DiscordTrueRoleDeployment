@@ -22,7 +22,7 @@ class PingMaster extends Nomination_1.default {
         return Math.max(...pings);
     }
     getThumbURL() {
-        return 'https://78.media.tumblr.com/avatar_e2d62cd6015d_128.pnj';
+        return 'https://www.dropbox.com/s/ttfrgwt19jywnzo/MasterPing.jpg?dl=0';
     }
     scorePoint(match, player_slot) {
         if (!!match) {

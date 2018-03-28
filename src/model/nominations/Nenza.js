@@ -15,6 +15,9 @@ class Nenza extends Nomination_1.default {
     getScoreDescription() {
         return ' понаписувати херні ';
     }
+    getThumbURL() {
+        return 'https://www.dropbox.com/s/c8afvrkkmt5k8fo/Nenza.jpg?dl=0';
+    }
     scorePoint(match, player_slot) {
         if (match && match.chat) {
             const nenzaMsg = match.chat.filter(msg => msg.player_slot === player_slot)

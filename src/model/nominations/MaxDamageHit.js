@@ -18,6 +18,9 @@ class MaxDamageHit extends Nomination_1.default {
     getScoreDescription() {
         return ' гепнути за раз ';
     }
+    getThumbURL() {
+        return 'https://www.dropbox.com/s/3pl3be829p6cv11/onePunchMan.jpg?dl=0';
+    }
     getScore() {
         const dmgArr = this.getPoints().map(p => parseInt(p.p2 + ''));
         return Math.max(...dmgArr);

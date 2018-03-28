@@ -17,6 +17,9 @@ class MotherOfGod extends Nomination_1.default {
     getScoreDescription() {
         return ' літати як метелик, жалити як бджола ';
     }
+    getThumbURL() {
+        return 'https://www.dropbox.com/s/cb0k6i5uh295q7t/motherOfGod.png?dl=0';
+    }
     scorePoint(match, player_slot) {
         if (!!match) {
             const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);

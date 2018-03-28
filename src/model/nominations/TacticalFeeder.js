@@ -16,6 +16,9 @@ class TacticalFeeder extends Nomination_1.default {
     getScoreDescription() {
         return ' виграти матчів безбожно фідячи ворога ';
     }
+    getThumbURL() {
+        return 'https://www.dropbox.com/s/x5hm81dy3y2gq0r/TacticalFeeder.png?dl=0';
+    }
     scorePoint(match, player_slot) {
         if (!!match) {
             const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);

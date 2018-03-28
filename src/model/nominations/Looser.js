@@ -17,6 +17,9 @@ class Looser extends Nomination_1.default {
     getScoreDescription() {
         return ' перемогти, тільки навпаки ';
     }
+    getThumbURL() {
+        return 'https://www.dropbox.com/s/v16doe6rq6q0l5j/looser.png?dl=0';
+    }
     scorePoint(match, player_slot) {
         if (!!match) {
             const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);

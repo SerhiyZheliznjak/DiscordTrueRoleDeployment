@@ -16,6 +16,9 @@ class StunningMan extends Nomination_1.default {
     getScoreDescription() {
         return ' протримати ворогів у приголомшенні ';
     }
+    getThumbURL() {
+        return 'https://www.dropbox.com/s/7hp4kz65g51r1nt/stunner.png?dl=0';
+    }
     scorePoint(match, player_slot) {
         if (!!match) {
             const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
