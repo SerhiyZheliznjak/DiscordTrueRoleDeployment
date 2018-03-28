@@ -22,8 +22,8 @@ class CommandsProcessor extends Command_1.CommandBase {
         return this.commandMap.get(commandName);
     }
     onMessage(msg) {
+        console.log('processing message: ', msg.content);
         if (this.isBot(msg)) {
-            console.log('sent by bot');
             return;
         }
         if (this.isRetard(msg.author.id)) {
