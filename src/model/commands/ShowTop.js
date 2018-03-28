@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Command_1 = require("../Command");
 const rxjs_1 = require("rxjs");
 const DiscordUtils_1 = require("../../utils/DiscordUtils");
+const Pair_1 = require("../Pair");
 class ShowTop extends Command_1.CommandBase {
     constructor(client, dataStore, nominationService) {
         super(client, dataStore);
@@ -37,13 +38,17 @@ class ShowTop extends Command_1.CommandBase {
                     }, new Map())
                         .subscribe((profileMap) => {
                         const firstNomination = topRes[0].nomination;
-                        let msgText = 'Вони зуміли\n';
+                        const columns = new Pair_1.default('', '');
                         topRes.forEach((tr, index) => {
                             const place = index + 1;
-                            msgText += place + ') ' + profileMap.get(tr.account_id) + ':\t' + tr.nomination.getScoreText() + '\n';
+                            columns.p1 += place + ') ' + profileMap.get(tr.account_id) + '\n';
+                            columns.p2 += tr.nomination.getScoreText() + '\n';
                         });
+                        const embed = DiscordUtils_1.DiscordUtils.getRichEmbed(firstNomination.getName(), 'Вони зуміли', undefined, '#Тайтаке.');
+                        embed.addField('СтімАйді', columns.p1, true);
+                        embed.addField('Результат', columns.p1, true);
                         this.queue.get(args.className).forEach(channel => {
-                            channel.send('', DiscordUtils_1.DiscordUtils.getRichEmbed(firstNomination.getName(), msgText, undefined, '#Тайтаке.'));
+                            channel.send('', embed);
                         });
                     });
                 });

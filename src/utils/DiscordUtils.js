@@ -4,7 +4,7 @@ const discord_js_1 = require("discord.js");
 const rxjs_1 = require("rxjs");
 const Pair_1 = require("../model/Pair");
 class DiscordUtils {
-    static getRichEmbed(title, description, avatarUrl, footer, url) {
+    static getRichEmbed(title, description, avatarUrl, footer, url, fields) {
         const richEmbed = new discord_js_1.RichEmbed();
         richEmbed.setTitle(title);
         richEmbed.setDescription(description);
@@ -16,6 +16,9 @@ class DiscordUtils {
         }
         if (url) {
             richEmbed.setURL(url);
+        }
+        if (fields) {
+            fields.forEach(field => richEmbed.addField(field.name, field.value, field.inline));
         }
         return richEmbed;
     }
