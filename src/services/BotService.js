@@ -22,7 +22,7 @@ class BotService {
         this.commandsProcessor.addCommand('restart', new CreatorCommand_1.CreatorCommand(this.client, this.dataStore, msg => this.restart(msg)));
     }
     processMesage(msg) {
-        this.commandsProcessor.process(msg);
+        this.commandsProcessor.onMessage(msg);
     }
     startNominating() {
         this.dataStore.registeredPlayers.subscribe(playersMap => {
