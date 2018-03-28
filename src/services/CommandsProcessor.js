@@ -23,6 +23,7 @@ class CommandsProcessor extends Command_1.CommandBase {
     }
     onMessage(msg) {
         if (this.isBot(msg)) {
+            console.log('sent by bot');
             return;
         }
         if (this.isRetard(msg.author.id)) {
