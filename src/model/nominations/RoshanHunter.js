@@ -17,7 +17,7 @@ class RoshanHunter extends Nomination_1.default {
         return ' вбити рошанів';
     }
     getThumbURL() {
-        return 'https://www.dropbox.com/s/nng80711fbthpy2/Roshan.jpg';
+        return 'https://image.ibb.co/i8JLZn/Roshan.jpg';
     }
     scorePoint(match, player_slot) {
         if (!match) {

@@ -19,7 +19,7 @@ class JungleOppressor extends Nomination_1.default {
         return ' гнобити джунглі протягом числа матчів';
     }
     getThumbURL() {
-        return 'https://www.dropbox.com/s/o19rh5sjftbi794/Jungler.jpg';
+        return 'https://image.ibb.co/b1XsfS/Jungler.jpg';
     }
     scorePoint(match, player_slot) {
         if (!match) {

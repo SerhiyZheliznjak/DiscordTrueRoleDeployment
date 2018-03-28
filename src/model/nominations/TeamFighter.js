@@ -21,7 +21,7 @@ class TeamFighter extends Nomination_1.default {
         return ' приймати участь у командних бійках';
     }
     getThumbURL() {
-        return 'https://www.dropbox.com/s/z9nqjmd63uem5sg/Team_Fighterlogo_square.png';
+        return 'https://image.ibb.co/kNZuun/Team_Fighterlogo_square.png';
     }
     scorePoint(match, player_slot) {
         if (!match) {

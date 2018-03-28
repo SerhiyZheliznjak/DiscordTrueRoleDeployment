@@ -18,7 +18,7 @@ class Donor extends Nomination_1.default {
         return ' віддатись на першу кров';
     }
     getThumbURL() {
-        return 'https://www.dropbox.com/s/7jbzwdhy6ncvlt8/DONOR.jpg';
+        return 'https://image.ibb.co/eSTLZn/DONOR.jpg';
     }
     scorePoint(match, player_slot) {
         if (!match) {

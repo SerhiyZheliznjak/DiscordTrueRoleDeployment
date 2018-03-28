@@ -21,7 +21,7 @@ class DenyGod extends Nomination_1.default {
         return ' заперечити кріпів за одну гру';
     }
     getThumbURL() {
-        return 'https://www.dropbox.com/s/4u2nnqk5h85wyzl/Denier.jpg';
+        return 'https://image.ibb.co/gGMk0S/Denier.jpg';
     }
     scorePoint(match, player_slot) {
         if (!match) {

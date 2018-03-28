@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Command_1 = require("../Command");
+const discord_js_1 = require("discord.js");
 const rxjs_1 = require("rxjs");
 const DiscordUtils_1 = require("../../utils/DiscordUtils");
 class ShowTop extends Command_1.CommandBase {
@@ -62,8 +63,12 @@ class ShowTop extends Command_1.CommandBase {
                 const name = DiscordUtils_1.DiscordUtils.fillWithSpaces(profileMap.get(tr.account_id), longestProfileName);
                 msgText += '#' + place + ' ' + name + ': ' + tr.nomination.scoreToString() + '\n';
             });
-            return DiscordUtils_1.DiscordUtils.getRichEmbed('Вони зуміли' + firstNomination.getScoreDescription(), DiscordUtils_1.DiscordUtils.formatAsBlock(msgText), undefined, // firstNomination.getThumbURL(),
-            '#Тайтаке.');
+            const richEmbed = new discord_js_1.RichEmbed();
+            richEmbed.setTitle('Вони зуміли' + firstNomination.getScoreDescription());
+            richEmbed.setDescription(DiscordUtils_1.DiscordUtils.formatAsBlock(msgText));
+            richEmbed.setThumbnail(firstNomination.getThumbURL());
+            richEmbed.setFooter('#Тайтаке.');
+            return richEmbed;
         }
     }
     getLongestLength(profileMap) {

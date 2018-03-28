@@ -17,7 +17,7 @@ class StackGod extends Nomination_1.default {
         return ' наскиртувати таборів';
     }
     getThumbURL() {
-        return 'https://www.dropbox.com/s/97k2fxf5gz404av/Stack.jpg';
+        return 'https://image.ibb.co/fKKSEn/Stack.jpg';
     }
     scorePoint(match, player_slot) {
         if (!!match) {

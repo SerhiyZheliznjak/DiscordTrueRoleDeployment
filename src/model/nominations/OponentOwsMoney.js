@@ -17,7 +17,7 @@ class OponentOwsMoney extends Nomination_1.default {
         return ' не вбити жодного суперника';
     }
     getThumbURL() {
-        return 'https://www.dropbox.com/s/5ck534x4gfv6x9a/OpponentOwnsMoney.jpeg';
+        return 'https://image.ibb.co/kXpSEn/Opponent_Owns_Money.jpg';
     }
     scorePoint(match, player_slot) {
         if (!!match) {

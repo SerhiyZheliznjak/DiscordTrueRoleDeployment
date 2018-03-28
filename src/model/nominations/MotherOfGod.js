@@ -18,7 +18,7 @@ class MotherOfGod extends Nomination_1.default {
         return ' літати як метелик, жалити як бджола';
     }
     getThumbURL() {
-        return 'https://www.dropbox.com/s/cb0k6i5uh295q7t/motherOfGod.png';
+        return 'https://image.ibb.co/mdvCfS/mother_Of_God.jpg';
     }
     scorePoint(match, player_slot) {
         if (!!match) {

@@ -18,7 +18,7 @@ class Looser extends Nomination_1.default {
         return ' перемогти, тільки навпаки';
     }
     getThumbURL() {
-        return 'https://www.dropbox.com/s/v16doe6rq6q0l5j/looser.png';
+        return 'https://image.ibb.co/d0aCfS/looser.png';
     }
     scorePoint(match, player_slot) {
         if (!!match) {
