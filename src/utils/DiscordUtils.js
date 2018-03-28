@@ -33,5 +33,11 @@ class DiscordUtils {
     static fillWithSpaces(text, desiredLength) {
         return desiredLength - text.length > 0 ? text + ' '.repeat(desiredLength - text.length) : text;
     }
+    static getLongestLength(arr) {
+        return arr.sort((a, b) => a.length - b.length)[0].length;
+    }
+    static formatAsBlock(text) {
+        return '```\n' + text + '```';
+    }
 }
 exports.DiscordUtils = DiscordUtils;

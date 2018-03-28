@@ -55,17 +55,17 @@ class ShowTop extends Command_1.CommandBase {
         if (profileMap.size && topRes.length) {
             const longestProfileName = this.getLongestLength(profileMap);
             const firstNomination = topRes[0].nomination;
-            let msgText = '```\n';
+            let msgText = '';
             topRes.forEach((tr, index) => {
                 const place = index + 1;
                 const name = DiscordUtils_1.DiscordUtils.fillWithSpaces(profileMap.get(tr.account_id), longestProfileName);
                 msgText += '#' + place + ' ' + name + ': ' + tr.nomination.getScore() + '\n';
             });
-            return DiscordUtils_1.DiscordUtils.getRichEmbed('Вони зуміли' + firstNomination.getScoreDescription(), msgText + '```', firstNomination.getThumbURL(), '#Тайтаке.');
+            return DiscordUtils_1.DiscordUtils.getRichEmbed('Вони зуміли' + firstNomination.getScoreDescription(), DiscordUtils_1.DiscordUtils.formatAsBlock(msgText), firstNomination.getThumbURL(), '#Тайтаке.');
         }
     }
     getLongestLength(profileMap) {
-        return [...profileMap].map(p => p[1]).sort((a, b) => a.length - b.length)[0].length;
+        return DiscordUtils_1.DiscordUtils.getLongestLength([...profileMap].map(p => p[1]));
     }
     parseArgs(msg) {
         const arr = this.getArgs(msg.content.toLowerCase());
