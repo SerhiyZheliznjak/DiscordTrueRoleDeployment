@@ -22,7 +22,6 @@ class CommandsProcessor extends Command_1.CommandBase {
         return this.commandMap.get(commandName);
     }
     onMessage(msg) {
-        console.log('processing message: ', msg.content);
         if (this.isBot(msg)) {
             return;
         }
@@ -47,7 +46,7 @@ class CommandsProcessor extends Command_1.CommandBase {
         return message.author.bot;
     }
     parseCommandName(content) {
-        return content.split(' ')[0].substring(1).toLowerCase();
+        return content.split(' ')[0].toLowerCase();
     }
     init() {
         this.commandMap.set('register', new Register_1.Register(this.client, this.dataStore));
