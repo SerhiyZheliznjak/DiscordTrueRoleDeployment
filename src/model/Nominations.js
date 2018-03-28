@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const MaxDamageHit_1 = require("./nominations/MaxDamageHit");
+const OnePunchMan_1 = require("./nominations/OnePunchMan");
 const FirstBloodOwner_1 = require("./nominations/FirstBloodOwner");
 const Donor_1 = require("./nominations/Donor");
 const JungleOppressor_1 = require("./nominations/JungleOppressor");
@@ -26,7 +26,7 @@ const Freelancer_1 = require("./nominations/Freelancer");
 class Nominations {
     static get all() {
         return [
-            new MaxDamageHit_1.MaxDamageHit(),
+            new OnePunchMan_1.OnePunchMan(),
             new FirstBloodOwner_1.FirstBloodOwner(),
             new Donor_1.Donor(),
             new JungleOppressor_1.JungleOppressor(),
