@@ -59,7 +59,7 @@ class ShowTop extends Command_1.CommandBase {
             topRes.forEach((tr, index) => {
                 const place = index + 1;
                 const name = DiscordUtils_1.DiscordUtils.fillWithSpaces(profileMap.get(tr.account_id), longestProfileName);
-                msgText += '#' + place + ' ' + name + ': ' + tr.nomination.getScore() + '\n';
+                msgText += '#' + place + ' ' + name + ': ' + tr.nomination.scoreToString() + '\n';
             });
             return DiscordUtils_1.DiscordUtils.getRichEmbed('Вони зуміли' + firstNomination.getScoreDescription(), DiscordUtils_1.DiscordUtils.formatAsBlock(msgText), undefined, // firstNomination.getThumbURL(),
             '#Тайтаке.');
