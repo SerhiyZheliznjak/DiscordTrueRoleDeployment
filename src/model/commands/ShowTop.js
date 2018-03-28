@@ -57,7 +57,7 @@ class ShowTop extends Command_1.CommandBase {
         }
     }
     fillWithSpaces(name, length) {
-        return name + ' '.repeat(length - name.length);
+        return length - name.length > 0 ? name + ' '.repeat(length - name.length) : name;
     }
     parseArgs(msg) {
         const arr = this.getArgs(msg.content.toLowerCase());
