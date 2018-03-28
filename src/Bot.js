@@ -8,7 +8,6 @@ client.login(process.env.test);
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
     botService = new BotService_1.default(client);
-    botService.forgiveRetards();
     botService.startNominating();
 });
 client.on('message', msg => {
