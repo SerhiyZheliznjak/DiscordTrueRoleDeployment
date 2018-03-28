@@ -31,7 +31,6 @@ class CommandsProcessor extends Command_1.CommandBase {
         }
         const processor = this.getCommandParser(msg);
         if (processor) {
-            console.log('processing', processor.constructor.name);
             processor.process(msg);
         }
     }

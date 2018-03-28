@@ -28,11 +28,12 @@ class NominationService {
         return rxjs_1.Observable.create(claimedNominationsObserver => this.claimedNominationsObserver = claimedNominationsObserver);
     }
     getTopN(nominationClassName, n = 3) {
-        if (!Nominations_1.default.getByClassName(nominationClassName)) {
+        const nomination = Nominations_1.default.getByClassName(nominationClassName);
+        if (!nomination) {
             console.log('no such nomination className: ', nominationClassName);
             return;
         }
-        const nominationKey = Nominations_1.default.getByClassName(nominationClassName).getKey();
+        const nominationKey = nomination.getKey();
         if (this.scoreBoard && this.scoreBoard.hasScores(nominationKey)) {
             console.log('using scored scoreboard');
             return rxjs_1.Observable.of(this.scoreBoard.getTopN(n).get(nominationKey));
