@@ -17,10 +17,11 @@ class CommandsProcessor extends Command_1.CommandBase {
         this.commandMap.set(command, processor);
     }
     getCommandParser(msg) {
-        if (this.commandMap.size === 0) {
+        const commandName = this.parseCommandName(msg.content);
+        if (!this.commandMap.get(commandName)) {
             this.init();
         }
-        return this.commandMap.get(this.parseCommandName(msg.content));
+        return this.commandMap.get(commandName);
     }
     onMessage(msg) {
         if (this.isBot(msg)) {
@@ -30,9 +31,9 @@ class CommandsProcessor extends Command_1.CommandBase {
             this.shutUpYouRRetard(msg);
             return;
         }
-        const command = this.getCommandParser(msg);
-        if (command) {
-            command.process(msg);
+        const processor = this.getCommandParser(msg);
+        if (processor) {
+            processor.process(msg);
         }
     }
     process(msg) {
