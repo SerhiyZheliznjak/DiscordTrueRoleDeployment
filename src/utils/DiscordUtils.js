@@ -30,5 +30,8 @@ class DiscordUtils {
     static getNomiPlayerPair(nomiRes, dataStore) {
         return dataStore.getProfile(nomiRes.account_id).map(profile => new Pair_1.default(nomiRes, profile));
     }
+    static fillWithSpaces(text, desiredLength) {
+        return desiredLength - text.length > 0 ? text + ' '.repeat(desiredLength - text.length) : text;
+    }
 }
 exports.DiscordUtils = DiscordUtils;

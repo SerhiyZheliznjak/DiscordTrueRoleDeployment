@@ -35,20 +35,7 @@ class ShowTop extends Command_1.CommandBase {
                         profileMap.set(profile.account_id, profile.personaname);
                         return profileMap;
                     }, new Map())
-                        .subscribe((profileMap) => {
-                        const longestProfileName = [...profileMap].sort((a, b) => a[1].length - b[1].length)[0].length;
-                        const firstNomination = topRes[0].nomination;
-                        let msgText = '```\n';
-                        topRes.forEach((tr, index) => {
-                            const place = index + 1;
-                            const name = this.fillWithSpaces(profileMap.get(tr.account_id), longestProfileName);
-                            msgText += place + ') ' + name + ': ' + tr.nomination.getScore() + '\n';
-                        });
-                        const embed = DiscordUtils_1.DiscordUtils.getRichEmbed('Вони зуміли' + firstNomination.getScoreDescription(), msgText + '```', firstNomination.getThumbURL(), '#Тайтаке.');
-                        this.queue.get(args.className).forEach(channel => {
-                            channel.send('', embed);
-                        });
-                    });
+                        .subscribe((profileMap) => this.sendTopNMessage(args.className, profileMap, topRes));
                 });
             }
         }
@@ -56,8 +43,29 @@ class ShowTop extends Command_1.CommandBase {
             this.retardPlusPlus(msg);
         }
     }
-    fillWithSpaces(name, length) {
-        return length - name.length > 0 ? name + ' '.repeat(length - name.length) : name;
+    sendTopNMessage(className, profileMap, topRes) {
+        this.queue.get(className).forEach(channel => {
+            const embed = this.generateEmbed(profileMap, topRes);
+            if (embed) {
+                channel.send('', embed);
+            }
+        });
+    }
+    generateEmbed(profileMap, topRes) {
+        if (profileMap.size && topRes.length) {
+            const longestProfileName = this.getLongestLength(profileMap);
+            const firstNomination = topRes[0].nomination;
+            let msgText = '```\n';
+            topRes.forEach((tr, index) => {
+                const place = index + 1;
+                const name = DiscordUtils_1.DiscordUtils.fillWithSpaces(profileMap.get(tr.account_id), longestProfileName);
+                msgText += '#' + place + ' ' + name + ': ' + tr.nomination.getScore() + '\n';
+            });
+            return DiscordUtils_1.DiscordUtils.getRichEmbed('Вони зуміли' + firstNomination.getScoreDescription(), msgText + '```', firstNomination.getThumbURL(), '#Тайтаке.');
+        }
+    }
+    getLongestLength(profileMap) {
+        return [...profileMap].map(p => p[1]).sort((a, b) => a.length - b.length)[0].length;
     }
     parseArgs(msg) {
         const arr = this.getArgs(msg.content.toLowerCase());
