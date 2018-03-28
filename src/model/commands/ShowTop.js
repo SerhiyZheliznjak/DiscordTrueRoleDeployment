@@ -61,7 +61,8 @@ class ShowTop extends Command_1.CommandBase {
                 const name = DiscordUtils_1.DiscordUtils.fillWithSpaces(profileMap.get(tr.account_id), longestProfileName);
                 msgText += '#' + place + ' ' + name + ': ' + tr.nomination.getScore() + '\n';
             });
-            return DiscordUtils_1.DiscordUtils.getRichEmbed('Вони зуміли' + firstNomination.getScoreDescription(), DiscordUtils_1.DiscordUtils.formatAsBlock(msgText), firstNomination.getThumbURL(), '#Тайтаке.');
+            return DiscordUtils_1.DiscordUtils.getRichEmbed('Вони зуміли' + firstNomination.getScoreDescription(), DiscordUtils_1.DiscordUtils.formatAsBlock(msgText), undefined, // firstNomination.getThumbURL(),
+            '#Тайтаке.');
         }
     }
     getLongestLength(profileMap) {

@@ -28,7 +28,7 @@ class DiscordUtils {
     static generateMessages(claimedNominations, dataStore) {
         return rxjs_1.Observable.from(claimedNominations)
             .flatMap(cn => DiscordUtils.getNomiPlayerPair(cn, dataStore))
-            .map(pair => DiscordUtils.getRichEmbed(pair.p2.personaname + ': ' + pair.p1.nomination.getName(), pair.p1.nomination.getMessage(), pair.p1.nomination.getThumbURL(), pair.p1.nomination.getScoreText(), pair.p2.profileurl, pair.p2.avatarmedium));
+            .map(pair => DiscordUtils.getRichEmbed(pair.p2.personaname + ': ' + pair.p1.nomination.getName(), pair.p1.nomination.getMessage(), pair.p2.avatarmedium, pair.p1.nomination.getScoreText(), pair.p2.profileurl));
     }
     static getNomiPlayerPair(nomiRes, dataStore) {
         return dataStore.getProfile(nomiRes.account_id).map(profile => new Pair_1.default(nomiRes, profile));
