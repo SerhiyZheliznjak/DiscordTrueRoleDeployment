@@ -21,6 +21,9 @@ class PingMaster extends Nomination_1.default {
         const pings = this.points.map(p => parseInt(p.p2 + ''));
         return Math.max(...pings);
     }
+    getThumbURL() {
+        return 'https://78.media.tumblr.com/avatar_e2d62cd6015d_128.pnj';
+    }
     scorePoint(match, player_slot) {
         if (!!match) {
             const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);

@@ -16,6 +16,9 @@ class FirstBloodOwner extends Nomination_1.default {
     getScoreDescription() {
         return ' пролити першої крові ';
     }
+    getThumbURL() {
+        return 'http://is4.mzstatic.com/image/thumb/Video4/v4/ed/11/4d/ed114d74-8312-6fbc-072c-d1f8ac576743/source/227x227bb.jpg';
+    }
     scorePoint(match, player_slot) {
         if (!match) {
             return 0;

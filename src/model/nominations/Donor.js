@@ -17,6 +17,9 @@ class Donor extends Nomination_1.default {
     getScoreDescription() {
         return ' віддатись на першу кров ';
     }
+    getThumbURL() {
+        return 'https://n6-img-fp.akamaized.net/vetores-gratis/fundo-do-dia-do-doador-com-mensagem_23-2147625494.jpg?size=338&ext=jpg';
+    }
     scorePoint(match, player_slot) {
         if (!match) {
             return 0;

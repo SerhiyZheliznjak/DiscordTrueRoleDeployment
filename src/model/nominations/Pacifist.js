@@ -20,6 +20,9 @@ class Pacifist extends Nomination_1.default {
     getScoreDescription() {
         return ' приймати участь у відсотку командних бійок ';
     }
+    getThumbURL() {
+        return 'https://ic.pics.livejournal.com/ibigdan/8161099/5590101/5590101_original.jpg';
+    }
     scorePoint(match, player_slot) {
         if (!match) {
             return 0;

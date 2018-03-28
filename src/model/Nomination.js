@@ -47,6 +47,9 @@ class Nomination {
     getScoreDescription() {
         throw new Error('Should be implemented by child classes');
     }
+    getThumbURL() {
+        throw new Error('Should be implemented by child classes');
+    }
     scorePoint(match, player_slot) {
         throw new Error('Should be implemented by child classes');
     }

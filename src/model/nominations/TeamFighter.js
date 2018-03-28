@@ -20,6 +20,9 @@ class TeamFighter extends Nomination_1.default {
     getScoreDescription() {
         return ' приймати участь у командних бійках ';
     }
+    getThumbURL() {
+        return 'https://d1u5p3l4wpay3k.cloudfront.net/lolesports_gamepedia_en/7/76/Team_Fighterlogo_square.png';
+    }
     scorePoint(match, player_slot) {
         if (!match) {
             return 0;

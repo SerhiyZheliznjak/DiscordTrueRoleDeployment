@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Command_1 = require("../Command");
 const rxjs_1 = require("rxjs");
 const DiscordUtils_1 = require("../../utils/DiscordUtils");
-const Pair_1 = require("../Pair");
 class ShowTop extends Command_1.CommandBase {
     constructor(client, dataStore, nominationService) {
         super(client, dataStore);
@@ -37,16 +36,15 @@ class ShowTop extends Command_1.CommandBase {
                         return profileMap;
                     }, new Map())
                         .subscribe((profileMap) => {
+                        const longestProfileName = [...profileMap].sort((a, b) => b[1].length - a[1].length)[0].length;
                         const firstNomination = topRes[0].nomination;
-                        const columns = new Pair_1.default('', '');
+                        let msgText = '```bash\n';
                         topRes.forEach((tr, index) => {
                             const place = index + 1;
-                            columns.p1 += place + ') ' + profileMap.get(tr.account_id) + '\n';
-                            columns.p2 += tr.nomination.getScoreText() + '\n';
+                            const name = this.fillWithSpaces(profileMap.get(tr.account_id), longestProfileName);
+                            msgText += place + ') ' + name + ': ' + tr.nomination.getScoreText() + '\n';
                         });
-                        const embed = DiscordUtils_1.DiscordUtils.getRichEmbed(firstNomination.getName(), 'Вони зуміли', 'http://is4.mzstatic.com/image/thumb/Video4/v4/ed/11/4d/ed114d74-8312-6fbc-072c-d1f8ac576743/source/227x227bb.jpg', '#Тайтаке.');
-                        embed.addField('СтімАйді', columns.p1, true);
-                        embed.addField('Результат', columns.p2, true);
+                        const embed = DiscordUtils_1.DiscordUtils.getRichEmbed('Вони зуміли' + firstNomination.getScoreDescription(), msgText + '```', firstNomination.getThumbURL(), '#Тайтаке.');
                         this.queue.get(args.className).forEach(channel => {
                             channel.send('', embed);
                         });
@@ -57,6 +55,9 @@ class ShowTop extends Command_1.CommandBase {
         else {
             this.retardPlusPlus(msg);
         }
+    }
+    fillWithSpaces(name, length) {
+        return name + ' '.repeat(length - name.length);
     }
     parseArgs(msg) {
         const arr = this.getArgs(msg.content.toLowerCase());

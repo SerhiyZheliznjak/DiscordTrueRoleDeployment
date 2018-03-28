@@ -21,6 +21,9 @@ class Parkinson extends Nomination_1.default {
     getScoreDescription() {
         return ' понацикувати за хвилину ';
     }
+    getThumbURL() {
+        return 'https://media.giphy.com/media/LXGkhlf2fGSmQ/giphy.gif';
+    }
     scorePoint(match, player_slot) {
         if (!!match) {
             const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
