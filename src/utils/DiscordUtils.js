@@ -11,10 +11,9 @@ class DiscordUtils {
             const richEmbed = new discord_js_1.RichEmbed();
             richEmbed.setTitle(pair.p2.personaname + ': ' + pair.p1.nomination.getName());
             richEmbed.setDescription(pair.p1.nomination.getMessage());
-            richEmbed.setThumbnail(pair.p1.nomination.getThumbURL());
+            richEmbed.setThumbnail(pair.p2.avatarmedium);
             richEmbed.setFooter(pair.p1.nomination.getScoreText());
             richEmbed.setURL(pair.p2.profileurl);
-            richEmbed.setImage(pair.p2.avatarmedium);
             return richEmbed;
         });
     }
