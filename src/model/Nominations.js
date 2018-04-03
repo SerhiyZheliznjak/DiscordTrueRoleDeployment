@@ -23,6 +23,8 @@ const RoshanHunter_1 = require("./nominations/RoshanHunter");
 const TeamFighter_1 = require("./nominations/TeamFighter");
 const Pacifist_1 = require("./nominations/Pacifist");
 const Freelancer_1 = require("./nominations/Freelancer");
+const Rapist_1 = require("./nominations/Rapist");
+const BadRapist_1 = require("./nominations/BadRapist");
 class Nominations {
     static get all() {
         return [
@@ -48,7 +50,9 @@ class Nominations {
             new RoshanHunter_1.RoshanHunter(),
             new TeamFighter_1.TeamFighter(),
             new Pacifist_1.Pacifist(),
-            new Freelancer_1.Freelancer()
+            new Freelancer_1.Freelancer(),
+            new Rapist_1.Rapist(),
+            new BadRapist_1.BadRapist()
         ];
     }
     static getByClassName(className) {
