@@ -8,7 +8,7 @@ class WinnerForLife extends Nomination_1.default {
         this.points = points;
         this.name = 'Пабідітіль па жизні';
         this.minScore = 15;
-        this.msg = 'Всі хочуть його в тіму, а хто не хоче той просто заздрит\nБільше 10ти перемог';
+        this.msg = 'Всі хочуть його в тіму, а хто не хоче той просто заздрит\nБільше 15ти перемог';
     }
     getScoreText() {
         return 'Виграно матчів: ' + this.getScore();
