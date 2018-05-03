@@ -16,8 +16,8 @@ class Constants {
     static get AM_HP() { return 640; }
     static get WINNING_MATCH_ID() { return '686'; }
     static get FORGIVE_RETARDS_INTERVAL() { return 1000 * 60 * 60 * 24; }
-    static get NOMINATION_DUE_INTERVAL() { return 1000 * 60 * 60 * 24 * 7; } // week
-    static get MATCH_DUE_TIME_SEC() { return 60 * 60 * 24 * 7 * 2; } // two weeks
+    static get NOMINATION_DUE_INTERVAL() { return 1000 * 60 * 60 * 24 * 7 * 4; } // 4 weeks
+    static get MATCH_DUE_TIME_SEC() { return 60 * 60 * 24 * 7 * 4; } // 4 weeks
     static get WATCH_INTERVAL() { return 1000 * 60 * 30; }
 }
 exports.default = Constants;
