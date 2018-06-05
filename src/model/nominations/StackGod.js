@@ -20,8 +20,8 @@ class StackGod extends Nomination_1.default {
         return 'https://image.ibb.co/fKKSEn/Stack.jpg';
     }
     scorePoint(match, player_slot) {
-        if (!!match) {
-            const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+        const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+        if (!!player) {
             return !!player && player.camps_stacked ? player.camps_stacked : 0;
         }
         return 0;

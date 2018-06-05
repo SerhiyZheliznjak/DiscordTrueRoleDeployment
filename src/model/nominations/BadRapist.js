@@ -20,8 +20,8 @@ class BadRapist extends Nomination_1.default {
         return 'https://image.ibb.co/bHyf9x/Rapier_Loose.jpg';
     }
     scorePoint(match, player_slot) {
-        if (!!match) {
-            const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+        const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+        if (!!player) {
             return player && player.purchase_rapier && player.win !== null && !player.win ? player.purchase_rapier : 0;
         }
         return 0;

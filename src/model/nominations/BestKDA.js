@@ -33,8 +33,8 @@ class BestKDA extends Nomination_1.default {
         return `https://image.ibb.co/bvMUS7/kda.jpg`;
     }
     scorePoint(match, player_slot) {
-        if (!!match) {
-            const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+        const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+        if (!!player) {
             const matchResult = player.win === 1 ? Constants_1.default.WON : Constants_1.default.LOST;
             return !!player && player.kills !== null && player.deaths !== null && player.assists !== null
                 ? player.kills + '/' + player.deaths + '/' + player.assists + '/' + matchResult

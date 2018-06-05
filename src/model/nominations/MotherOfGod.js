@@ -21,8 +21,8 @@ class MotherOfGod extends Nomination_1.default {
         return 'https://image.ibb.co/mdvCfS/mother_Of_God.jpg';
     }
     scorePoint(match, player_slot) {
-        if (!!match) {
-            const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+        const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+        if (!!player) {
             return !!player && player.deaths === 0 ? 1 : 0;
         }
         return 0;

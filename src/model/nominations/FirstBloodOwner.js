@@ -20,10 +20,10 @@ class FirstBloodOwner extends Nomination_1.default {
         return 'https://image.ibb.co/iTHQ0S/First_Blood.jpg';
     }
     scorePoint(match, player_slot) {
-        if (!match) {
+        const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+        if (!player) {
             return 0;
         }
-        const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
         return !!player && player.firstblood_claimed ? player.firstblood_claimed : 0;
     }
 }

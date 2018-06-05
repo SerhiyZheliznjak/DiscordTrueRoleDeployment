@@ -20,8 +20,8 @@ class ThisTimeItWillWork extends Nomination_1.default {
         return 'https://image.ibb.co/n1AZun/buyback.png';
     }
     scorePoint(match, player_slot) {
-        if (!!match) {
-            const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+        const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+        if (!!player) {
             return player && player.buyback_count && player.win === 1 ? player.buyback_count : 0;
         }
         return 0;

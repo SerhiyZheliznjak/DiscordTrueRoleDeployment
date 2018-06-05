@@ -20,8 +20,8 @@ class OponentOwsMoney extends Nomination_1.default {
         return 'https://image.ibb.co/kXpSEn/Opponent_Owns_Money.jpg';
     }
     scorePoint(match, player_slot) {
-        if (!!match) {
-            const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+        const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+        if (!!player) {
             return !!player && player.kills === 0 ? 1 : 0;
         }
         return 0;

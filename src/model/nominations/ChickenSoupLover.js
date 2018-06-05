@@ -20,10 +20,10 @@ class ChickeSoupLover extends Nomination_1.default {
         return 'https://image.ibb.co/fAtMqS/currier_Killer.jpg';
     }
     scorePoint(match, player_slot) {
-        if (!match) {
+        const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+        if (!player) {
             return 0;
         }
-        const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
         return player && player.courier_kills ? player.courier_kills : 0;
     }
 }

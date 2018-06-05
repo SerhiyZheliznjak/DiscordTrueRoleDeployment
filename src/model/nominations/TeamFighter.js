@@ -24,10 +24,10 @@ class TeamFighter extends Nomination_1.default {
         return 'https://image.ibb.co/kNZuun/Team_Fighterlogo_square.png';
     }
     scorePoint(match, player_slot) {
-        if (!match) {
+        const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+        if (!player) {
             return 0;
         }
-        const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
         return player && player.teamfight_participation ? player.teamfight_participation : 0;
     }
 }

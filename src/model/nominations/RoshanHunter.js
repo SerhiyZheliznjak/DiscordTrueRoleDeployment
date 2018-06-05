@@ -20,10 +20,10 @@ class RoshanHunter extends Nomination_1.default {
         return 'https://image.ibb.co/i8JLZn/Roshan.jpg';
     }
     scorePoint(match, player_slot) {
-        if (!match) {
+        const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+        if (!player) {
             return 0;
         }
-        const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
         return player && player.roshan_kills ? player.roshan_kills : 0;
     }
 }

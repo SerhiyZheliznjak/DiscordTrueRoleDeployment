@@ -20,8 +20,8 @@ class StunningMan extends Nomination_1.default {
         return 'https://image.ibb.co/fTpin7/stunner.png';
     }
     scorePoint(match, player_slot) {
-        if (!!match) {
-            const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+        const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+        if (!!player) {
             return player && player.stuns ? player.stuns : 0;
         }
         return 0;

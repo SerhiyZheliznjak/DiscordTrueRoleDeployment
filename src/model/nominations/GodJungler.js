@@ -21,9 +21,6 @@ class GodJungler extends Nomination_1.default {
         return 'https://image.ibb.co/dpc0A8/creeps_are_a_huge_part_of_every_dota_2_match.jpg';
     }
     scorePoint(match, player_slot) {
-        if (!match) {
-            return 0;
-        }
         const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
         if (!player || !player.killed_by) {
             return 0;

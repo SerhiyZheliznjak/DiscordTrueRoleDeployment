@@ -25,8 +25,8 @@ class PingMaster extends Nomination_1.default {
         return 'https://image.ibb.co/id89S7/Master_Ping.jpg';
     }
     scorePoint(match, player_slot) {
-        if (!!match) {
-            const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+        const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+        if (!!player) {
             return player && player.pings ? player.pings : 0;
         }
         return 0;

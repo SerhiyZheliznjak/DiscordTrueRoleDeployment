@@ -20,8 +20,8 @@ class TacticalFeeder extends Nomination_1.default {
         return 'https://image.ibb.co/if1o4n/Tactical_Feeder.jpg';
     }
     scorePoint(match, player_slot) {
-        if (!!match) {
-            const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+        const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+        if (!!player) {
             return player && player.deaths && player.deaths > 10 && player.win === 1 ? 1 : 0;
         }
         return 0;

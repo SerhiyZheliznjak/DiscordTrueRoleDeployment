@@ -22,9 +22,6 @@ class JungleOppressor extends Nomination_1.default {
         return 'https://image.ibb.co/b1XsfS/Jungler.jpg';
     }
     scorePoint(match, player_slot) {
-        if (!match) {
-            return 0;
-        }
         const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
         if (!player || !player.damage) {
             return 0;

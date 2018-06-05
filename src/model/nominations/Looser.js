@@ -21,8 +21,8 @@ class Looser extends Nomination_1.default {
         return 'https://image.ibb.co/d0aCfS/looser.png';
     }
     scorePoint(match, player_slot) {
-        if (!!match) {
-            const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+        const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
+        if (!!player) {
             return player && player.lose ? player.lose : 0;
         }
         return 0;

@@ -21,11 +21,11 @@ class Donor extends Nomination_1.default {
         return 'https://image.ibb.co/gZYzc7/DONOR.jpg';
     }
     scorePoint(match, player_slot) {
-        if (!match) {
+        const objectives = DotaParser_1.DotaParser.getObjectives(match);
+        if (!objectives) {
             return 0;
         }
-        const objectives = DotaParser_1.DotaParser.getObjectives(match);
-        const fbObjective = !!objectives ? objectives.find(obj => obj.type === Constants_1.default.OBJECTIVE_FB) : undefined;
+        const fbObjective = objectives.find(obj => obj.type === Constants_1.default.OBJECTIVE_FB);
         return !!fbObjective ? fbObjective.key === player_slot ? 1 : 0 : 0;
     }
 }
