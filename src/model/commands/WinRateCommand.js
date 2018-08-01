@@ -28,8 +28,10 @@ class WinRate extends Command_1.CommandBase {
     }
     mapAccountIdToWinRate(account_id, winLoss) {
         return winLoss.map(wl => {
-            const winrate = (+wl.win * 100) / (+wl.loose + +wl.win);
-            return new AccountWinRate(account_id, winrate);
+            console.log('wl is ', wl);
+            const winrate = wl.win / (+wl.loose + +wl.win);
+            console.log('winrate is ', winrate);
+            return new AccountWinRate(account_id, winrate * 100);
         });
     }
     sendMessage(msg, accWinRates) {
@@ -44,7 +46,6 @@ class WinRate extends Command_1.CommandBase {
         });
     }
     populateWithName(awr) {
-        console.log('populateWithName');
         return this.dataStore.getProfile(awr.account_id).map(profile => {
             awr.name = profile.personaname;
             return awr;
