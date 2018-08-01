@@ -27,12 +27,14 @@ class WinRate extends Command_1.CommandBase {
         }
     }
     mapAccountIdToWinRate(account_id, winLoss) {
+        console.log('mapAccountIdToWinRate');
         return winLoss.map(wl => {
             const winrate = (wl.win * 100) / (wl.loose + wl.win);
             return new AccountWinRate(account_id, winrate);
         });
     }
     sendMessage(msg, accWinRates) {
+        console.log('sendingMessage');
         rxjs_1.Observable.forkJoin(accWinRates.map(awr => this.populateWithName(awr)))
             .subscribe(winrates => {
             const winratesMsg = winrates.reduce((message, wr) => {
