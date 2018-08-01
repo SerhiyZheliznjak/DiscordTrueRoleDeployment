@@ -19,7 +19,6 @@ class WinRate extends Command_1.CommandBase {
             this.alreadyProcessing = true;
             this.dataStore.registeredPlayers.subscribe((registeredPlayers) => {
                 const profileIds = Array.from(registeredPlayers.keys());
-                console.log('got registered players', profileIds);
                 rxjs_1.Observable.forkJoin(profileIds.map(account_id => this.mapAccountIdToWinRate(account_id, this.dataStore.getWinLoss(account_id)))).subscribe(accWinRate => this.sendMessage(msg, accWinRate));
             });
         }
@@ -34,9 +33,9 @@ class WinRate extends Command_1.CommandBase {
         });
     }
     sendMessage(msg, accWinRates) {
-        console.log('sendingMessage');
         rxjs_1.Observable.forkJoin(accWinRates.map(awr => this.populateWithName(awr)))
             .subscribe(winrates => {
+            console.log('winrates: ', winrates.reduce((a, b) => a + b.name + ' ' + b.winRate, ''));
             const winratesMsg = winrates.reduce((message, wr) => {
                 return message + wr.name + ': ' + wr.winRate + '\n';
             }, '');
@@ -45,6 +44,7 @@ class WinRate extends Command_1.CommandBase {
         });
     }
     populateWithName(awr) {
+        console.log('populateWithName');
         return this.dataStore.getProfile(awr.account_id).map(profile => {
             awr.name = profile.personaname;
             return awr;
