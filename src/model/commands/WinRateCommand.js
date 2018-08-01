@@ -34,12 +34,11 @@ class WinRate extends Command_1.CommandBase {
     sendMessage(msg, accWinRates) {
         rxjs_1.Observable.forkJoin(accWinRates.map(awr => this.populateWithName(awr)))
             .subscribe(winrates => {
-            console.log('winrates: ', winrates.reduce((a, b) => a + b.name + ' ' + b.winRate + ', ', ''));
-            const winratesMsg = winrates.sort((a, b) => a.winRate - b.winRate).reduce((message, wr) => {
-                return message + wr.winRate + ': ' + wr.name + '\n';
+            const winratesMsg = winrates.sort((a, b) => b.winRate - a.winRate)
+                .reduce((message, wr) => {
+                return message + wr.winRate + '%: ' + wr.name + '\n';
             }, '\n');
             msg.reply(winratesMsg + '#тайтаке');
-            console.log('done replying');
             this.alreadyProcessing = false;
         });
     }
