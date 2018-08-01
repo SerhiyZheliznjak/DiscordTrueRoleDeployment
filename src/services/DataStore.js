@@ -79,5 +79,6 @@ class DataStore {
     }
 }
 DataStore.matchesCacheMap = new Map();
+DataStore.profilesMap = new Map();
 DataStore.registeredPlayersCache = new Map();
 exports.default = DataStore;
