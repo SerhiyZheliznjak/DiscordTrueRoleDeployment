@@ -28,8 +28,11 @@ class WinRate extends Command_1.CommandBase {
     }
     mapAccountIdToWinRate(account_id, winLoss) {
         return winLoss.map(wl => {
-            console.log('wl is ', wl);
-            const winrate = wl.win / (+wl.loose + +wl.win);
+            const wins = wl.win;
+            const sum = wl.loose + wl.win;
+            console.log('wins is ', wins);
+            console.log('sum is ', sum);
+            const winrate = wins / sum;
             console.log('winrate is ', winrate);
             return new AccountWinRate(account_id, winrate * 100);
         });
