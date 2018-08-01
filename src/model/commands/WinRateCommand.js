@@ -28,6 +28,8 @@ class WinRate extends Command_1.CommandBase {
     }
     mapAccountIdToWinRate(account_id, winLoss) {
         return winLoss.map(wl => {
+            console.log('typof win ', typeof wl.win);
+            console.log('typof loose ', typeof wl.loose);
             const wins = wl.win;
             const sum = wl.loose + wl.win;
             console.log('wins is ', wins);
