@@ -48,25 +48,16 @@ class DataStore {
             return rxjs_1.Observable.of(match);
         }
     }
-    get profilesCache() {
-        if (!DataStore.profilesMap) {
-            DataStore.profilesMap = new Map();
-        }
-        return DataStore.profilesMap;
-    }
     getProfile(account_id) {
-        const profile = this.profilesCache.get(account_id);
-        console.log('typeof account_id: ', typeof account_id);
-        for (const key in this.profilesCache.keys()) {
-            console.log('keys of map ', key, typeof key);
-        }
+        const profile = DataStore.profilesMap.get(account_id);
         if (profile) {
             return rxjs_1.Observable.of(profile);
         }
         else {
             return this.dotaApi.getPlayerProfile(account_id)
                 .map(p => {
-                this.profilesCache.set(account_id, profile);
+                console.log('setting key ', account_id);
+                DataStore.profilesMap.set(account_id, profile);
                 return p.profile;
             });
         }
