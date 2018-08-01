@@ -19,7 +19,7 @@ class WinRate extends Command_1.CommandBase {
             this.alreadyProcessing = true;
             this.dataStore.registeredPlayers.subscribe((registeredPlayers) => {
                 const profileIds = Array.from(registeredPlayers).map(stringId => +stringId);
-                console.log('got registered players', profileIds.length);
+                console.log('got registered players', profileIds);
                 rxjs_1.Observable.forkJoin(profileIds.map(account_id => this.mapAccountIdToWinRate(account_id, this.dataStore.getWinLoss(account_id)))).subscribe(accWinRate => this.sendMessage(msg, accWinRate));
             });
         }
