@@ -56,8 +56,7 @@ class DataStore {
         else {
             return this.dotaApi.getPlayerProfile(account_id)
                 .map(p => {
-                console.log('setting key ', account_id);
-                DataStore.profilesMap.set(account_id, profile);
+                DataStore.profilesMap.set(account_id, p.profile);
                 return p.profile;
             });
         }
