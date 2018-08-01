@@ -79,6 +79,9 @@ class DataStore {
     registerPlayer(account_id, discordId) {
         this.storage.registerPlayer(account_id, discordId);
     }
+    getWinLoss(account_id) {
+        return this.dotaApi.getWinLoss(account_id);
+    }
 }
 DataStore.matchesCacheMap = new Map();
 DataStore.registeredPlayersCache = new Map();

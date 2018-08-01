@@ -15,3 +15,6 @@ exports.ProfileJson = ProfileJson;
 class RecentMatchJson {
 }
 exports.RecentMatchJson = RecentMatchJson;
+class WinLossJson {
+}
+exports.WinLossJson = WinLossJson;

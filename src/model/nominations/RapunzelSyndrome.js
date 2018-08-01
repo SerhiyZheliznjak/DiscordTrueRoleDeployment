@@ -11,10 +11,10 @@ class RapunzelSyndrome extends Nomination_1.default {
         this.msg = 'Нахєр вежі!\nДобив 5 або більше веж за матч';
     }
     getScoreText() {
-        return 'Добито веж: ' + this.getScore();
+        return 'Добито більше 5ти веж за матч: ' + this.getScore();
     }
     getScoreDescription() {
-        return ' добити веж';
+        return ' добити більше 5ти веж';
     }
     getThumbURL() {
         return 'https://image.ibb.co/fA4uun/rapunzel.jpg';
@@ -22,7 +22,7 @@ class RapunzelSyndrome extends Nomination_1.default {
     scorePoint(match, player_slot) {
         const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
         if (!!player) {
-            return player && player.tower_kills > 5 ? player.tower_kills : 0;
+            return player && player.tower_kills > 5 ? 1 : 0;
         }
         return 0;
     }

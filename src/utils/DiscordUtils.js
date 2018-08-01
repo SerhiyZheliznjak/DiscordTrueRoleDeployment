@@ -9,8 +9,8 @@ class DiscordUtils {
             .flatMap(cn => DiscordUtils.getNomiPlayerPair(cn, dataStore))
             .map(pair => {
             const richEmbed = new discord_js_1.RichEmbed();
-            richEmbed.setAuthor(pair.p2.personaname, pair.p2.avatarmedium);
-            richEmbed.setTitle(pair.p1.nomination.getName());
+            richEmbed.setAuthor(pair.p1.nomination.getName(), pair.p2.avatarmedium);
+            richEmbed.setTitle(pair.p2.personaname);
             richEmbed.setDescription(pair.p1.nomination.getMessage());
             richEmbed.setThumbnail(pair.p1.nomination.getThumbURL());
             richEmbed.setFooter(pair.p1.nomination.getScoreText());
@@ -29,6 +29,13 @@ class DiscordUtils {
     }
     static formatAsBlock(text) {
         return '```bash\n' + text + '\n```';
+    }
+    static getWinRateMessage(msg) {
+        const richEmbed = new discord_js_1.RichEmbed();
+        richEmbed.setTitle('Відсоток перемог:');
+        richEmbed.setDescription(msg);
+        richEmbed.setFooter('#тайтаке');
+        return richEmbed;
     }
 }
 exports.DiscordUtils = DiscordUtils;

@@ -55,6 +55,9 @@ class DotaApi {
     getMatch(match_id) {
         return this.queueRequest(DotaApi.getMatchUrl(match_id));
     }
+    getWinLoss(account_id) {
+        return this.queueRequest(util_1.format('https://api.opendota.com/api/players/%s/wl', account_id));
+    }
     moveQueue() {
         DotaApi.queueSubscription = rxjs_1.Observable.interval(500).subscribe(() => {
             if (DotaApi.queue.length > 0) {
