@@ -37,7 +37,7 @@ class WinRate extends Command_1.CommandBase {
             const winratesMsg = winrates.sort((a, b) => b.winRate - a.winRate)
                 .reduce((message, wr) => {
                 return message + wr.winRate + '%: ' + wr.name + '\n';
-            }, '```cs\n');
+            }, '```diff\n+');
             msg.reply(winratesMsg + '#тайтаке```');
             this.alreadyProcessing = false;
         });
