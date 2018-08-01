@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Command_1 = require("../Command");
 const rxjs_1 = require("rxjs");
-const DiscordUtils_1 = require("../../utils/DiscordUtils");
 class WinRate extends Command_1.CommandBase {
     constructor() {
         super(...arguments);
@@ -29,17 +28,18 @@ class WinRate extends Command_1.CommandBase {
     mapAccountIdToWinRate(account_id, winLoss) {
         return winLoss.map(wl => {
             const winrate = wl.win / (wl.lose + wl.win);
-            return new AccountWinRate(account_id, winrate * 100);
+            return new AccountWinRate(account_id, Math.round(winrate * 10000) / 100);
         });
     }
     sendMessage(msg, accWinRates) {
         rxjs_1.Observable.forkJoin(accWinRates.map(awr => this.populateWithName(awr)))
             .subscribe(winrates => {
-            console.log('winrates: ', winrates.reduce((a, b) => a + b.name + ' ' + b.winRate, ''));
+            console.log('winrates: ', winrates.reduce((a, b) => a + b.name + ' ' + b.winRate + ', ', ''));
             const winratesMsg = winrates.reduce((message, wr) => {
                 return message + wr.name + ': ' + wr.winRate + '\n';
             }, '');
-            msg.reply(DiscordUtils_1.DiscordUtils.getWinRateMessage(winratesMsg));
+            msg.reply(winratesMsg + '#тайтаке');
+            console.log('done replying');
             this.alreadyProcessing = false;
         });
     }
