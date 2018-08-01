@@ -36,9 +36,9 @@ class WinRate extends Command_1.CommandBase {
             .subscribe(winrates => {
             const winratesMsg = winrates.sort((a, b) => b.winRate - a.winRate)
                 .reduce((message, wr) => {
-                return message + wr.winRate + '%: ' + wr.name + '\n';
-            }, '\n');
-            msg.reply(winratesMsg + '#тайтаке');
+                return message + wr.winRate + '%: <a href="http://google.com">' + wr.name + '</a>\n';
+            }, '```html\n');
+            msg.reply(winratesMsg + '#тайтаке```');
             this.alreadyProcessing = false;
         });
     }
