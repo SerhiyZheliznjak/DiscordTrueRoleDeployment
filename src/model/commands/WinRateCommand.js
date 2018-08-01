@@ -10,7 +10,7 @@ class WinRate extends Command_1.CommandBase {
     }
     process(msg) {
         const arr = this.getArgs(msg.content.toLowerCase());
-        if (!this.alreadyProcessing) {
+        if (this.alreadyProcessing) {
             msg.reply('Я знав що так буде, retardPlusPlus()');
             this.retardPlusPlus(msg);
             return;
