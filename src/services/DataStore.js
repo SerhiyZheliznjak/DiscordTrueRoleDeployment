@@ -56,6 +56,10 @@ class DataStore {
     }
     getProfile(account_id) {
         const profile = this.profilesCache.get(account_id);
+        console.log('typeof account_id: ', typeof account_id);
+        for (const key in this.profilesCache.keys()) {
+            console.log('keys of map ', key, typeof key);
+        }
         if (profile) {
             return rxjs_1.Observable.of(profile);
         }
