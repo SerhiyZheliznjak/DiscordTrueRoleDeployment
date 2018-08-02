@@ -36,8 +36,8 @@ class WinRate extends Command_1.CommandBase {
         const args = this.getArgs(msgContent);
         const mentions = this.getIdsFromMentions(args);
         let accountIdsToCount;
-        let with_ids;
-        let without_ids;
+        let with_ids = [];
+        let without_ids = [];
         let messageHeader = 'Вінрейт ';
         if (heroName) {
             messageHeader += 'на ' + heroName + ' ';
