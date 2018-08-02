@@ -26,9 +26,9 @@ class WinRate extends Command_1.CommandBase {
         }
     }
     helpText() {
-        return 'winrate all? HERO_NAME? without? @MENTION; якщо не вказати all то порахує лише для того хто то викликав команду; '
-            + 'HERO_NAME опційне, рахуватиме ігри на цьому герої;'
-            + '@MENTION дискорд згадка з якими гравцями рахувати ігри, можна кілька; without опційне буде рахувати ігри без згаданих гравців.';
+        return 'winrate all? HERO_NAME? without? @MENTION\nякщо не вказати all то порахує лише для того хто то викликав команду;\n'
+            + 'HERO_NAME опційне, рахуватиме ігри на цьому герої;\n'
+            + '@MENTION дискорд згадка з якими гравцями рахувати ігри, можна кілька;\nwithout опційне буде рахувати ігри без згаданих гравців.';
     }
     countWinRate(msg, registeredPlayers, hero_id, heroName) {
         const msgContent = msg.content.toLowerCase();
