@@ -63,7 +63,7 @@ class WinRate extends Command_1.CommandBase {
             }
             messageHeader += Array.from(msg.mentions.members.values()).map(member => member.displayName).join(', ');
         }
-        rxjs_1.Observable.forkJoin(accountIdsToCount.map(account_id => this.mapAccountIdToWinRate(account_id, this.dataStore.getWinLoss(account_id, hero_id, with_ids, without_ids)))).subscribe((accWinRate) => this.sendMessage(msg, accWinRate, messageHeader + '\n'));
+        rxjs_1.Observable.forkJoin(accountIdsToCount.map(account_id => this.mapAccountIdToWinRate(account_id, this.dataStore.getWinLoss(account_id, hero_id, with_ids, without_ids)))).subscribe((accWinRate) => this.sendMessage(msg, accWinRate, messageHeader));
     }
     getAccountId(discordIds, registeredPlayers) {
         return Array.from(registeredPlayers.entries())
@@ -83,8 +83,8 @@ class WinRate extends Command_1.CommandBase {
                 .reduce((message, wr) => {
                 const sign = wr.winRate > 50 ? '+' : '-';
                 const winRate = isNaN(wr.winRate) ? '-' : wr.winRate;
-                return messageHeader + message + sign + ' ' + winRate + '%: ' + wr.name + '\n';
-            }, '```diff\n');
+                return message + sign + ' ' + winRate + '%: ' + wr.name + '\n';
+            }, '```diff\n' + messageHeader + '\n');
             msg.reply(winratesMsg + '#тайтаке```');
             this.unlock();
         });
