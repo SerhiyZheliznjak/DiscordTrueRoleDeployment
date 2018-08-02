@@ -35,19 +35,17 @@ class WinRate extends Command_1.CommandBase {
         const msgContent = msg.content.toLowerCase();
         const args = this.getArgs(msgContent);
         const mentions = this.getIdsFromMentions(args);
+        const with_ids = this.getWithOrWithouts(msgContent, registeredPlayers);
+        const without_ids = this.getWithOrWithouts(msgContent, registeredPlayers, false);
         let accountIdsToCount;
-        let with_ids = [];
-        let without_ids = [];
         let messageHeader = 'Вінрейт ';
         if (heroName) {
             messageHeader += 'на ' + heroName + ' ';
         }
-        if (args.indexOf('all') > -1 || args.length === 0) {
+        if (args.indexOf('all') > -1 || args.length === 0 || with_ids.length === 0) {
             accountIdsToCount = Array.from(registeredPlayers.keys());
         }
         else if (mentions.length > 0) {
-            with_ids = this.getWithOrWithouts(msgContent, registeredPlayers);
-            without_ids = this.getWithOrWithouts(msgContent, registeredPlayers, false);
             if (with_ids.length) {
                 messageHeader += this.getMentionedNamesString(msg, with_ids);
             }
