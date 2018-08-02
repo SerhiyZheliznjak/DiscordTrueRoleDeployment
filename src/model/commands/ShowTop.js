@@ -74,6 +74,9 @@ class ShowTop extends Command_1.CommandBase {
     getLongestLength(profileMap) {
         return DiscordUtils_1.DiscordUtils.getLongestLength([...profileMap].map(p => p[1]));
     }
+    helpText() {
+        return 'top NOMINATION_KEY, використовуй команду nominationkeys щоб дізнатись ключ потрібної номінації';
+    }
     parseArgs(msg) {
         const arr = this.getArgs(msg.content.toLowerCase());
         if (arr.length === 1) {

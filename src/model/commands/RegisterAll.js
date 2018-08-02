@@ -27,5 +27,8 @@ class RegisterAll extends Command_1.CommandBase {
             });
         }
     }
+    helpText() {
+        return 'то тільки для Творця';
+    }
 }
 exports.RegisterAll = RegisterAll;

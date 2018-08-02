@@ -36,5 +36,8 @@ class Register extends Command_1.CommandBase {
             });
         }
     }
+    helpText() {
+        return 'watch @КОРИСТУВАЧ DOTA_ID';
+    }
 }
 exports.Register = Register;

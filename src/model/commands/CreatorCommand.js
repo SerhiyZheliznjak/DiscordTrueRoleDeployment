@@ -6,6 +6,9 @@ class CreatorCommand extends Command_1.CommandBase {
         super(client, dataStore);
         this.processCb = processCb;
     }
+    helpText() {
+        return 'то щоб Творець міг перезапустити';
+    }
     process(msg) {
         if (this.isCreator(msg)) {
             this.processCb(msg);

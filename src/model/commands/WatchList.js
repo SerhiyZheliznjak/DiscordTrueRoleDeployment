@@ -18,5 +18,8 @@ class WatchList extends Command_1.CommandBase {
             msg.reply('хуйочліст');
         }
     }
+    helpText() {
+        return 'то тільки для Творця';
+    }
 }
 exports.WatchList = WatchList;

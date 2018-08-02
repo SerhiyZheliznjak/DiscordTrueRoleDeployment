@@ -18,5 +18,8 @@ class NominationKeysReminder extends Command_1.CommandBase {
             });
         }
     }
+    helpText() {
+        return 'Повертає всі назви номінацій, які можна використовувати для команди top';
+    }
 }
 exports.NominationKeysReminder = NominationKeysReminder;

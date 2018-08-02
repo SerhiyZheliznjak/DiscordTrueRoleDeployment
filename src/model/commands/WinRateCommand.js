@@ -25,21 +25,30 @@ class WinRate extends Command_1.CommandBase {
             });
         }
     }
+    helpText() {
+        return 'winrate all? HERO_NAME without? @MENTION; якщо не вказати all то порахує лише для того хто то викликав команду; '
+            + 'HERO_NAME опційне, рахуватиме ігри на цьому герої;'
+            + '@MENTION дискорд згадка з якими гравцями рахувати ігри, можна кілька; without опційне буде рахувати ігри без згаданих гравців.';
+    }
     countWinRate(msg, registeredPlayers, hero_id) {
         const msgContent = msg.content.toLowerCase();
         const args = this.getArgs(msgContent);
-        const accountIds = Array.from(registeredPlayers.keys());
+        let accountIdsToCount;
         let mentionedIds;
         let with_ids;
         let without_ids;
         const mentions = args.filter(a => a.startsWith('<@')).map(m => m.match(/\d+/)[0]);
+        if (args.indexOf('all') > -1) {
+            accountIdsToCount = Array.from(registeredPlayers.keys());
+        }
+        else {
+            accountIdsToCount = this.getAccountId(mentions, registeredPlayers);
+        }
         if (mentions.length === 0) {
             mentionedIds = Array.from(registeredPlayers.keys());
         }
         else {
-            mentionedIds = Array.from(registeredPlayers.entries())
-                .filter(kv => mentions.indexOf(kv[1]) > -1)
-                .map(kv => kv[0]);
+            mentionedIds = this.getAccountId(mentions, registeredPlayers);
         }
         if (msgContent.indexOf('without') > -1) {
             without_ids = mentionedIds;
@@ -47,7 +56,12 @@ class WinRate extends Command_1.CommandBase {
         else {
             with_ids = mentionedIds;
         }
-        rxjs_1.Observable.forkJoin(accountIds.map(account_id => this.mapAccountIdToWinRate(account_id, this.dataStore.getWinLoss(account_id, hero_id, with_ids, without_ids)))).subscribe((accWinRate) => this.sendMessage(msg, accWinRate));
+        rxjs_1.Observable.forkJoin(accountIdsToCount.map(account_id => this.mapAccountIdToWinRate(account_id, this.dataStore.getWinLoss(account_id, hero_id, with_ids, without_ids)))).subscribe((accWinRate) => this.sendMessage(msg, accWinRate));
+    }
+    getAccountId(discordIds, registeredPlayers) {
+        return Array.from(registeredPlayers.entries())
+            .filter(kv => discordIds.indexOf(kv[1]) > -1)
+            .map(kv => kv[0]);
     }
     mapAccountIdToWinRate(account_id, winLoss) {
         return winLoss.map(wl => {

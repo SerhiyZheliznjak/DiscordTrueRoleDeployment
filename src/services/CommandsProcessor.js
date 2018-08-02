@@ -39,8 +39,11 @@ class CommandsProcessor extends Command_1.CommandBase {
         }
     }
     process(msg) {
-        const commands = [...this.commandMap].map(p => p[0]).sort().join('\n');
+        const commands = [...this.commandMap].map(p => p[0] + ' - ' + p[1].helpText()).sort().join('\n');
         msg.reply(DiscordUtils_1.DiscordUtils.formatAsBlock(commands));
+    }
+    helpText() {
+        return '';
     }
     forgiveRetards() {
         rxjs_1.Observable.interval(Constants_1.default.FORGIVE_RETARDS_INTERVAL).subscribe(() => Command_1.CommandBase.retardMap = new Map());

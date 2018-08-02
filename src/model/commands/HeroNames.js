@@ -11,5 +11,8 @@ class HeroNames extends Command_1.CommandBase {
             });
         }
     }
+    helpText() {
+        return 'Повертає всі імена героїв, які можна використовувати для команди winrate';
+    }
 }
 exports.HeroNames = HeroNames;
