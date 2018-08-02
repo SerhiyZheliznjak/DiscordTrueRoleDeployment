@@ -16,7 +16,7 @@ class WinRate extends Command_1.CommandBase {
                         if (heroName) {
                             hero_id = heroes.get(heroName);
                         }
-                        this.countWinRate(msg, registeredPlayers, hero_id);
+                        this.countWinRate(msg, registeredPlayers, hero_id, heroName);
                     });
                 }
                 else {
@@ -26,18 +26,22 @@ class WinRate extends Command_1.CommandBase {
         }
     }
     helpText() {
-        return 'winrate all? HERO_NAME without? @MENTION; якщо не вказати all то порахує лише для того хто то викликав команду; '
+        return 'winrate all? HERO_NAME? without? @MENTION; якщо не вказати all то порахує лише для того хто то викликав команду; '
             + 'HERO_NAME опційне, рахуватиме ігри на цьому герої;'
             + '@MENTION дискорд згадка з якими гравцями рахувати ігри, можна кілька; without опційне буде рахувати ігри без згаданих гравців.';
     }
-    countWinRate(msg, registeredPlayers, hero_id) {
+    countWinRate(msg, registeredPlayers, hero_id, heroName) {
         const msgContent = msg.content.toLowerCase();
         const args = this.getArgs(msgContent);
+        const mentions = args.filter(a => a.startsWith('<@')).map(m => m.match(/\d+/)[0]);
         let accountIdsToCount;
         let mentionedIds;
         let with_ids;
         let without_ids;
-        const mentions = args.filter(a => a.startsWith('<@')).map(m => m.match(/\d+/)[0]);
+        let messageHeader = 'Вінрейт ';
+        if (heroName) {
+            messageHeader += 'на ' + heroName + ' ';
+        }
         if (args.indexOf('all') > -1) {
             accountIdsToCount = Array.from(registeredPlayers.keys());
         }
@@ -45,18 +49,21 @@ class WinRate extends Command_1.CommandBase {
             accountIdsToCount = this.getAccountId(mentions, registeredPlayers);
         }
         if (mentions.length === 0) {
-            mentionedIds = Array.from(registeredPlayers.keys());
+            mentionedIds = [];
         }
         else {
             mentionedIds = this.getAccountId(mentions, registeredPlayers);
+            if (msgContent.indexOf('without') > -1) {
+                without_ids = mentionedIds;
+                messageHeader += ' без ';
+            }
+            else {
+                with_ids = mentionedIds;
+                messageHeader += ' з ';
+            }
+            messageHeader += Array.from(msg.mentions.members.values()).map(member => member.displayName).join(', ');
         }
-        if (msgContent.indexOf('without') > -1) {
-            without_ids = mentionedIds;
-        }
-        else {
-            with_ids = mentionedIds;
-        }
-        rxjs_1.Observable.forkJoin(accountIdsToCount.map(account_id => this.mapAccountIdToWinRate(account_id, this.dataStore.getWinLoss(account_id, hero_id, with_ids, without_ids)))).subscribe((accWinRate) => this.sendMessage(msg, accWinRate));
+        rxjs_1.Observable.forkJoin(accountIdsToCount.map(account_id => this.mapAccountIdToWinRate(account_id, this.dataStore.getWinLoss(account_id, hero_id, with_ids, without_ids)))).subscribe((accWinRate) => this.sendMessage(msg, accWinRate, messageHeader + '\n'));
     }
     getAccountId(discordIds, registeredPlayers) {
         return Array.from(registeredPlayers.entries())
@@ -69,13 +76,14 @@ class WinRate extends Command_1.CommandBase {
             return new AccountWinRate(account_id, Math.round(winrate * 10000) / 100);
         });
     }
-    sendMessage(msg, accWinRates) {
+    sendMessage(msg, accWinRates, messageHeader) {
         rxjs_1.Observable.forkJoin(accWinRates.map(awr => this.populateWithName(awr)))
             .subscribe(winrates => {
             const winratesMsg = winrates.sort((a, b) => b.winRate - a.winRate)
                 .reduce((message, wr) => {
                 const sign = wr.winRate > 50 ? '+' : '-';
-                return message + sign + ' ' + wr.winRate + '%: ' + wr.name + '\n';
+                const winRate = isNaN(wr.winRate) ? '-' : wr.winRate;
+                return messageHeader + message + sign + ' ' + winRate + '%: ' + wr.name + '\n';
             }, '```diff\n');
             msg.reply(winratesMsg + '#тайтаке```');
             this.unlock();

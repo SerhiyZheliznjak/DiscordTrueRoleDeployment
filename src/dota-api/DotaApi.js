@@ -67,7 +67,6 @@ class DotaApi {
         if (without_ids) {
             without_ids.forEach(id => query += 'excluded_account_id=' + id + '&');
         }
-        console.log('built query: ', query);
         return this.queueRequest(query);
     }
     getHeroes() {
