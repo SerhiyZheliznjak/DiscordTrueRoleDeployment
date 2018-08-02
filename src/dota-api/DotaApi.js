@@ -55,8 +55,29 @@ class DotaApi {
     getMatch(match_id) {
         return this.queueRequest(DotaApi.getMatchUrl(match_id));
     }
-    getWinLoss(account_id) {
-        return this.queueRequest(util_1.format('https://api.opendota.com/api/players/%s/wl', account_id));
+    getWinLoss(account_id, hero_id, with_id, without_id) {
+        let query = util_1.format('https://api.opendota.com/api/players/%s/wl', account_id);
+        query += this.hasQueryParameters(hero_id, with_id, without_id) ? '?' : '';
+        if (hero_id) {
+            query += "hero_id=" + hero_id + '&';
+        }
+        if (with_id) {
+            with_id.forEach(id => query += 'included_account_id=' + id + '&');
+        }
+        if (without_id) {
+            without_id.forEach(id => query += 'excluded_account_id=' + id + '&');
+        }
+        console.log('built query: ', query);
+        return this.queueRequest(query);
+    }
+    getHeroes() {
+        return this.queueRequest('https://api.opendota.com/api/heroes');
+    }
+    hasQueryParameters(...args) {
+        if (args.find(arg => !!arg)) {
+            return true;
+        }
+        return false;
     }
     moveQueue() {
         DotaApi.queueSubscription = rxjs_1.Observable.interval(500).subscribe(() => {

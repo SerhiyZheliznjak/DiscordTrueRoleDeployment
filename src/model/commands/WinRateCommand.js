@@ -14,15 +14,17 @@ class WinRate extends Command_1.CommandBase {
             this.retardPlusPlus(msg);
             return;
         }
-        if (arr.length === 0) {
+        else {
+            const args = [];
             this.alreadyProcessing = true;
+            if (arr.length > 0) {
+                console.log(...arr);
+                console.log(...Array.from(msg.mentions.members.entries()));
+            }
             this.dataStore.registeredPlayers.subscribe((registeredPlayers) => {
                 const profileIds = Array.from(registeredPlayers.keys());
-                rxjs_1.Observable.forkJoin(profileIds.map(account_id => this.mapAccountIdToWinRate(account_id, this.dataStore.getWinLoss(account_id)))).subscribe(accWinRate => this.sendMessage(msg, accWinRate));
+                rxjs_1.Observable.forkJoin(profileIds.map(account_id => this.mapAccountIdToWinRate(account_id, this.dataStore.getWinLoss(account_id, ...args)))).subscribe(accWinRate => this.sendMessage(msg, accWinRate));
             });
-        }
-        else {
-            this.retardPlusPlus(msg);
         }
     }
     mapAccountIdToWinRate(account_id, winLoss) {

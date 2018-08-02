@@ -18,3 +18,6 @@ exports.RecentMatchJson = RecentMatchJson;
 class WinLossJson {
 }
 exports.WinLossJson = WinLossJson;
+class HeroJson {
+}
+exports.HeroJson = HeroJson;

@@ -73,11 +73,28 @@ class DataStore {
     registerPlayer(account_id, discordId) {
         this.storage.registerPlayer(account_id, discordId);
     }
-    getWinLoss(account_id) {
-        return this.dotaApi.getWinLoss(account_id);
+    getWinLoss(account_id, hero_id, with_id, without_id) {
+        return this.dotaApi.getWinLoss(account_id, hero_id, with_id, without_id);
+    }
+    getHeroId(name) {
+        if (DataStore.heroes.size === 0) {
+            return this.getHeroes().map(map => map.get(name));
+        }
+        else {
+            return rxjs_1.Observable.of(DataStore.heroes.get(name));
+        }
+    }
+    getHeroes() {
+        if (DataStore.heroes.size === 0) {
+            return this.dotaApi.getHeroes().map(heroes => heroes.reduce((map, h) => map.set(h.localized_name, h.id), DataStore.heroes));
+        }
+        else {
+            return rxjs_1.Observable.of(DataStore.heroes);
+        }
     }
 }
 DataStore.matchesCacheMap = new Map();
 DataStore.profilesMap = new Map();
 DataStore.registeredPlayersCache = new Map();
+DataStore.heroes = new Map();
 exports.default = DataStore;
