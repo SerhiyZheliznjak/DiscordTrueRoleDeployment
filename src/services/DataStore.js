@@ -73,8 +73,8 @@ class DataStore {
     registerPlayer(account_id, discordId) {
         this.storage.registerPlayer(account_id, discordId);
     }
-    getWinLoss(account_id, hero_id, with_id, without_id) {
-        return this.dotaApi.getWinLoss(account_id, hero_id, with_id, without_id);
+    getWinLoss(account_id, hero_id, with_ids, without_ids) {
+        return this.dotaApi.getWinLoss(account_id, hero_id, with_ids, without_ids);
     }
     getHeroId(name) {
         if (DataStore.heroes.size === 0) {

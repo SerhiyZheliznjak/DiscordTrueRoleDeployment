@@ -11,37 +11,37 @@ class ShowTop extends Command_1.CommandBase {
         this.queue = new Map();
     }
     process(msg) {
-        const args = this.parseArgs(msg);
-        if (args && args.className) {
-            const pendingChannels = this.queue.get(args.className);
-            if (pendingChannels) {
-                const exists = pendingChannels.find((ch) => ch.equals(msg.channel));
-                if (!exists) {
-                    console.log('adding new channel to queue');
-                    pendingChannels.push(msg.channel);
+        if (this.isLocked(msg)) {
+            const args = this.parseArgs(msg);
+            if (args && args.className) {
+                const pendingChannels = this.queue.get(args.className);
+                if (pendingChannels) {
+                    const exists = pendingChannels.find((ch) => ch.equals(msg.channel));
+                    if (!exists) {
+                        pendingChannels.push(msg.channel);
+                    }
+                    else {
+                        this.retardPlusPlus(msg);
+                    }
                 }
                 else {
-                    this.retardPlusPlus(msg);
+                    this.queue.set(args.className, [msg.channel]);
+                    this.nominationService.getTopN(args.className, args.n).subscribe(topRes => {
+                        const accountIdsSet = topRes.map(r => r.account_id)
+                            .filter((account_id, pos, self) => self.indexOf(account_id) === pos);
+                        rxjs_1.Observable.from(accountIdsSet)
+                            .flatMap(account_id => this.dataStore.getProfile(account_id))
+                            .reduce((profileMap, profile) => {
+                            profileMap.set(profile.account_id, profile.personaname);
+                            return profileMap;
+                        }, new Map())
+                            .subscribe((profileMap) => this.sendTopNMessage(args.className, profileMap, topRes));
+                    });
                 }
             }
             else {
-                console.log('sending request to get top best');
-                this.queue.set(args.className, [msg.channel]);
-                this.nominationService.getTopN(args.className, args.n).subscribe(topRes => {
-                    const accountIdsSet = topRes.map(r => r.account_id)
-                        .filter((account_id, pos, self) => self.indexOf(account_id) === pos);
-                    rxjs_1.Observable.from(accountIdsSet)
-                        .flatMap(account_id => this.dataStore.getProfile(account_id))
-                        .reduce((profileMap, profile) => {
-                        profileMap.set(profile.account_id, profile.personaname);
-                        return profileMap;
-                    }, new Map())
-                        .subscribe((profileMap) => this.sendTopNMessage(args.className, profileMap, topRes));
-                });
+                this.retardPlusPlus(msg);
             }
-        }
-        else {
-            this.retardPlusPlus(msg);
         }
     }
     sendTopNMessage(className, profileMap, topRes) {

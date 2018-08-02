@@ -4,6 +4,20 @@ class CommandBase {
     constructor(client, dataStore) {
         this.client = client;
         this.dataStore = dataStore;
+        this.locked = false;
+    }
+    lock() {
+        this.locked = true;
+    }
+    unlock() {
+        this.locked = false;
+    }
+    isLocked(msg) {
+        if (this.locked) {
+            msg.reply('Ваш запит дуже важливий для нас, будь ласка очікуйте на лінії');
+            this.retardPlusPlus(msg);
+        }
+        return this.locked;
     }
     isCreator(message) {
         return message.author.id === process.env.creatorId;
