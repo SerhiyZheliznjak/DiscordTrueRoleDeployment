@@ -46,7 +46,7 @@ class WinRate extends Command_1.CommandBase {
             accountIdsToCount = Array.from(registeredPlayers.keys());
         }
         else {
-            accountIdsToCount = this.getAccountId(mentions, registeredPlayers);
+            accountIdsToCount = this.getAccountId([msg.member.id], registeredPlayers);
         }
         if (mentions.length === 0) {
             mentionedIds = [];
