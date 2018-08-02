@@ -93,7 +93,7 @@ class WinRate extends Command_1.CommandBase {
                 const palyerName = accWinRates.length > 1 ? ': ' + wr.name : '';
                 return message + sign + ' ' + winRate + '% з ' + wr.count + palyerName + '\n';
             }, '```diff\n' + messageHeader + '\n');
-            msg.reply(winratesMsg + '#тайтаке```');
+            msg.channel.send(winratesMsg + '#тайтаке```');
             this.unlock();
         });
     }
