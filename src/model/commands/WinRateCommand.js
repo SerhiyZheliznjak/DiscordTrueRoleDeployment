@@ -48,13 +48,13 @@ class WinRate extends Command_1.CommandBase {
         else if (mentions.length > 0) {
             with_ids = this.getWithOrWithouts(msgContent, registeredPlayers);
             without_ids = this.getWithOrWithouts(msgContent, registeredPlayers, false);
-            accountIdsToCount = this.getDotaAccountId([with_ids.shift()], registeredPlayers);
             if (with_ids.length) {
-                messageHeader += 'з ' + this.getMentionedNamesString(msg, with_ids);
+                messageHeader += this.getMentionedNamesString(msg, with_ids);
             }
             if (without_ids.length) {
                 messageHeader += 'без ' + this.getMentionedNamesString(msg, without_ids);
             }
+            accountIdsToCount = this.getDotaAccountId([with_ids.shift()], registeredPlayers);
         }
         rxjs_1.Observable.forkJoin(accountIdsToCount.map(account_id => this.mapAccountIdToWinRate(account_id, this.dataStore.getWinLoss(account_id, hero_id, this.getDotaAccountId(with_ids, registeredPlayers), this.getDotaAccountId(without_ids, registeredPlayers))))).subscribe((accWinRate) => this.sendMessage(msg, accWinRate, messageHeader));
     }
@@ -88,11 +88,12 @@ class WinRate extends Command_1.CommandBase {
     sendMessage(msg, accWinRates, messageHeader) {
         rxjs_1.Observable.forkJoin(accWinRates.map(awr => this.populateWithName(awr)))
             .subscribe(winrates => {
-            const winratesMsg = winrates.sort((a, b) => b.winRate - a.winRate)
+            const winratesMsg = winrates.sort()
                 .reduce((message, wr) => {
                 const sign = wr.winRate > 50 ? '+' : '-';
                 const winRate = isNaN(wr.winRate) ? '-' : wr.winRate;
-                return message + sign + ' ' + winRate + '% з ' + wr.count + ': ' + wr.name + '\n';
+                const palyerName = accWinRates.length > 1 ? ': ' + wr.name : '';
+                return message + sign + ' ' + winRate + '% з ' + wr.count + palyerName + '\n';
             }, '```diff\n' + messageHeader + '\n');
             msg.reply(winratesMsg + '#тайтаке```');
             this.unlock();
