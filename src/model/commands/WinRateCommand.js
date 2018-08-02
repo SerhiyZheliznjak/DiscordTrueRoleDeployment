@@ -19,7 +19,7 @@ class WinRate extends Command_1.CommandBase {
             this.alreadyProcessing = true;
             if (arr.length > 0) {
                 console.log(...arr);
-                console.log(...Array.from(msg.mentions.members.entries()));
+                // console.log(...Array.from(msg.mentions.members.entries()));
             }
             this.dataStore.registeredPlayers.subscribe((registeredPlayers) => {
                 const profileIds = Array.from(registeredPlayers.keys());
