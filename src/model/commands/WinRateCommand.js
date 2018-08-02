@@ -47,10 +47,10 @@ class WinRate extends Command_1.CommandBase {
         }
         else if (mentions.length > 0) {
             if (with_ids.length) {
-                messageHeader += this.getMentionedNamesString(msg, with_ids);
+                messageHeader += this.getMentionedNamesString(msg, with_ids) + ' ';
             }
             if (without_ids.length) {
-                messageHeader += 'без ' + this.getMentionedNamesString(msg, without_ids);
+                messageHeader += 'без ' + this.getMentionedNamesString(msg, without_ids) + ' ';
             }
             accountIdsToCount = this.getDotaAccountId([with_ids.shift()], registeredPlayers);
         }
