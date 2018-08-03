@@ -31,9 +31,9 @@ class TopTeams extends Command_1.CommandBase {
                         + DiscordUtils_1.DiscordUtils.fillWithSpaces(String(winrate), winrateText.length) + ' | ' + team.losses + team.wins + '\n';
                 }, '```' + nameText + ' | ' + winrateText + ' | ' + sumText + '\n');
                 msg.channel.send(message + '```');
-                if (this.hasNaVi(topTeams)) {
-                    msg.channel.send('```cs#НАВІ В КАНАВІ```');
-                }
+                // if (this.hasNaVi(topTeams)) {
+                //     msg.channel.send('```cs#НАВІ В КАНАВІ```');
+                // }
             });
         }
     }
