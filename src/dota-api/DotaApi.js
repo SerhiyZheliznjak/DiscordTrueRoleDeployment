@@ -72,6 +72,9 @@ class DotaApi {
     getHeroes() {
         return this.queueRequest('https://api.opendota.com/api/heroes');
     }
+    getTeams() {
+        return this.queueRequest('https://api.opendota.com/api/teams');
+    }
     hasQueryParameters(...args) {
         if (args.find(arg => !!arg)) {
             return true;

@@ -92,6 +92,9 @@ class DataStore {
             return rxjs_1.Observable.of(DataStore.heroes);
         }
     }
+    getTeams() {
+        return this.dotaApi.getTeams();
+    }
 }
 DataStore.matchesCacheMap = new Map();
 DataStore.profilesMap = new Map();

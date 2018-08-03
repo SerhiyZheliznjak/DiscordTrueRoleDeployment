@@ -21,3 +21,6 @@ exports.WinLossJson = WinLossJson;
 class HeroJson {
 }
 exports.HeroJson = HeroJson;
+class TeamsJson {
+}
+exports.TeamsJson = TeamsJson;
