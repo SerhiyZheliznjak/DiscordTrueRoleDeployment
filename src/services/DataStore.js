@@ -93,7 +93,7 @@ class DataStore {
         }
     }
     getTeams() {
-        return this.dotaApi.getTeams();
+        return this.dotaApi.getTeams().map(teams => teams.sort((t1, t2) => t2.rating - t1.rating));
     }
 }
 DataStore.matchesCacheMap = new Map();
