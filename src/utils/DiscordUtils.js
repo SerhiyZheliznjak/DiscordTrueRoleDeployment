@@ -38,7 +38,7 @@ class DiscordUtils {
         if (result.split('.').length === 1) {
             result += '.';
         }
-        return (result + '00').slice(0, 5);
+        return (result + '00').slice(0, 5) + '%';
     }
 }
 exports.DiscordUtils = DiscordUtils;
