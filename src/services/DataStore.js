@@ -86,7 +86,7 @@ class DataStore {
     }
     getHeroes() {
         if (DataStore.heroes.size === 0) {
-            return this.dotaApi.getHeroes().map(heroes => heroes.reduce((map, h) => map.set(h.localized_name.split(/['-]/).join(''), h.id), DataStore.heroes));
+            return this.dotaApi.getHeroes().map(heroes => heroes.reduce((map, h) => map.set(h.localized_name.split(/['-\s]/).join(''), h.id), DataStore.heroes));
         }
         else {
             return rxjs_1.Observable.of(DataStore.heroes);
