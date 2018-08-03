@@ -11,7 +11,7 @@ const NominationKeysReminder_1 = require("../model/commands/NominationKeysRemind
 const DiscordUtils_1 = require("../utils/DiscordUtils");
 const WinRateCommand_1 = require("../model/commands/WinRateCommand");
 const HeroNames_1 = require("../model/commands/HeroNames");
-const TeamRates_1 = require("../model/commands/TeamRates");
+const TopTeams_1 = require("../model/commands/TopTeams");
 class CommandsProcessor extends Command_1.CommandBase {
     constructor(client, dataStore, nominationService) {
         super(client, dataStore);
@@ -64,7 +64,7 @@ class CommandsProcessor extends Command_1.CommandBase {
         this.commandMap.set('nominationkeys', new NominationKeysReminder_1.NominationKeysReminder(this.client, this.dataStore));
         this.commandMap.set('winrate', new WinRateCommand_1.WinRate(this.client, this.dataStore));
         this.commandMap.set('heronames', new HeroNames_1.HeroNames(this.client, this.dataStore));
-        this.commandMap.set('teamrates', new TeamRates_1.TeamRates(this.client, this.dataStore));
+        this.commandMap.set('topteams', new TopTeams_1.TopTeams(this.client, this.dataStore));
         this.forgiveRetards();
     }
 }

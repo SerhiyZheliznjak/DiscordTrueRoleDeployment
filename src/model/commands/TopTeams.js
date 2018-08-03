@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Command_1 = require("../Command");
 const DiscordUtils_1 = require("../../utils/DiscordUtils");
-class TeamRates extends Command_1.CommandBase {
+class TopTeams extends Command_1.CommandBase {
     process(msg) {
         if (!this.isLocked(msg)) {
             this.dataStore.getTeams().subscribe(teams => {
@@ -23,4 +23,4 @@ class TeamRates extends Command_1.CommandBase {
         return 'Повертає топ N професійних команд, N = 10 за замовчуванням';
     }
 }
-exports.TeamRates = TeamRates;
+exports.TopTeams = TopTeams;
