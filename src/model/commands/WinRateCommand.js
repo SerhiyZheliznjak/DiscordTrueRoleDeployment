@@ -43,7 +43,7 @@ class WinRate extends Command_1.CommandBase {
         if (countingAll) {
             accountIdsToCount = Array.from(registeredPlayers.keys());
         }
-        else if (mentions.length > 0) {
+        if (mentions.length > 0) {
             if (with_ids.length) {
                 messageHeader += this.getMentionedNamesString(msg, with_ids) + ' ';
             }
