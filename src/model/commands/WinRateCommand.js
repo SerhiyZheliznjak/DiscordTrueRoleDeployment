@@ -42,6 +42,7 @@ class WinRate extends Command_1.CommandBase {
         let messageHeader = 'Вінрейт ';
         if (countingAll) {
             accountIdsToCount = Array.from(registeredPlayers.keys());
+            messageHeader += 'кожного';
         }
         if (mentions.length > 0) {
             if (with_ids.length) {
@@ -57,8 +58,7 @@ class WinRate extends Command_1.CommandBase {
                 messageHeader += countingAll ? '' : 'коли ';
                 messageHeader += this.getMentionedNamesString(msg, [registeredPlayers.get(accountIdsToCount[0])]) + ' ';
             }
-            messageHeader += countingAll ? 'кожного на ' : 'грав на ';
-            messageHeader += heroName + ' ';
+            messageHeader += 'на ' + heroName + ' ';
         }
         rxjs_1.Observable.forkJoin(accountIdsToCount.map(account_id => this.mapAccountIdToWinRate(account_id, this.dataStore.getWinLoss(account_id, hero_id, this.getDotaAccountId(with_ids, registeredPlayers), this.getDotaAccountId(without_ids, registeredPlayers))))).subscribe((accWinRate) => this.sendMessage(msg, accWinRate, messageHeader));
     }
