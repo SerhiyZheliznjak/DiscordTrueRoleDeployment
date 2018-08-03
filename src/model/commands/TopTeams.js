@@ -12,7 +12,6 @@ class TopTeams extends Command_1.CommandBase {
             this.dataStore.getTeams().subscribe(teams => {
                 const digits = this.getArgs(msg.content.toLowerCase()).find(arg => /\d+/.test(arg));
                 let numberOfTeams = !digits ? this.defaultN : +digits.match(/\d+/)[0];
-                // numberOfTeams = Math.min(numberOfTeams, 30); // choosing more than 30 will possibly throw and error about more than 2000 symbols 
                 const topTeams = teams.slice(0, numberOfTeams);
                 const maxNameLength = Math.max(...(topTeams.map((t, index) => {
                     const placeText = this.getPlaceText(index);
@@ -26,17 +25,18 @@ class TopTeams extends Command_1.CommandBase {
                 }
                 const message = topTeams.reduce((msg, team) => {
                     const winrate = DiscordUtils_1.DiscordUtils.getPercentString(Math.round(team.wins / (team.losses + team.wins) * 10000) / 100);
-                    //     return msg + DiscordUtils.fillWithSpaces(this.getPlaceText(topTeams.indexOf(team)) + team.name, nameText.length) + ' | '
-                    //         + DiscordUtils.fillWithSpaces(String(winrate), winrateText.length) + ' | ' + team.losses + team.wins + '\n';
-                    // }, '```' + nameText + ' | ' + winrateText + ' | ' + sumText + '\n');
-                    return msg + team.name + ' | ' + team.rating + '\n';
-                }, '```');
-                msg.channel.send(message + '```');
+                    return msg + DiscordUtils_1.DiscordUtils.fillWithSpaces(this.getPlaceText(topTeams.indexOf(team)) + team.name, nameText.length) + ' | '
+                        + DiscordUtils_1.DiscordUtils.fillWithSpaces(String(winrate), winrateText.length) + ' | ' + team.losses + team.wins + '\n';
+                }, '```' + nameText + ' | ' + winrateText + ' | ' + sumText + '\n') + '```';
+                msg.channel.send(this.trimMessage(message));
                 if (!this.hasNaVi(topTeams)) {
                     msg.channel.send('```cs\n#НАВІ В КАНАВІ```');
                 }
             });
         }
+    }
+    trimMessage(msg) {
+        return msg.length < 2000 ? msg : msg.slice(0, 1990) + '```';
     }
     hasNaVi(topTeams) {
         return !!topTeams.find(t => t.team_id === 36);
