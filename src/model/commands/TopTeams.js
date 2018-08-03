@@ -10,6 +10,7 @@ class TopTeams extends Command_1.CommandBase {
     process(msg) {
         if (!this.isLocked(msg)) {
             this.dataStore.getTeams().subscribe(teams => {
+                console.log('parsing digits');
                 const digits = this.getArgs(msg.content.toLowerCase()).find(arg => /\d+/.test(arg));
                 const n = !digits ? this.defaultN : +digits.match(/\d+/)[0];
                 console.log('slicing');
