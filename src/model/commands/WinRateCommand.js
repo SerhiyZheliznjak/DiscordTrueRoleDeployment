@@ -107,8 +107,12 @@ class WinRate extends Command_1.CommandBase {
         });
     }
     sortDescending(a, b) {
-        const bothNumbers = !isNaN(a.winRate) && !isNaN(b.winRate);
-        return bothNumbers ? b.winRate - a.winRate : 100;
+        if (isNaN(b.winRate)) {
+            return 1 - isNaN(a.winRate);
+        }
+        else {
+            return b.winRate - a.winRate;
+        }
     }
     populateWithName(awr) {
         return this.dataStore.getProfile(awr.account_id).map(profile => {
