@@ -15,7 +15,7 @@ class RegisterAll extends Command_1.CommandBase {
                     new Pair_1.default(333303976, '407949091163865099'),
                     new Pair_1.default(118975931, '289388465034887178'),
                     new Pair_1.default(86848474, '408363774257528852'),
-                    new Pair_1.default(314684987, '413792999030652938'),
+                    new Pair_1.default(314684987, '235372240160423936'),
                     new Pair_1.default(36753317, '408172132875501581'),
                 ];
                 myFriends.forEach(friend => {
