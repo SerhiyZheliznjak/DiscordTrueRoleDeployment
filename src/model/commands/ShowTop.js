@@ -11,7 +11,7 @@ class ShowTop extends Command_1.CommandBase {
         this.queue = new Map();
     }
     process(msg) {
-        if (this.isLocked(msg)) {
+        if (!this.isLocked(msg)) {
             const args = this.parseArgs(msg);
             if (args && args.className) {
                 const pendingChannels = this.queue.get(args.className);

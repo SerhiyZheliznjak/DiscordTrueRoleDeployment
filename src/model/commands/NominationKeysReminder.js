@@ -5,7 +5,7 @@ const Nominations_1 = require("../Nominations");
 const DiscordUtils_1 = require("../../utils/DiscordUtils");
 class NominationKeysReminder extends Command_1.CommandBase {
     process(msg) {
-        if (this.isLocked(msg)) {
+        if (!this.isLocked(msg)) {
             this.dataStore.hallOfFame.subscribe((hallOfFame) => {
                 let keys = '\n';
                 const keyClassNameMap = Nominations_1.default.getKeyClassNameMap();

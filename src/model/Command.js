@@ -8,6 +8,7 @@ class CommandBase {
     }
     lock() {
         this.locked = true;
+        setTimeout(() => this.unlock(), 3000);
     }
     unlock() {
         this.locked = false;
@@ -23,7 +24,10 @@ class CommandBase {
         return message.author.id === process.env.creatorId;
     }
     getArgs(content) {
-        return content.split(' ').slice(1);
+        return this.split(content).slice(1);
+    }
+    split(content) {
+        return content.split(' ').filter(a => a.length);
     }
     isRetard(authorId) {
         const retardCount = CommandBase.retardMap.get(authorId);
