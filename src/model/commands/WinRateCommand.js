@@ -26,10 +26,10 @@ class WinRate extends Command_1.CommandBase {
         }
     }
     helpText() {
-        return 'winrate all? HERO_NAME? @MENTION without? @MENTION\nякщо не вказати all то порахує лише для того хто то викликав команду;\n'
-            + 'HERO_NAME опційне, рахуватиме ігри на цьому герої, якщо є @MENTION то порахує для першого гравця на цьому герої;\n'
-            + '@MENTION рахуватиме ігри з цими гравцями ;\n'
-            + 'without опційне буде рахувати ігри без згаданих гравців вказаних після without.';
+        return 'winrate @MENTION? HERO_NAME? without? @MENTION\n'
+            + '@MENTION рахуватиме ігри з цими гравцями, якщо не вказати рахуватиме для всіх;\n'
+            + 'HERO_NAME ім\'я героя. Перший @MENTION - той хто ним грав, якщо нема то для кожого;\n'
+            + 'without опційне буде рахувати ігри без гравців вказаних після without.';
     }
     countWinRate(msg, registeredPlayers, hero_id, heroName) {
         const msgContent = msg.content.toLowerCase();
@@ -62,7 +62,7 @@ class WinRate extends Command_1.CommandBase {
         rxjs_1.Observable.forkJoin(accountIdsToCount.map(account_id => this.mapAccountIdToWinRate(account_id, this.dataStore.getWinLoss(account_id, hero_id, this.getDotaAccountId(with_ids, registeredPlayers), this.getDotaAccountId(without_ids, registeredPlayers))))).subscribe((accWinRate) => this.sendMessage(msg, accWinRate, messageHeader));
     }
     countingEachOne(args, with_ids) {
-        return args.indexOf('all') > -1 || args.length === 0 || with_ids.length === 0;
+        return args.length === 0 || with_ids.length === 0;
     }
     getMentionedNamesString(msg, mentioned) {
         return Array.from(msg.mentions.members.values())
