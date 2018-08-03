@@ -34,7 +34,6 @@ class WinRate extends Command_1.CommandBase {
     countWinRate(msg, registeredPlayers, hero_id, heroName) {
         const msgContent = msg.content.toLowerCase();
         const args = this.getArgs(msgContent);
-        const mentions = this.getIdsFromMentions(args);
         const with_ids = this.getWithOrWithouts(msgContent, registeredPlayers);
         const without_ids = this.getWithOrWithouts(msgContent, registeredPlayers, false);
         const countingAll = this.countingEachOne(args, with_ids);
@@ -42,16 +41,10 @@ class WinRate extends Command_1.CommandBase {
         let messageHeader = 'Вінрейт ';
         if (countingAll) {
             accountIdsToCount = Array.from(registeredPlayers.keys());
-            messageHeader += 'кожного ';
         }
-        if (mentions.length > 0) {
-            if (with_ids.length) {
-                messageHeader += this.getMentionedNamesString(msg, with_ids) + ' ';
-                accountIdsToCount = this.getDotaAccountId([with_ids.shift()], registeredPlayers);
-            }
-            if (without_ids.length) {
-                messageHeader += 'без ' + this.getMentionedNamesString(msg, without_ids) + ' ';
-            }
+        if (with_ids.length) {
+            messageHeader += this.getMentionedNamesString(msg, with_ids) + ' ';
+            accountIdsToCount = this.getDotaAccountId([with_ids.shift()], registeredPlayers);
         }
         if (heroName) {
             if (accountIdsToCount.length) {
@@ -60,6 +53,9 @@ class WinRate extends Command_1.CommandBase {
                 messageHeader += countingAll ? '' : ' ';
             }
             messageHeader += 'на ' + heroName + ' ';
+        }
+        if (without_ids.length) {
+            messageHeader += 'без ' + this.getMentionedNamesString(msg, without_ids) + ' ';
         }
         rxjs_1.Observable.forkJoin(accountIdsToCount.map(account_id => this.mapAccountIdToWinRate(account_id, this.dataStore.getWinLoss(account_id, hero_id, this.getDotaAccountId(with_ids, registeredPlayers), this.getDotaAccountId(without_ids, registeredPlayers))))).subscribe((accWinRate) => this.sendMessage(msg, accWinRate, messageHeader));
     }
