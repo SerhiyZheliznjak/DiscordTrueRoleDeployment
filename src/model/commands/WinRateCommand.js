@@ -108,7 +108,7 @@ class WinRate extends Command_1.CommandBase {
     }
     sortDescending(a, b) {
         const bothNumbers = !isNaN(a.winRate) && !isNaN(b.winRate);
-        return bothNumbers ? b.winRate - a.winRate : 1;
+        return bothNumbers ? b.winRate - a.winRate : 100;
     }
     populateWithName(awr) {
         return this.dataStore.getProfile(awr.account_id).map(profile => {
