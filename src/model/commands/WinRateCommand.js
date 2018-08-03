@@ -108,7 +108,7 @@ class WinRate extends Command_1.CommandBase {
     }
     sortDescending(a, b) {
         if (isNaN(b.winRate)) {
-            return 1 - isNaN(a.winRate);
+            return isNaN(a.winRate) - 1;
         }
         else {
             return b.winRate - a.winRate;
