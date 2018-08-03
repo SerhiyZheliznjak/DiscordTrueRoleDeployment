@@ -26,9 +26,11 @@ class TopTeams extends Command_1.CommandBase {
                 }
                 const message = topTeams.reduce((msg, team) => {
                     const winrate = DiscordUtils_1.DiscordUtils.getPercentString(Math.round(team.wins / (team.losses + team.wins) * 10000) / 100);
-                    return msg + DiscordUtils_1.DiscordUtils.fillWithSpaces(this.getPlaceText(topTeams.indexOf(team)) + team.name, nameText.length) + ' | '
-                        + DiscordUtils_1.DiscordUtils.fillWithSpaces(String(winrate), winrateText.length) + ' | ' + team.losses + team.wins + '\n';
-                }, '```' + nameText + ' | ' + winrateText + ' | ' + sumText + '\n');
+                    //     return msg + DiscordUtils.fillWithSpaces(this.getPlaceText(topTeams.indexOf(team)) + team.name, nameText.length) + ' | '
+                    //         + DiscordUtils.fillWithSpaces(String(winrate), winrateText.length) + ' | ' + team.losses + team.wins + '\n';
+                    // }, '```' + nameText + ' | ' + winrateText + ' | ' + sumText + '\n');
+                    return msg + team.name + ' | ' + team.rating;
+                }, '```');
                 msg.channel.send(message + '```');
                 if (this.hasNaVi(topTeams)) {
                     msg.channel.send('```cs#НАВІ В КАНАВІ```');
