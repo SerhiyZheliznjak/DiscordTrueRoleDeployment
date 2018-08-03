@@ -42,7 +42,7 @@ class WinRate extends Command_1.CommandBase {
         let messageHeader = 'Вінрейт ';
         if (countingAll) {
             accountIdsToCount = Array.from(registeredPlayers.keys());
-            messageHeader += 'кожного';
+            messageHeader += 'кожного ';
         }
         if (mentions.length > 0) {
             if (with_ids.length) {
@@ -95,7 +95,7 @@ class WinRate extends Command_1.CommandBase {
     sendMessage(msg, accWinRates, messageHeader) {
         rxjs_1.Observable.forkJoin(accWinRates.map(awr => this.populateWithName(awr)))
             .subscribe(winrates => {
-            const winratesMsg = winrates.sort((a, b) => isNaN(a.winRate) || isNaN(b.winRate) ? 1 : b.winRate - a.winRate)
+            const winratesMsg = winrates.sort((a, b) => (isNaN(a.winRate) || isNaN(b.winRate)) ? 1 : b.winRate - a.winRate)
                 .reduce((message, wr) => {
                 const sign = wr.winRate > 50 ? '+' : '-';
                 const winRate = isNaN(wr.winRate) ? '-' : wr.winRate;
