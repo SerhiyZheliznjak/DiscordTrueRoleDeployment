@@ -64,7 +64,7 @@ class CommandsProcessor extends Command_1.CommandBase {
         this.commandMap.set('nominationkeys', new NominationKeysReminder_1.NominationKeysReminder(this.client, this.dataStore));
         this.commandMap.set('winrate', new WinRateCommand_1.WinRate(this.client, this.dataStore));
         this.commandMap.set('heronames', new HeroNames_1.HeroNames(this.client, this.dataStore));
-        this.commandMap.set('teamrate', new TeamRates_1.TeamRates(this.client, this.dataStore));
+        this.commandMap.set('teamrates', new TeamRates_1.TeamRates(this.client, this.dataStore));
         this.forgiveRetards();
     }
 }
