@@ -33,7 +33,7 @@ class TopTeams extends Command_1.CommandBase {
                 }, '```');
                 msg.channel.send(message + '```');
                 if (!this.hasNaVi(topTeams)) {
-                    msg.channel.send('```cs#НАВІ В КАНАВІ```');
+                    msg.channel.send('```cs\n#НАВІ В КАНАВІ```');
                 }
             });
         }
