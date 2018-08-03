@@ -12,7 +12,7 @@ class TopTeams extends Command_1.CommandBase {
             this.dataStore.getTeams().subscribe(teams => {
                 const digits = this.getArgs(msg.content.toLowerCase()).find(arg => /\d+/.test(arg));
                 let numberOfTeams = !digits ? this.defaultN : +digits.match(/\d+/)[0];
-                numberOfTeams = Math.min(numberOfTeams, 30); // choosing more than 30 will possibly throw and error about more than 2000 symbols 
+                // numberOfTeams = Math.min(numberOfTeams, 30); // choosing more than 30 will possibly throw and error about more than 2000 symbols 
                 const topTeams = teams.slice(0, numberOfTeams);
                 const maxNameLength = Math.max(...(topTeams.map((t, index) => {
                     const placeText = this.getPlaceText(index);
@@ -32,7 +32,7 @@ class TopTeams extends Command_1.CommandBase {
                     return msg + team.name + ' | ' + team.rating + '\n';
                 }, '```');
                 msg.channel.send(message + '```');
-                if (this.hasNaVi(topTeams)) {
+                if (!this.hasNaVi(topTeams)) {
                     msg.channel.send('```cs#НАВІ В КАНАВІ```');
                 }
             });
