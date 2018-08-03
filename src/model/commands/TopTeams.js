@@ -3,11 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Command_1 = require("../Command");
 const DiscordUtils_1 = require("../../utils/DiscordUtils");
 class TopTeams extends Command_1.CommandBase {
+    constructor() {
+        super(...arguments);
+        this.defaultN = 5;
+    }
     process(msg) {
         if (!this.isLocked(msg)) {
             this.dataStore.getTeams().subscribe(teams => {
                 const digits = this.getArgs(msg.content.toLowerCase()).find(arg => /\d+/.test(arg));
-                const n = !digits ? 10 : +digits.match(/\d+/)[0];
+                const n = !digits ? this.defaultN : +digits.match(/\d+/)[0];
                 const topTeams = teams.slice(0, n);
                 const maxNameLength = Math.max(...(topTeams.map(t => t.name.length)));
                 let nameText = 'Команда';
@@ -26,7 +30,7 @@ class TopTeams extends Command_1.CommandBase {
         }
     }
     helpText() {
-        return 'Повертає топ N професійних команд, N = 10 за замовчуванням';
+        return 'Повертає топ N професійних команд, N = ' + this.defaultN + ' за замовчуванням';
     }
 }
 exports.TopTeams = TopTeams;
