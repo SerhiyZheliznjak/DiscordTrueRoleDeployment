@@ -29,7 +29,7 @@ class TopTeams extends Command_1.CommandBase {
                     //     return msg + DiscordUtils.fillWithSpaces(this.getPlaceText(topTeams.indexOf(team)) + team.name, nameText.length) + ' | '
                     //         + DiscordUtils.fillWithSpaces(String(winrate), winrateText.length) + ' | ' + team.losses + team.wins + '\n';
                     // }, '```' + nameText + ' | ' + winrateText + ' | ' + sumText + '\n');
-                    return msg + team.name + ' | ' + team.rating;
+                    return msg + team.name + ' | ' + team.rating + '\n';
                 }, '```');
                 msg.channel.send(message + '```');
                 if (this.hasNaVi(topTeams)) {
