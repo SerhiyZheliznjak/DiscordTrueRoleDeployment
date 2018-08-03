@@ -39,7 +39,7 @@ class WinRate extends Command_1.CommandBase {
         const without_ids = this.getWithOrWithouts(msgContent, registeredPlayers, false);
         let accountIdsToCount;
         let messageHeader = 'Вінрейт ';
-        if (args.indexOf('all') > -1 || args.length === 0 || with_ids.length === 0) {
+        if (this.countingEachOne(args, with_ids)) {
             accountIdsToCount = Array.from(registeredPlayers.keys());
         }
         else if (mentions.length > 0) {
@@ -55,9 +55,13 @@ class WinRate extends Command_1.CommandBase {
             if (accountIdsToCount.length) {
                 messageHeader += 'коли ' + this.getMentionedNamesString(msg, [registeredPlayers.get(accountIdsToCount[0])]) + ' ';
             }
-            messageHeader += 'грав на ' + heroName + ' ';
+            messageHeader += this.countingEachOne(args, with_ids) ? 'всіх на ' : 'грав на ';
+            messageHeader += heroName + ' ';
         }
         rxjs_1.Observable.forkJoin(accountIdsToCount.map(account_id => this.mapAccountIdToWinRate(account_id, this.dataStore.getWinLoss(account_id, hero_id, this.getDotaAccountId(with_ids, registeredPlayers), this.getDotaAccountId(without_ids, registeredPlayers))))).subscribe((accWinRate) => this.sendMessage(msg, accWinRate, messageHeader));
+    }
+    countingEachOne(args, with_ids) {
+        return args.indexOf('all') > -1 || args.length === 0 || with_ids.length === 0;
     }
     getMentionedNamesString(msg, mentioned) {
         return Array.from(msg.mentions.members.values())
@@ -89,7 +93,7 @@ class WinRate extends Command_1.CommandBase {
     sendMessage(msg, accWinRates, messageHeader) {
         rxjs_1.Observable.forkJoin(accWinRates.map(awr => this.populateWithName(awr)))
             .subscribe(winrates => {
-            const winratesMsg = winrates.sort((a, b) => a.winRate - b.winRate)
+            const winratesMsg = winrates.sort((a, b) => b.winRate - a.winRate)
                 .reduce((message, wr) => {
                 const sign = wr.winRate > 50 ? '+' : '-';
                 const winRate = isNaN(wr.winRate) ? '-' : wr.winRate;
