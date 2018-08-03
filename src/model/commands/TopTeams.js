@@ -5,20 +5,18 @@ const DiscordUtils_1 = require("../../utils/DiscordUtils");
 class TopTeams extends Command_1.CommandBase {
     constructor() {
         super(...arguments);
-        this.defaultN = 10;
+        this.defaultN = 5;
     }
     process(msg) {
         if (!this.isLocked(msg)) {
             this.dataStore.getTeams().subscribe(teams => {
                 const digits = this.getArgs(msg.content.toLowerCase()).find(arg => /\d+/.test(arg));
-                const n = !digits ? this.defaultN : +digits.match(/\d+/)[0];
-                const topTeams = [];
-                for (let i = 0; i < n; i++) {
-                    topTeams.push(teams[i]);
-                }
+                let n = !digits ? this.defaultN : +digits.match(/\d+/)[0];
+                n = Math.min(n, teams.length);
+                const topTeams = teams.slice(0, n);
                 const maxNameLength = Math.max(...(topTeams.map((t, index) => {
                     const placeText = this.getPlaceText(index);
-                    return t.name.length + placeText.length;
+                    return t.tag.length + placeText.length;
                 })));
                 let nameText = 'Команда';
                 const winrateText = 'Вінрейт';
@@ -32,8 +30,14 @@ class TopTeams extends Command_1.CommandBase {
                         + DiscordUtils_1.DiscordUtils.fillWithSpaces(String(winrate), winrateText.length) + ' | ' + team.losses + team.wins + '\n';
                 }, '```' + nameText + ' | ' + winrateText + ' | ' + sumText + '\n');
                 msg.channel.send(message + '```');
+                if (this.hasNaVi(topTeams)) {
+                    msg.channel.send('```#НАВІ В КАНАВІ```');
+                }
             });
         }
+    }
+    hasNaVi(topTeams) {
+        return !!topTeams.find(t => t.team_id === 36);
     }
     getPlaceText(index) {
         return index + 1 + '. ';
