@@ -5,7 +5,7 @@ const DiscordUtils_1 = require("../../utils/DiscordUtils");
 class TopTeams extends Command_1.CommandBase {
     constructor() {
         super(...arguments);
-        this.defaultN = 5;
+        this.defaultN = 10;
     }
     process(msg) {
         if (!this.isLocked(msg)) {
