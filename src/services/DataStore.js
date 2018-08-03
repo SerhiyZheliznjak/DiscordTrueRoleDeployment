@@ -93,7 +93,7 @@ class DataStore {
         }
     }
     getTeams() {
-        const lastYear = new Date().getMilliseconds() - 1000 * 60 * 60 * 24 * 600;
+        const lastYear = new Date().getMilliseconds() - 1000 * 60 * 60 * 24 * 356;
         return this.dotaApi.getTeams().map(teams => teams.filter(team => team.last_match_time > lastYear));
     }
 }
