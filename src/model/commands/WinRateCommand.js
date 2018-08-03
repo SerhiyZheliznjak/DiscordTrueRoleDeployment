@@ -97,7 +97,8 @@ class WinRate extends Command_1.CommandBase {
                 .reduce((message, wr) => {
                 const sign = wr.winRate > 50 ? '+' : '-';
                 const palyerName = accWinRates.length > 1 ? ': ' + wr.name : '';
-                return message + sign + ' ' + DiscordUtils_1.DiscordUtils.getPercentString(wr.winRate) + '% з ' + wr.count + palyerName + '\n';
+                return message + sign + ' ' + DiscordUtils_1.DiscordUtils.getPercentString(wr.winRate) + '% з '
+                    + wr.count + palyerName + '\n';
             }, '```diff\n' + messageHeader + '\n');
             msg.channel.send(winratesMsg + '#тайтаке```');
             this.unlock();
