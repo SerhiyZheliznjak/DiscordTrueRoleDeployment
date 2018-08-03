@@ -28,23 +28,23 @@ class TopTeams extends Command_1.CommandBase {
                     return msg + DiscordUtils_1.DiscordUtils.fillWithSpaces(this.getPlaceText(topTeams.indexOf(team)) + team.name, this.nameText.length) + ' | '
                         + DiscordUtils_1.DiscordUtils.fillWithSpaces(String(winrate), this.winrateText.length) + ' | ' + team.losses + team.wins + '\n';
                 }, '');
-                this.sendMessage(msg, message.split('\n'), 0);
+                this.sendMessage(msg, message.split('\n'));
                 if (!this.hasNaVi(topTeams)) {
                     msg.channel.send('```cs\n#НАВІ В КАНАВІ```');
                 }
             });
         }
     }
-    sendMessage(msg, message, lastIndex) {
+    sendMessage(msg, message) {
         if (message.join('\n').length > 1994 - this.getTableHead().length) {
             let part = '';
-            let i = lastIndex;
+            let i = 0;
             while ((part + message[i]).length < 1994 - this.getTableHead().length) {
                 part += message[i] + '\n';
                 i++;
             }
             msg.channel.send(this.wrapMessage(part));
-            this.sendMessage(msg, message.slice(i), i);
+            this.sendMessage(msg, message.slice(i));
         }
         else {
             msg.channel.send(this.wrapMessage(message.join('\n')));
