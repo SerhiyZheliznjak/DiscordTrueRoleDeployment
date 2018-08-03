@@ -11,9 +11,10 @@ class TopTeams extends Command_1.CommandBase {
         if (!this.isLocked(msg)) {
             this.dataStore.getTeams().subscribe(teams => {
                 const digits = this.getArgs(msg.content.toLowerCase()).find(arg => /\d+/.test(arg));
-                let n = !digits ? this.defaultN : +digits.match(/\d+/)[0];
-                n = Math.min(n, teams.length);
-                const topTeams = teams.slice(0, n);
+                let numberOfTeams = !digits ? this.defaultN : +digits.match(/\d+/)[0];
+                numberOfTeams = Math.min(numberOfTeams, teams.length);
+                console.log(numberOfTeams);
+                const topTeams = teams.slice(0, numberOfTeams);
                 const maxNameLength = Math.max(...(topTeams.map((t, index) => {
                     const placeText = this.getPlaceText(index);
                     return t.tag.length + placeText.length;
@@ -31,7 +32,7 @@ class TopTeams extends Command_1.CommandBase {
                 }, '```' + nameText + ' | ' + winrateText + ' | ' + sumText + '\n');
                 msg.channel.send(message + '```');
                 if (this.hasNaVi(topTeams)) {
-                    msg.channel.send('```#НАВІ В КАНАВІ```');
+                    msg.channel.send('```cs#НАВІ В КАНАВІ```');
                 }
             });
         }
