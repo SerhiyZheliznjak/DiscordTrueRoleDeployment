@@ -12,6 +12,7 @@ class TopTeams extends Command_1.CommandBase {
             this.dataStore.getTeams().subscribe(teams => {
                 const digits = this.getArgs(msg.content.toLowerCase()).find(arg => /\d+/.test(arg));
                 const n = !digits ? this.defaultN : +digits.match(/\d+/)[0];
+                console.log('slicing');
                 const topTeams = teams.slice(0, n);
                 const maxNameLength = Math.max(...(topTeams.map((t, index) => {
                     const placeText = this.getPlaceText(index);
