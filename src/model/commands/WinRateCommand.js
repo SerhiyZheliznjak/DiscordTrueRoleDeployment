@@ -95,7 +95,7 @@ class WinRate extends Command_1.CommandBase {
     sendMessage(msg, accWinRates, messageHeader) {
         rxjs_1.Observable.forkJoin(accWinRates.map(awr => this.populateWithName(awr)))
             .subscribe(winrates => {
-            const winratesMsg = winrates.sort((a, b) => (isNaN(a.winRate) || isNaN(b.winRate)) ? 1 : b.winRate - a.winRate)
+            const winratesMsg = winrates.sort((a, b) => this.sortDescending(a, b))
                 .reduce((message, wr) => {
                 const sign = wr.winRate > 50 ? '+' : '-';
                 const winRate = isNaN(wr.winRate) ? '-' : wr.winRate;
@@ -105,6 +105,10 @@ class WinRate extends Command_1.CommandBase {
             msg.channel.send(winratesMsg + '#тайтаке```');
             this.unlock();
         });
+    }
+    sortDescending(a, b) {
+        const bothNumbers = !isNaN(a.winRate) && !isNaN(b.winRate);
+        return bothNumbers ? b.winRate - a.winRate : 1;
     }
     populateWithName(awr) {
         return this.dataStore.getProfile(awr.account_id).map(profile => {
