@@ -10,11 +10,12 @@ class TopTeams extends Command_1.CommandBase {
     process(msg) {
         if (!this.isLocked(msg)) {
             this.dataStore.getTeams().subscribe(teams => {
-                console.log('parsing digits');
                 const digits = this.getArgs(msg.content.toLowerCase()).find(arg => /\d+/.test(arg));
                 const n = !digits ? this.defaultN : +digits.match(/\d+/)[0];
-                console.log('slicing ', n, typeof n);
-                const topTeams = teams.slice(0, n);
+                const topTeams = [];
+                for (let i = 0; i < n; i++) {
+                    topTeams.push(teams[i]);
+                }
                 const maxNameLength = Math.max(...(topTeams.map((t, index) => {
                     const placeText = this.getPlaceText(index);
                     return t.name.length + placeText.length;
