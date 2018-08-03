@@ -98,21 +98,17 @@ class WinRate extends Command_1.CommandBase {
             const winratesMsg = winrates.sort((a, b) => this.sortDescending(a, b))
                 .reduce((message, wr) => {
                 const sign = wr.winRate > 50 ? '+' : '-';
-                const winRate = isNaN(wr.winRate) ? '-' : wr.winRate;
                 const palyerName = accWinRates.length > 1 ? ': ' + wr.name : '';
-                return message + sign + ' ' + winRate + '% з ' + wr.count + palyerName + '\n';
+                const newLine = isNaN(wr.winRate) ? '' : sign + ' ' + wr.winRate + '% з ' + wr.count + palyerName + '\n';
+                return message + newLine;
             }, '```diff\n' + messageHeader + '\n');
             msg.channel.send(winratesMsg + '#тайтаке```');
             this.unlock();
         });
     }
     sortDescending(a, b) {
-        if (isNaN(b.winRate)) {
-            return isNaN(a.winRate) - 1;
-        }
-        else {
-            return b.winRate - a.winRate;
-        }
+        const bothNumbers = !isNaN(a.winRate) && !isNaN(b.winRate);
+        return bothNumbers ? b.winRate - a.winRate : -1;
     }
     populateWithName(awr) {
         return this.dataStore.getProfile(awr.account_id).map(profile => {
