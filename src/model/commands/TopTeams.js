@@ -16,7 +16,7 @@ class TopTeams extends Command_1.CommandBase {
                 const topTeams = teams.slice(0, numberOfTeams);
                 const maxNameLength = Math.max(...(topTeams.map((t, index) => {
                     const placeText = this.getPlaceText(index);
-                    return t.tag.length + placeText.length;
+                    return t.name.length + placeText.length;
                 })));
                 let nameText = 'Команда';
                 const winrateText = 'Вінрейт';
@@ -26,7 +26,7 @@ class TopTeams extends Command_1.CommandBase {
                 }
                 const message = topTeams.reduce((msg, team) => {
                     const winrate = DiscordUtils_1.DiscordUtils.getPercentString(Math.round(team.wins / (team.losses + team.wins) * 10000) / 100);
-                    return msg + DiscordUtils_1.DiscordUtils.fillWithSpaces(this.getPlaceText(topTeams.indexOf(team)) + team.tag, nameText.length) + ' | '
+                    return msg + DiscordUtils_1.DiscordUtils.fillWithSpaces(this.getPlaceText(topTeams.indexOf(team)) + team.name, nameText.length) + ' | '
                         + DiscordUtils_1.DiscordUtils.fillWithSpaces(String(winrate), winrateText.length) + ' | ' + team.losses + team.wins + '\n';
                 }, '```' + nameText + ' | ' + winrateText + ' | ' + sumText + '\n');
                 msg.channel.send(message + '```');
