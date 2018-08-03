@@ -12,7 +12,7 @@ class WinRate extends Command_1.CommandBase {
                     this.dataStore.getHeroes().subscribe(heroes => {
                         let hero_id;
                         const heroNames = Array.from(heroes.keys());
-                        const heroName = heroNames.find(hn => msgContent.indexOf(hn.toLowerCase()) > -1);
+                        const heroName = heroNames.find(hn => msgContent.indexOf(' ' + hn.toLowerCase() + ' ') > -1);
                         if (heroName) {
                             hero_id = heroes.get(heroName);
                         }
