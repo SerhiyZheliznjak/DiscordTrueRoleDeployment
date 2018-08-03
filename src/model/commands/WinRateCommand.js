@@ -56,7 +56,8 @@ class WinRate extends Command_1.CommandBase {
         if (heroName) {
             if (accountIdsToCount.length) {
                 messageHeader += countingAll ? '' : 'коли ';
-                messageHeader += this.getMentionedNamesString(msg, [registeredPlayers.get(accountIdsToCount[0])]) + ' ';
+                messageHeader += this.getMentionedNamesString(msg, [registeredPlayers.get(accountIdsToCount[0])]);
+                messageHeader += countingAll ? '' : ' ';
             }
             messageHeader += 'на ' + heroName + ' ';
         }
