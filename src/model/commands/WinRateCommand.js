@@ -57,7 +57,13 @@ class WinRate extends Command_1.CommandBase {
             }
             messageHeader += 'грав на ' + heroName + ' ';
         }
-        rxjs_1.Observable.forkJoin(accountIdsToCount.map(account_id => this.mapAccountIdToWinRate(account_id, this.dataStore.getWinLoss(account_id, hero_id, this.getDotaAccountId(with_ids, registeredPlayers), this.getDotaAccountId(without_ids, registeredPlayers))))).subscribe((accWinRate) => this.sendMessage(msg, accWinRate, messageHeader));
+        rxjs_1.Observable.forkJoin(accountIdsToCount.map(account_id => {
+            const with_dota_ids = this.getDotaAccountId(with_ids, registeredPlayers);
+            const withot_dota_ids = this.getDotaAccountId(without_ids, registeredPlayers);
+            console.log(with_dota_ids);
+            console.log(withot_dota_ids);
+            return this.mapAccountIdToWinRate(account_id, this.dataStore.getWinLoss(account_id, hero_id, with_dota_ids, withot_dota_ids));
+        })).subscribe((accWinRate) => this.sendMessage(msg, accWinRate, messageHeader));
     }
     getMentionedNamesString(msg, mentioned) {
         return Array.from(msg.mentions.members.values())
