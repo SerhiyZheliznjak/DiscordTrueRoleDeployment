@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Command_1 = require("../Command");
 const rxjs_1 = require("rxjs");
+const DiscordUtils_1 = require("../../utils/DiscordUtils");
 class WinRate extends Command_1.CommandBase {
     process(msg) {
         if (!this.isLocked(msg)) {
@@ -96,7 +97,7 @@ class WinRate extends Command_1.CommandBase {
                 .reduce((message, wr) => {
                 const sign = wr.winRate > 50 ? '+' : '-';
                 const palyerName = accWinRates.length > 1 ? ': ' + wr.name : '';
-                return message + sign + ' ' + wr.winRate + '% з ' + wr.count + palyerName + '\n';
+                return message + sign + ' ' + DiscordUtils_1.DiscordUtils.getPercentString(wr.winRate) + '% з ' + wr.count + palyerName + '\n';
             }, '```diff\n' + messageHeader + '\n');
             msg.channel.send(winratesMsg + '#тайтаке```');
             this.unlock();
