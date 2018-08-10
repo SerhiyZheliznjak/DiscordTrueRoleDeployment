@@ -96,7 +96,7 @@ class WinRate extends Command_1.CommandBase {
             const maxCountLength = String(Math.max(...winrates.map(wr => wr.count))).length;
             const winratesMsg = winrates.filter(wr => !isNaN(wr.winRate)).sort((a, b) => b.winRate - a.winRate)
                 .reduce((message, wr) => {
-                const sign = wr.winRate > 50 ? '+' : '-';
+                const sign = wr.winRate === 50 ? ' ' : wr.winRate > 50 ? '+' : '-';
                 const palyerName = accWinRates.length > 1 ? ': ' + wr.name : '';
                 return message + sign + ' ' + DiscordUtils_1.DiscordUtils.getPercentString(wr.winRate) + ' з '
                     + DiscordUtils_1.DiscordUtils.fillWithSpaces(String(wr.count), maxCountLength) + palyerName + '\n';
