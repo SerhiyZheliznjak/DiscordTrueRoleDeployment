@@ -10,7 +10,10 @@ class Nenza extends Nomination_1.default {
         this.chatHistory = [];
     }
     get msg() {
-        return 'Цитую: "' + this.chatHistory.join('"/n"') + '"';
+        return 'Цитую: "' + this.chatHistory.reduce((flat, arr) => {
+            flat.push(...arr);
+            return flat;
+        }, []).join('"\n"') + '"';
     }
     getScoreText() {
         return 'Кількість написаної херні в чаті: ' + this.getScore();
