@@ -42,7 +42,10 @@ class Nenza extends Nomination_1.default {
                     || words.indexOf('pidaras') > -1
                     || words.indexOf('fuck') > -1
                     || words.indexOf('pa') > -1
-                    || words.indexOf('пп') > -1
+                    || words.indexOf('gg') > -1
+                    || words.indexOf('gl') > -1
+                    || words.indexOf('glhf') > -1
+                    || words.indexOf('hf') > -1
                     || words.indexOf('хуй') > -1;
             });
             if (nenzaMsg.length > 0) {
