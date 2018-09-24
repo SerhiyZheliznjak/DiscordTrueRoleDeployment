@@ -32,7 +32,6 @@ class Nenza extends Nomination_1.default {
                 const words = msgText ? msgText.toLowerCase().split(' ') : [''];
                 return words.indexOf('ff') > -1
                     || words.indexOf('report') > -1
-                    || words.indexOf('pa') > -1
                     || words.indexOf('пездець') > -1
                     || words.indexOf('нахуй') > -1
                     || words.indexOf('nahoi') > -1
