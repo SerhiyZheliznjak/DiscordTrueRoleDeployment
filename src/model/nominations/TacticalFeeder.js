@@ -8,7 +8,11 @@ class TacticalFeeder extends Nomination_1.default {
         this.points = points;
         this.name = 'Тактичний Фідер';
         this.minScore = 1;
-        this.msg = 'Мета реально працює\nВмер не менше 10 разів, але виграв матч';
+        this.tacticalKDA = [];
+    }
+    get msg() {
+        return 'Мета реально працює\nВмер не менше 10 разів, але виграв матч\n'
+            + this.tacticalKDA.join('\n');
     }
     getScoreText() {
         return 'Виграно матчів фідженням: ' + this.getScore();
@@ -22,7 +26,13 @@ class TacticalFeeder extends Nomination_1.default {
     scorePoint(match, player_slot) {
         const player = DotaParser_1.DotaParser.getPlayerInfo(match, player_slot);
         if (!!player) {
-            return player && player.deaths && player.deaths > 10 && player.win === 1 ? 1 : 0;
+            if (player && player.deaths && player.deaths > 10 && player.win === 1) {
+                this.tacticalKDA.push(player.kills + '/' + player.deaths + '/' + player.assists);
+                return 1;
+            }
+            else {
+                return 0;
+            }
         }
         return 0;
     }

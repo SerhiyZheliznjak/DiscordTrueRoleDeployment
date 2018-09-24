@@ -10,7 +10,7 @@ class Nenza extends Nomination_1.default {
         this.chatHistory = [];
     }
     get msg() {
-        return 'Цитую: "' + this.chatHistory.reduce((flat, arr) => {
+        return 'Цитую:\n"' + this.chatHistory.reduce((flat, arr) => {
             flat.push(...arr);
             return flat;
         }, []).join('"\n"') + '"';
@@ -33,7 +33,6 @@ class Nenza extends Nomination_1.default {
                 return words.indexOf('ff') > -1
                     || words.indexOf('report') > -1
                     || words.indexOf('pa') > -1
-                    || words.indexOf('76') > -1
                     || words.indexOf('пездець') > -1
                     || words.indexOf('нахуй') > -1
                     || words.indexOf('nahoi') > -1
