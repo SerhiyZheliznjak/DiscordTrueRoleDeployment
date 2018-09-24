@@ -13,7 +13,7 @@ class NominationUtils {
         }
         else {
             if (!this.noMatches(freshMatches)) {
-                return this.freshMatchesNotStored(freshMatches, storedMatches);
+                return freshMatches.recentMatchesIds[0] === storedMatches.recentMatchesIds[0] ? false : true;
             }
         }
         return false;
@@ -46,10 +46,6 @@ class NominationUtils {
             pfm.matches.push(match);
         }
         return pfm;
-    }
-    freshMatchesNotStored(freshMatches, storedMatches) {
-        const notStored = freshMatches.recentMatchesIds.filter(match_id => storedMatches.recentMatchesIds.indexOf(match_id) < 0);
-        return notStored.length > 0;
     }
     noMatches(playerMatches) {
         return !playerMatches || !playerMatches.recentMatchesIds || !playerMatches.recentMatchesIds.length;
