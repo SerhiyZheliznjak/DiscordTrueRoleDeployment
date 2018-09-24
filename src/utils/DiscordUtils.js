@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const rxjs_1 = require("rxjs");
+const DotaJsonTypings_1 = require("../dota-api/DotaJsonTypings");
 class DiscordUtils {
     static generateMessages(claimedNominations, dataStore) {
         return rxjs_1.Observable.from(claimedNominations)
@@ -17,8 +18,18 @@ class DiscordUtils {
             return richEmbed;
         });
     }
+    static failSafe(p, account_id) {
+        if (p) {
+            return p;
+        }
+        else {
+            const stub = new DotaJsonTypings_1.ProfileJson();
+            stub.personaname = account_id + '';
+            return stub;
+        }
+    }
     static getNomiPlayerTuple(nomiRes, dataStore) {
-        return dataStore.getProfile(nomiRes.account_id).map(profile => [nomiRes, profile]);
+        return dataStore.getProfile(nomiRes.account_id).map(profile => [nomiRes, this.failSafe(profile, nomiRes.account_id)]);
     }
     static getLongestLength(arr) {
         return Math.max(...arr.map(s => s.length));
