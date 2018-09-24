@@ -11,7 +11,7 @@ class TeamFighter extends Nomination_1.default {
         this.msg = 'Найвищий середній показник участі в командних бійках';
     }
     getScore() {
-        const pointsSum = this.getPoints().reduce((sum, p) => sum + (+p.p2 * 100), 0);
+        const pointsSum = this.getPoints().reduce((sum, p) => sum + (+p[1] * 100), 0);
         return Math.round(pointsSum / this.getPoints().length);
     }
     getScoreText() {

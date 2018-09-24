@@ -5,7 +5,7 @@ const Constants_1 = require("../Constants");
 class NominationUtils {
     isFreshMatch(recentMatch) {
         const nowInSeconds = new Date().getTime() / 1000;
-        return nowInSeconds - recentMatch.start_time < Constants_1.default.MATCH_DUE_TIME_SEC;
+        return nowInSeconds - recentMatch.start_time < Constants_1.default.MATCH_DUE_TIME_DAYS;
     }
     hasNewMatches(freshMatches, storedMatches) {
         if (this.noMatches(storedMatches)) {

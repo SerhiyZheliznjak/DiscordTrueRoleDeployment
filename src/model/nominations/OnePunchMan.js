@@ -22,7 +22,7 @@ class OnePunchMan extends Nomination_1.default {
         return 'https://image.ibb.co/i4SsfS/one_Punch_Man.jpg';
     }
     getScore() {
-        const dmgArr = this.getPoints().map(p => parseInt(p.p2 + ''));
+        const dmgArr = this.getPoints().map(p => parseInt(p[1] + ''));
         return Math.max(...dmgArr);
     }
     getMessage() {

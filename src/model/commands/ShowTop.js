@@ -60,7 +60,7 @@ class ShowTop extends Command_1.CommandBase {
             let msgText = '';
             topRes.forEach((tr, index) => {
                 const place = index + 1;
-                const name = DiscordUtils_1.DiscordUtils.fillWithSpaces(profileMap.get(tr.account_id), longestProfileName);
+                const name = profileMap.get(tr.account_id).padEnd(longestProfileName);
                 msgText += '#' + place + ' ' + name + ': ' + tr.nomination.scoreToString() + '\n';
             });
             const richEmbed = new discord_js_1.RichEmbed();

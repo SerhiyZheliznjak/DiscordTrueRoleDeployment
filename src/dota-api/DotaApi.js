@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const rx_http_request_1 = require("rx-http-request");
 const rxjs_1 = require("rxjs");
 const util_1 = require("util");
+const Constants_1 = require("../Constants");
 class QueuedRequest {
     constructor(url, observers, retryCount, observable) {
         this.url = url;
@@ -19,7 +20,7 @@ class DotaApi {
         return util_1.format('https://api.opendota.com/api/matches/%s', match_id);
     }
     static getRecentMatchesUrl(account_id) {
-        return util_1.format('https://api.opendota.com/api/players/%s/recentMatches', account_id);
+        return util_1.format('https://api.opendota.com/api/players/%s/matches?limit=20&date=%s', account_id, Constants_1.default.MATCH_DUE_TIME_DAYS);
     }
     queueRequest(url) {
         let observable;

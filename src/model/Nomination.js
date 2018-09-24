@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Pair_1 = require("./Pair");
 class Nomination {
     constructor(points = [], timeClaimed = new Date().getTime()) {
         this.points = points;
@@ -19,7 +18,7 @@ class Nomination {
         this.addPoint(match.match_id, this.scorePoint(match, player_slot));
     }
     addPoint(match_id, point) {
-        this.points.push(new Pair_1.default(match_id, point));
+        this.points.push([match_id, point]);
         while (this.points.length > 20) {
             this.points.shift();
         }
@@ -29,7 +28,7 @@ class Nomination {
     }
     getScore() {
         return this.points.reduce((r, p) => {
-            return p != null && p.p2 != null ? r + parseInt(p.p2 + '') : r;
+            return p != null && p[0] != null ? r + parseInt(p[1] + '') : r;
         }, 0);
     }
     scoreToString() {

@@ -12,11 +12,11 @@ class BestKDA extends Nomination_1.default {
         this.msg = 'От в мене KDA то KDA';
     }
     getScore() {
-        const kdaArr = this.getPoints().map(p => this.countKDA(p.p2 + ''));
+        const kdaArr = this.getPoints().map(p => this.countKDA(p[1] + ''));
         return Math.max(...kdaArr);
     }
     scoreToString() {
-        return this.getPoints().map(p => p.p2 + '').reduce((max, next) => {
+        return this.getPoints().map(p => p[1] + '').reduce((max, next) => {
             if (this.countKDA(max) < this.countKDA(next)) {
                 return next;
             }

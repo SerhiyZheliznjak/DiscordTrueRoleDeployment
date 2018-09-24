@@ -18,7 +18,7 @@ class PingMaster extends Nomination_1.default {
         return ' напінгати';
     }
     getScore() {
-        const pings = this.points.map(p => parseInt(p.p2 + ''));
+        const pings = this.points.map(p => parseInt(p[1] + ''));
         return Math.max(...pings);
     }
     getThumbURL() {

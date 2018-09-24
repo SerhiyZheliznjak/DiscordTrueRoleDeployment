@@ -14,7 +14,7 @@ class DenyGod extends Nomination_1.default {
         return 'Заперечено кріпів за одну гру: ' + this.getScore();
     }
     getScore() {
-        const denyArr = this.getPoints().map(p => parseInt(p.p2 + ''));
+        const denyArr = this.getPoints().map(p => parseInt(p[1] + ''));
         return Math.max(...denyArr);
     }
     getScoreDescription() {

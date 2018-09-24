@@ -15,7 +15,7 @@ class Parkinson extends Nomination_1.default {
         return 'Дій за хвилину: ' + this.getScore();
     }
     getScore() {
-        const apmArr = this.getPoints().map(p => parseInt(p.p2 + ''));
+        const apmArr = this.getPoints().map(p => parseInt(p[1] + ''));
         return Math.max(...apmArr);
     }
     getScoreDescription() {

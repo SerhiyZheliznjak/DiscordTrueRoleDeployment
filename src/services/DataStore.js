@@ -29,7 +29,7 @@ class DataStore {
     addMatch(match) {
         if (!this.matchesCache.get(match.match_id)) {
             this.matchesCache.set(match.match_id, match);
-            if (DataStore.maxMatches) {
+            if (DataStore.matchesCacheSize) {
                 this.matchesCache.delete(this.matchesCache.keys().next().value);
             }
         }

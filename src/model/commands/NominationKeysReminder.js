@@ -12,7 +12,7 @@ class NominationKeysReminder extends Command_1.CommandBase {
                 const alignLength = DiscordUtils_1.DiscordUtils.getLongestLength([...keyClassNameMap].map(k => k[1]));
                 for (const key of hallOfFame.keys()) {
                     const className = keyClassNameMap.get(key);
-                    keys += DiscordUtils_1.DiscordUtils.fillWithSpaces(className, alignLength) + ': ' + hallOfFame.get(key).nominationName + '\n';
+                    keys += className.padEnd(alignLength) + ': ' + hallOfFame.get(key).nominationName + '\n';
                 }
                 msg.reply(DiscordUtils_1.DiscordUtils.formatAsBlock(keys));
             });

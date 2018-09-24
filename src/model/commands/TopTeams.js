@@ -21,14 +21,13 @@ class TopTeams extends Command_1.CommandBase {
                     return t.name.length + placeText.length;
                 })));
                 if (maxNameLength > this.nameText.length) {
-                    this.nameText = DiscordUtils_1.DiscordUtils.fillWithSpaces(this.nameText, maxNameLength);
+                    this.nameText = this.nameText.padEnd(maxNameLength);
                 }
                 const message = topTeams.reduce((text, team) => {
                     const winrate = DiscordUtils_1.DiscordUtils.getPercentString(Math.round(team.wins / (team.losses + team.wins) * 10000) / 100);
                     const gamesPlayed = team.losses + team.wins;
-                    return text + DiscordUtils_1.DiscordUtils.fillWithSpaces(this.getPlaceText(topTeams.indexOf(team))
-                        + team.name, this.nameText.length) + ' | '
-                        + DiscordUtils_1.DiscordUtils.fillWithSpaces(String(winrate), this.winrateText.length) + ' | '
+                    return text + (this.getPlaceText(topTeams.indexOf(team)) + team.name).padEnd(this.nameText.length) + ' | '
+                        + String(winrate).padEnd(this.winrateText.length) + ' | '
                         + gamesPlayed + '\n';
                 }, '');
                 this.sendMessage(msg, message.split('\n'));
@@ -37,6 +36,9 @@ class TopTeams extends Command_1.CommandBase {
                 }
             });
         }
+    }
+    helpText() {
+        return 'Повертає топ N професійних команд, N = ' + this.defaultN + ' за замовчуванням';
     }
     sendMessage(msg, message) {
         if (message.join('\n').length > 1994 - this.getTableHead().length) {
@@ -67,9 +69,6 @@ class TopTeams extends Command_1.CommandBase {
     }
     getPlaceText(index) {
         return index + 1 + '. ';
-    }
-    helpText() {
-        return 'Повертає топ N професійних команд, N = ' + this.defaultN + ' за замовчуванням';
     }
 }
 exports.TopTeams = TopTeams;

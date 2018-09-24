@@ -21,7 +21,7 @@ class NominationService {
         };
     }
     startNominating(playersMap) {
-        DataStore_1.default.maxMatches = playersMap.size * 20;
+        DataStore_1.default.matchesCacheSize = playersMap.size * 20;
         this.dotaIds = this.getDotaIds(playersMap);
         this.subscription = rxjs_1.Observable.interval(Constants_1.default.WATCH_INTERVAL).subscribe(this.recentGamesObserver);
         this.recentGamesObserver.next(0);
@@ -41,7 +41,7 @@ class NominationService {
         else {
             console.log('getting new scoreboard');
             return rxjs_1.Observable.from(this.dotaIds)
-                .flatMap((account_id) => this.getFreshRecentMatchesForPlayer(account_id))
+                .flatMap((account_id) => this.getRecentMatchesForPlayer(account_id))
                 .flatMap((playerWithNewMatches) => this.mapToPlayerWithFullMatches(playerWithNewMatches))
                 .reduce((arr, pfm) => [...arr, pfm], []).map(playersMatches => {
                 this.scoreBoard = new ScoreBoard_1.default();
@@ -71,10 +71,9 @@ class NominationService {
             .flatMap(match_id => this.dataStore.getMatch(match_id))
             .reduce((pfm, match) => this.nominationUtils.getPlayerFullMatches(pfm, match), new PlayerFullMatches_1.default(prm.account_id, []));
     }
-    getFreshRecentMatchesForPlayer(account_id) {
+    getRecentMatchesForPlayer(account_id) {
         return this.dotaApi.getRecentMatches(account_id).map(recentMatches => {
-            const freshMatches = recentMatches.filter(rm => this.nominationUtils.isFreshMatch(rm)).map(m => m.match_id);
-            return new PlayerRecentMatches_1.default(account_id, freshMatches);
+            return new PlayerRecentMatches_1.default(account_id, recentMatches.map(m => m.match_id));
         });
     }
     getNewResults(playersMatches, hallOfFame) {
@@ -101,7 +100,7 @@ class NominationService {
     }
     getPlayerFullMatches(dotaIds) {
         return rxjs_1.Observable.from(dotaIds)
-            .flatMap((account_id) => rxjs_1.Observable.zip(this.getFreshRecentMatchesForPlayer(account_id), this.dataStore.getRecentMatchesForPlayer(account_id)))
+            .flatMap((account_id) => rxjs_1.Observable.zip(this.getRecentMatchesForPlayer(account_id), this.dataStore.getRecentMatchesForPlayer(account_id)))
             .map((playerMatches) => this.mapRecentMatchesToNew(playerMatches[0], playerMatches[1]))
             .flatMap((playerWithNewMatches) => this.mapToPlayerWithFullMatches(playerWithNewMatches))
             .reduce((arr, pfm) => [...arr, pfm], []);
