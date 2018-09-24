@@ -20,7 +20,7 @@ class DotaApi {
         return util_1.format('https://api.opendota.com/api/matches/%s', match_id);
     }
     static getRecentMatchesUrl(account_id) {
-        return util_1.format('https://api.opendota.com/api/players/%s/matches?limit=20&date=%s&sort=start_time', account_id, Constants_1.default.MATCH_DUE_TIME_DAYS);
+        return util_1.format('https://api.opendota.com/api/players/%s/matches?limit=40&date=%s&sort=start_time', account_id, Constants_1.default.MATCH_DUE_TIME_DAYS);
     }
     queueRequest(url) {
         let observable;
