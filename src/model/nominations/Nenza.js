@@ -10,7 +10,7 @@ class Nenza extends Nomination_1.default {
         this.chatHistory = [];
     }
     get msg() {
-        return 'Цитую: ' + this.chatHistory.join('/n');
+        return 'Цитую: "' + this.chatHistory.join('"/n"') + '"';
     }
     getScoreText() {
         return 'Кількість написаної херні в чаті: ' + this.getScore();
@@ -27,6 +27,7 @@ class Nenza extends Nomination_1.default {
                 .map(msg => msg.key)
                 .filter(msgText => {
                 const words = msgText ? msgText.toLowerCase().split(' ') : [''];
+                console.log(words);
                 return words.indexOf('ff') > -1
                     || words.indexOf('report') > -1
                     || words.indexOf('пездець') > -1

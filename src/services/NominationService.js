@@ -88,6 +88,7 @@ class NominationService {
         this.claimedNominationsObserver.next(newNominationsClaimed);
     }
     nextCheck(dotaIds) {
+        console.log(new Date().toString().split(' GMT')[0], ': Checking...');
         this.getPlayerFullMatches(dotaIds)
             .subscribe((playersMatches) => {
             this.dataStore.hallOfFame.subscribe(hallOfFame => {
