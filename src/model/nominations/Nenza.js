@@ -7,7 +7,11 @@ class Nenza extends Nomination_1.default {
         this.points = points;
         this.name = 'Ненза';
         this.minScore = 1;
-        this.msg = 'Бачу тапок в закупі - report, ff, afk';
+        // this.msg = 'Бачу тапок в закупі - ';
+        this.chatHistory = [];
+    }
+    get msg() {
+        return 'Бачу тапок в закупі - ' + this.chatHistory;
     }
     getScoreText() {
         return 'Кількість написаної херні в чаті: ' + this.getScore();
@@ -21,11 +25,15 @@ class Nenza extends Nomination_1.default {
     scorePoint(match, player_slot) {
         if (match && match.chat) {
             const nenzaMsg = match.chat.filter(msg => msg.player_slot === player_slot)
-                .filter(msg => {
-                const text = msg.key ? msg.key.toLowerCase() : '';
+                .map(msg => msg.key)
+                .filter(msgText => {
+                const text = msgText ? msgText.toLowerCase() : '';
                 return text.indexOf('ff') > -1
                     || text.indexOf('report') > -1;
             });
+            if (nenzaMsg.length > 0) {
+                this.chatHistory.push(nenzaMsg);
+            }
             return nenzaMsg.length;
         }
         return 0;
