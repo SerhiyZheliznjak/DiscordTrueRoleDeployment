@@ -11,8 +11,8 @@ class TacticalFeeder extends Nomination_1.default {
         this.tacticalKDA = [];
     }
     get msg() {
-        return 'Мета реально працює\nВмер не менше 10 разів, але виграв матч\n'
-            + this.tacticalKDA.join('\n');
+        return 'Мета реально працює\nВмер не менше 10 разів, але виграв матч\n```'
+            + this.tacticalKDA.join('\n') + '\n```';
     }
     getScoreText() {
         return 'Виграно матчів фідженням: ' + this.getScore();
