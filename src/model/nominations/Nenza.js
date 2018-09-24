@@ -7,11 +7,10 @@ class Nenza extends Nomination_1.default {
         this.points = points;
         this.name = 'Ненза';
         this.minScore = 1;
-        // this.msg = 'Бачу тапок в закупі - ';
         this.chatHistory = [];
     }
     get msg() {
-        return 'Бачу тапок в закупі - ' + this.chatHistory;
+        return 'Цитую: ' + this.chatHistory.join('/n');
     }
     getScoreText() {
         return 'Кількість написаної херні в чаті: ' + this.getScore();
@@ -27,9 +26,22 @@ class Nenza extends Nomination_1.default {
             const nenzaMsg = match.chat.filter(msg => msg.player_slot === player_slot)
                 .map(msg => msg.key)
                 .filter(msgText => {
-                const text = msgText ? msgText.toLowerCase() : '';
-                return text.indexOf('ff') > -1
-                    || text.indexOf('report') > -1;
+                const words = msgText ? msgText.toLowerCase().split(' ') : [''];
+                return words.indexOf('ff') > -1
+                    || words.indexOf('report') > -1
+                    || words.indexOf('пездець') > -1
+                    || words.indexOf('нахуй') > -1
+                    || words.indexOf('nahoi') > -1
+                    || words.indexOf('уйобок') > -1
+                    || words.indexOf('шлюхи') > -1
+                    || words.indexOf('шлюха') > -1
+                    || words.indexOf('підар') > -1
+                    || words.indexOf('лох') > -1
+                    || words.indexOf('suka') > -1
+                    || words.indexOf('blyat') > -1
+                    || words.indexOf('pidaras') > -1
+                    || words.indexOf('fuck') > -1
+                    || words.indexOf('хуй') > -1;
             });
             if (nenzaMsg.length > 0) {
                 this.chatHistory.push(nenzaMsg);
