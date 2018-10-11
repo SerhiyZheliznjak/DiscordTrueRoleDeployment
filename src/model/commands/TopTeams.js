@@ -18,7 +18,7 @@ class TopTeams extends Command_1.CommandBase {
                 const topTeams = teams.slice(0, numberOfTeams);
                 const maxNameLength = Math.max(...(topTeams.map((t, index) => {
                     const placeText = this.getPlaceText(index);
-                    return t.name.length + placeText.length;
+                    return this.getTeamName(t).length + placeText.length;
                 })));
                 if (maxNameLength > this.nameText.length) {
                     this.nameText = this.nameText.padEnd(maxNameLength);
@@ -26,7 +26,7 @@ class TopTeams extends Command_1.CommandBase {
                 const message = topTeams.reduce((text, team) => {
                     const winrate = DiscordUtils_1.DiscordUtils.getPercentString(Math.round(team.wins / (team.losses + team.wins) * 10000) / 100);
                     const gamesPlayed = team.losses + team.wins;
-                    return text + (this.getPlaceText(topTeams.indexOf(team)) + team.name).padEnd(this.nameText.length) + ' | '
+                    return text + (this.getPlaceText(topTeams.indexOf(team)) + this.getTeamName(team)).padEnd(this.nameText.length) + ' | '
                         + String(winrate).padEnd(this.winrateText.length) + ' | '
                         + gamesPlayed + '\n';
                 }, '');
@@ -69,6 +69,9 @@ class TopTeams extends Command_1.CommandBase {
     }
     getPlaceText(index) {
         return index + 1 + '. ';
+    }
+    getTeamName(team) {
+        return !!team.name ? team.name : !!team.tag ? team.tag : 'API issue!';
     }
 }
 exports.TopTeams = TopTeams;
