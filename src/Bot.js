@@ -8,7 +8,7 @@ client.login(process.env.token);
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
     botService = new BotService_1.default(client);
-    botService.startNominating();
+    // botService.startNominating();
 });
 client.on('message', msg => {
     botService.processMesage(msg);
