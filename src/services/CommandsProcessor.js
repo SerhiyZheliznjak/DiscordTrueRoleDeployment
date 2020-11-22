@@ -13,8 +13,8 @@ const WinRateCommand_1 = require("../model/commands/WinRateCommand");
 const HeroNames_1 = require("../model/commands/HeroNames");
 const TopTeams_1 = require("../model/commands/TopTeams");
 class CommandsProcessor extends Command_1.CommandBase {
-    constructor(client, dataStore, nominationService) {
-        super(client, dataStore);
+    constructor(client, nominationService) {
+        super(client);
         this.nominationService = nominationService;
         this.commandMap = new Map();
         this.init();
