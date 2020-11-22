@@ -1,9 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class CommandBase {
-    constructor(client, dataStore) {
+    constructor(client) {
         this.client = client;
-        this.dataStore = dataStore;
         this.locked = false;
     }
     lock() {
